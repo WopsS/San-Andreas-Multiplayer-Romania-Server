@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CSingleton.hpp>
+#include <Base/CSingleton.hpp>
 
 class CMySQL : public CSingleton<CMySQL>
 {

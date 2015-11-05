@@ -3,20 +3,18 @@
 #include <stdafx.hpp>
 #include <Base/CMap.hpp>
 
-class CPlayer : public CMap<CPlayer>
+class CVehicle : public CMap<CVehicle>
 {
 public:
-
-	CPlayer(uint16_t aID);
-	~CPlayer();
 
 	uint16_t GetID() const;
 
 private:
 
-	friend class CMap<CPlayer>;
+	friend class CMap<CVehicle>;
 
-	
+	CVehicle(uint16_t aID);
+	~CVehicle();
 
 	uint16_t m_ID;
 };

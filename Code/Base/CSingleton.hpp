@@ -10,6 +10,7 @@ public:
 
 	inline static void DestroyInstance()
 	{
+		// Check if we have a valid instance.
 		if (m_pInstance != nullptr)
 		{
 			delete m_pInstance;
@@ -19,6 +20,7 @@ public:
 
 	inline static T* GetInstance()
 	{
+		// Check if the instance is already allocated.
 		if (m_pInstance == nullptr)
 		{
 			m_pInstance = new T();
@@ -27,7 +29,7 @@ public:
 		return m_pInstance;
 	}
 
-protected:
+private:
 
 	static T* m_pInstance;
 };

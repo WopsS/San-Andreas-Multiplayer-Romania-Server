@@ -4,7 +4,7 @@
 #include <fstream>
 
 #include <format.h>
-#include <CSingleton.hpp>
+#include <Base/CSingleton.hpp>
 
 enum LogLevel : uint16_t
 {

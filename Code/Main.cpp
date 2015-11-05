@@ -21,11 +21,15 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int PlayerID)
 {
+	CPlayer::Add(static_cast<uint16_t>(PlayerID));
+
 	return true;
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int PlayerID, int Reason)
 {
+	CPlayer::Remove(static_cast<uint16_t>(PlayerID));
+
 	return true;
 }
 
@@ -36,6 +40,13 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestClass(int PlayerID, int ClassID)
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int PlayerID, const char* CMDText)
 {
+	auto pPlayer = CPlayer::Get(PlayerID);
+
+	if (pPlayer == nullptr)
+	{
+		return false;
+	}
+
 	return false;
 }
 
@@ -59,8 +70,8 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 {
 	sampgdk::logprintf("  SAMPRomania: Unloading plugin...", SERVER_VERSION);
 
-	CMySQL::CSingleton::DestroyInstance();
-	CLog::CSingleton::DestroyInstance();
+	CMySQL::DestroyInstance();
+	CLog::DestroyInstance();
 
 	mysql_library_end();
 
