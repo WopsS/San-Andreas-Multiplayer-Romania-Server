@@ -11,28 +11,28 @@ public:
 	inline static void DestroyInstance()
 	{
 		// Check if we have a valid instance.
-		if (m_pInstance != nullptr)
+		if (m_instance != nullptr)
 		{
-			delete m_pInstance;
-			m_pInstance = nullptr;
+			delete m_instance;
+			m_instance = nullptr;
 		}
 	}
 
 	inline static T* GetInstance()
 	{
 		// Check if the instance is already allocated.
-		if (m_pInstance == nullptr)
+		if (m_instance == nullptr)
 		{
-			m_pInstance = new T();
+			m_instance = new T();
 		}
 
-		return m_pInstance;
+		return m_instance;
 	}
 
 private:
 
-	static T* m_pInstance;
+	static T* m_instance;
 };
 
 template <class T>
-T* CSingleton<T>::m_pInstance = nullptr;
+T* CSingleton<T>::m_instance = nullptr;

@@ -4,6 +4,7 @@
 #include <Log/CLog.hpp>
 #include <MySQL/CMySQL.hpp>
 #include <Player/CPlayer.hpp>
+#include <Utilities/Time.hpp>
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 {
@@ -14,7 +15,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	sampgdk::DisableInteriorEnterExits();
 	sampgdk::ManualVehicleEngineAndLights();
 	sampgdk::SetNameTagDrawDistance(40.0);
-	sampgdk::SetWorldTime(12);
+	sampgdk::SetWorldTime(std::stoi(Time::GetHour()));
 
 	return true;
 }
@@ -22,6 +23,10 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int PlayerID)
 {
 	CPlayer::Add(static_cast<uint16_t>(PlayerID));
+
+	auto Player = CPlayer::Get(PlayerID);
+
+	CMySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `Players` WHERE `Name` = ':name'", { CMySQL::GetInstance()->MakeParameter("name", Player->GetName()) }, Player, &CPlayer::OnConnect);
 
 	return true;
 }
@@ -40,9 +45,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestClass(int PlayerID, int ClassID)
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int PlayerID, const char* CMDText)
 {
-	auto pPlayer = CPlayer::Get(PlayerID);
+	auto Player = CPlayer::Get(PlayerID);
 
-	if (pPlayer == nullptr)
+	if (Player == nullptr)
 	{
 		return false;
 	}
@@ -82,4 +87,5 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 PLUGIN_EXPORT void PLUGIN_CALL ProcessTick()
 {
 	sampgdk::ProcessTick();
+	CMySQL::GetInstance()->ProcessCallbacks();
 }
