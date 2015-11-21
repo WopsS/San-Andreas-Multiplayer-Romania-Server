@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.0.2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2015 at 01:31 AM
--- Server version: 10.0.17-MariaDB
+-- Generation Time: Nov 22, 2015 at 12:44 AM
+-- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,8 +29,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `players` (
   `ID` int(11) NOT NULL,
   `Name` varchar(24) NOT NULL,
-  `Password` text,
-  `Email` text
+  `Password` text NOT NULL,
+  `Salt` text NOT NULL,
+  `Email` text NOT NULL,
+  `Pin` text NOT NULL,
+  `Sex` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
