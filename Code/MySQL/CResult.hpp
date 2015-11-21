@@ -14,19 +14,58 @@ public:
 	CResult();
 	~CResult();
 
-	inline ULONG GetFieldCount() const
+	inline const ULONG& GetAffectedRows() const
+	{
+		return m_affectedRows;
+	}
+
+	inline const ULONG& GetFieldCount() const
 	{
 		return m_fieldsCount;
 	}
 
-	inline ULONG GetRowCount() const
+	inline const my_ulonglong& GetInsertedID() const
+	{
+		return m_insertID;
+	}
+
+	inline const ULONG& GetRowCount() const
 	{
 		return m_rowsCount;
 	}
 
+	inline const ULONG& GetWarningCount() const
+	{
+		return m_warningCount;
+	}
+
 	// TODO: Maybe an enum will be better for this instead the index or name?
 
-	std::string GetRowData(size_t RowIndex, size_t FieldIndex) const;
+	template<typename T>
+	inline std::string GetRowData(const T& FieldIndex) const
+	{
+		auto Index = static_cast<size_t>(FieldIndex);
+
+		if (Index < m_fieldsCount)
+		{
+			return std::string(m_data[0][Index]);
+		}
+
+		return std::string();
+	}
+
+	template<typename T>
+	inline std::string GetRowData(size_t RowIndex, const T& FieldIndex) const
+	{
+		auto Index = static_cast<size_t>(FieldIndex);
+
+		if (RowIndex < m_rowsCount && Index < m_fieldsCount)
+		{
+			return std::string(m_data[RowIndex][Index]);
+		}
+
+		return std::string();
+	}
 
 	std::string GetRowData(size_t RowIndex, const std::string& FieldName) const;
 
@@ -40,7 +79,7 @@ private:
 
 	size_t m_fieldsCount;
 
-	size_t m_insertId;
+	my_ulonglong m_insertID;
 
 	ULONG m_rowsCount;
 

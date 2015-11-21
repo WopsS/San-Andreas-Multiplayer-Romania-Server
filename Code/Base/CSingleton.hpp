@@ -34,5 +34,5 @@ private:
 	static T* m_instance;
 };
 
-template <class T>
+template<class T>
 T* CSingleton<T>::m_instance = nullptr;

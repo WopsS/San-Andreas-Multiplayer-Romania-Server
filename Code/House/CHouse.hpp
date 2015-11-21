@@ -2,7 +2,7 @@
 
 #include <Base/CMap.hpp>
 
-class CHouse : public CMap<CHouse>
+class CHouse : public CMap<uint16_t, CHouse>
 {
 public:
 
@@ -10,7 +10,7 @@ public:
 
 private:
 
-	friend class CMap<CHouse>;
+	friend class CMap<uint16_t, CHouse>;
 
 	CHouse(uint16_t aID);
 	~CHouse();

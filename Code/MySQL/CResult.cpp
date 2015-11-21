@@ -24,16 +24,6 @@ CResult::~CResult()
 	}
 }
 
-std::string CResult::GetRowData(size_t RowIndex, size_t FieldIndex) const
-{
-	if (RowIndex < m_rowsCount && FieldIndex < m_fieldsCount)
-	{
-		return std::string(m_data[RowIndex][FieldIndex]);
-	}
-
-	return std::string();
-}
-
 std::string CResult::GetRowData(size_t RowIndex, const std::string& FieldName) const
 {
 	if (RowIndex >= m_rowsCount || FieldName.empty() == true)

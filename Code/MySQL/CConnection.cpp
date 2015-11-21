@@ -75,8 +75,6 @@ void CConnection::ProcessCallbacks()
 
 void CConnection::Queue(std::shared_ptr<CQuery> Query, std::function<void()> Callback, std::shared_ptr<CResult> Result)
 {
-	CLog::GetInstance()->Log(LogLevel::kDebug, "CConnection::Queue(this={})", static_cast<const void*>(this));
-
 	auto Element = std::make_tuple(std::move(Query), std::move(Callback), std::move(Result));
 
 	std::lock_guard<std::mutex> lock_guard(m_queryMutex);
@@ -209,7 +207,7 @@ void CConnection::ProcessQueries()
 							if (mysql_field_count(m_connection) == 0)
 							{
 								Result->m_affectedRows = static_cast<ULONG>(mysql_affected_rows(m_connection));
-								Result->m_insertId = static_cast<ULONG>(mysql_insert_id(m_connection));
+								Result->m_insertID = static_cast<size_t>(mysql_insert_id(m_connection));
 								Result->m_warningCount = mysql_warning_count(m_connection);
 							}
 						}

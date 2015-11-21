@@ -3,7 +3,7 @@
 #include <stdafx.hpp>
 #include <Base/CMap.hpp>
 
-class CVehicle : public CMap<CVehicle>
+class CVehicle : public CMap<uint16_t, CVehicle>
 {
 public:
 
@@ -11,7 +11,7 @@ public:
 
 private:
 
-	friend class CMap<CVehicle>;
+	friend class CMap<uint16_t, CVehicle>;
 
 	CVehicle(uint16_t aID);
 	~CVehicle();

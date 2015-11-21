@@ -4,7 +4,9 @@
 #include <memory>
 #include <unordered_map>
 
-template<class T>
+#include <Base/CAny.hpp>
+
+template<typename T, class C>
 class CMap
 {
 public:
@@ -12,7 +14,8 @@ public:
 	CMap() { };
 	virtual ~CMap() { };
 
-	inline static bool Add(uint16_t ID)
+	template<typename... Args>
+	inline static bool Add(T ID, Args&& ...args)
 	{
 		// Check if the key already exists.
 		if (m_list.find(ID) != m_list.end())
@@ -20,12 +23,12 @@ public:
 			return false;
 		}
 
-		m_list.insert(std::make_pair(ID, std::make_shared<T>(ID)));
+		m_list.insert(std::make_pair(ID, std::make_shared<C>(ID, std::forward<Args>(args)...)));
 
 		return true;
 	}
 
-	inline static std::shared_ptr<T> Get(uint16_t ID)
+	inline static std::shared_ptr<C> Get(T ID)
 	{
 		// Check if the key exists. 
 		if (m_list.find(ID) == m_list.end())
@@ -36,7 +39,7 @@ public:
 		return m_list.at(ID);
 	}
 
-	inline static bool Remove(uint16_t ID)
+	inline static bool Remove(T ID)
 	{
 		// Check if the key exists.
 		if (m_list.find(ID) == m_list.end())
@@ -51,8 +54,8 @@ public:
 
 private:
 
-	static std::unordered_map<uint16_t, std::shared_ptr<T>> m_list;
+	static std::unordered_map<T, std::shared_ptr<C>> m_list;
 };
 
-template <class T>
-std::unordered_map<uint16_t, std::shared_ptr<T>> CMap<T>::m_list;
+template<typename T, class C>
+std::unordered_map<T, std::shared_ptr<C>> CMap<T, C>::m_list;

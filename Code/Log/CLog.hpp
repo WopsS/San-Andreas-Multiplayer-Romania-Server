@@ -28,7 +28,7 @@ public:
 		auto Information = std::make_unique<LogInformation>();
 
 		Information->Level = Level;
-		Information->Message = fmt::format(fmt::format(Format, std::forward<Args>(args)...));
+		Information->Message = fmt::format(Format, std::forward<Args>(args)...);
 
 		std::lock_guard<std::mutex> lock_guard(m_queueMutex);
 		m_queue.push(std::move(Information));

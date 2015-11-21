@@ -14,10 +14,13 @@ class CMySQL : public CSingleton<CMySQL>
 {
 public:
 
-	template <typename T>
+	template<typename T>
 	inline CParameter MakeParameter(const std::string& Name, const T& Value)
 	{
-		return CParameter(":" + Name, typeid(Value) == typeid(std::string) ? Value : std::string(Value));
+		std::stringstream StringStream;
+		StringStream << Value;
+
+		return CParameter(":" + Name, StringStream.str());
 	}
 
 	void ProcessCallbacks();
@@ -27,8 +30,8 @@ public:
 		m_connectionPool->Queue(std::make_shared<CQuery>(Type, Query, Parameters), nullptr, nullptr);
 	}
 
-	template <typename C, typename F, typename... Args>
-	inline void Query(const QueryType& Type, std::string Query, const std::vector<CParameter>& Parameters, std::shared_ptr<C> Class, F Function, Args&&... args)
+	template<typename C, typename F, typename... Args>
+	inline void Query(const QueryType& Type, const std::string& Query, const std::vector<CParameter>& Parameters, C Class, F Function, Args&&... args)
 	{
 		auto Result = std::make_shared<CResult>();
 

@@ -1,8 +1,9 @@
 #pragma once
 
+#include <cstdint>
 #include <Base/CMap.hpp>
 
-class CBusiness : public CMap<CBusiness>
+class CBusiness : public CMap<uint16_t, CBusiness>
 {
 public:
 
@@ -10,7 +11,7 @@ public:
 
 private:
 
-	friend class CMap<CBusiness>;
+	friend class CMap<uint16_t, CBusiness>;
 
 	CBusiness(uint16_t aID);
 	~CBusiness();

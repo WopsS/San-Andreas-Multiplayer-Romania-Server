@@ -8,3 +8,4 @@ EXPORTS
 	OnPlayerDisconnect
 	OnPlayerRequestClass
 	OnPlayerCommandText
+	OnDialogResponse
