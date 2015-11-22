@@ -10,5 +10,5 @@
 #include <sampgdk/core.h>
 #include <sampgdk/sdk.h>
 
-#define MYSQL_VERSION "0.1 alpha"
-#define SERVER_VERSION "0.1.0 alpha"
+#define MYSQL_VERSION "1.0 alpha"
+#define SERVER_VERSION "0.1.5 alpha"

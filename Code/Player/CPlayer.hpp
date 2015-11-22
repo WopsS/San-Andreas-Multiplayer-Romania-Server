@@ -18,18 +18,12 @@
 * doesn't exist in 'm_data' from 'CData' it will be added, so it will change a class member.
 * </remakrs>
 */
-class CPlayer : public CMap<uint16_t, CPlayer>
+class CPlayer : public CMap<uint16_t, CPlayer>, private CData<PlayerData>
 {
 public:
 
 	CPlayer(uint16_t aID);
 	~CPlayer();
-
-	template<typename T>
-	inline const bool AddData(PlayerData Index, T Value)
-	{
-		return m_data.Add(Index, Value);
-	}
 
 	void OnConnect(std::shared_ptr<CResult> Result);
 
@@ -41,38 +35,26 @@ public:
 
 	void OnSpawn();
 
-	template<typename T>
-	inline const T GetData(PlayerData Index)
-	{
-		return m_data.Get<T>(Index);
-	}
+	const std::string GetEmail() const;
 
-	const std::string GetEmail();
+	uint16_t GetGameID() const;
 
-	uint16_t GetGameID();
+	uint64_t GetMySQLID() const;
 
-	uint64_t GetMySQLID();
+	const std::string GetName() const;
 
-	const std::string GetName();
+	const std::string GetSalt() const;
 
-	const std::string GetSalt();
+	const PlayerSex GetSex() const;
 
-	const PlayerSex GetSex();
+	bool IsAuthenticated() const;
 
-	bool IsAuthenticated();
+	bool Kick() const;
 
-	bool Kick();
-
-	template<typename T>
-	inline const bool SetData(PlayerData Index, T Value)
-	{
-		return m_data.Set<T>(Index, Value);
-	}
-
-	bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0);
+	bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
 
 	template<typename... Args>
-	inline bool ShowDialog(const DialogID& ID, Args&& ...args)
+	inline const bool ShowDialog(const DialogID& ID, Args&& ...args) const
 	{
 		auto Dialog = CDialog::Get(ID);
 
@@ -81,7 +63,7 @@ public:
 	}
 
 	template<typename... Args>
-	inline bool ShowDialog(const CDialog& Dialog, Args&& ...args)
+	inline const bool ShowDialog(const CDialog& Dialog, Args&& ...args) const
 	{
 		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(Dialog.GetID()), static_cast<int>(Dialog.GetStyle()), Dialog.GetCaption().c_str(), 
 			fmt::format(Dialog.GetText(), std::forward<Args>(args)...).c_str(), Dialog.GetButton1().c_str(), Dialog.GetButton2().c_str());
@@ -90,10 +72,4 @@ public:
 	bool Spawn();
 
 	bool ToggleSpectating(const bool Toggle);
-
-private:
-
-	friend class CMap<uint16_t, CPlayer>;
-
-	CData<PlayerData> m_data;
 };

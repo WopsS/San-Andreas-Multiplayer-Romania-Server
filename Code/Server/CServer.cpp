@@ -1,7 +1,32 @@
 #include <Server/CServer.hpp>
-#include <Dialog/CDialog.hpp>
 
-void CServer::CreateDialogs()
+CServer::CServer()
+{
+}
+
+CServer::~CServer()
+{
+}
+
+void CServer::Initialize()
+{
+	CMySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `businesses`", {}, this, &CServer::InitializeBusinesses);
+	InitializeDialogs();
+	CMySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `houses`", {}, this, &CServer::InitializeHouses);
+	CMySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `faction_vehicles`", {}, this, &CServer::InitializeVehicles);
+}
+
+void CServer::InitializeBusinesses(std::shared_ptr<CResult> Result)
+{
+	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
+	{
+		CBusiness::Add(i, Result);
+	}
+
+	sampgdk::logprintf(fmt::format("CServer::Initialize: {} businesses loaded.", Result->GetRowCount()).c_str());
+}
+
+void CServer::InitializeDialogs()
 {
 	CDialog::Add(DialogID::kRegister, DialogStyle::kPassword, "Registration",
 		"Hello {{95A3FF}}{}{{BECBFC}},\n\nYou don't have an account, you need to register in order to play on this server.\nPassword must contains {{9E0028}}minimum 4{{BECBFC}} and {{9E0028}}maximum 32{{BECBFC}} characters.\n\nPlease type your password below:", 
@@ -33,10 +58,22 @@ void CServer::CreateDialogs()
 	CDialog::Add(DialogID::kAuthentication, DialogStyle::kPassword, "Authentication", "Hello {{95A3FF}}{}{{BECBFC}},\n\nYou have an account on our server, please login to access it.", "Login", "Cancel");
 }
 
-CServer::CServer()
+void CServer::InitializeHouses(std::shared_ptr<CResult> Result)
 {
+	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
+	{
+		CHouse::Add(i, Result);
+	}
+
+	sampgdk::logprintf(fmt::format("CServer::Initialize: {} houses loaded.", Result->GetRowCount()).c_str());
 }
 
-CServer::~CServer()
+void CServer::InitializeVehicles(std::shared_ptr<CResult> Result)
 {
+	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
+	{
+		CVehicle::Add(i, Result);
+	}
+
+	sampgdk::logprintf(fmt::format("CServer::Initialize: {} vehicles loaded.", Result->GetRowCount()).c_str());
 }

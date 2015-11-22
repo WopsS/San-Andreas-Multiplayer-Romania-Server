@@ -1,13 +1,21 @@
 #pragma once
 
+#include <memory>
+
+#include <stdafx.hpp>
+#include <format.h>
 #include <Base/CSingleton.hpp>
+#include <Business/CBusiness.hpp>
+#include <Dialog/CDialog.hpp>
+#include <House/CHouse.hpp>
+#include <MySQL/CMySQL.hpp>
+#include <Vehicle/CVehicle.hpp>
 
 class CServer : public CSingleton<CServer>
 {
 public:
 
-	// TODO: Store information about server and maybe load here businesses, houses and vehicles.
-	void CreateDialogs();
+	void Initialize();
 
 private:
 
@@ -15,4 +23,12 @@ private:
 
 	CServer();
 	~CServer();
+
+	void InitializeBusinesses(std::shared_ptr<CResult> Result);
+
+	void InitializeDialogs();
+
+	void InitializeHouses(std::shared_ptr<CResult> Result);
+
+	void InitializeVehicles(std::shared_ptr<CResult> Result);
 };

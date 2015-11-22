@@ -44,7 +44,7 @@ void CPlayer::OnConnect(std::shared_ptr<CResult> Result)
 			}
 			else if (i == static_cast<size_t>(PlayerData::kSex))
 			{
-				SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoul(Result->GetRowData(Index))));
+				SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Result->GetRowData(Index))));
 			}
 			else
 			{
@@ -297,47 +297,47 @@ void CPlayer::OnSpawn()
 {
 }
 
-const std::string CPlayer::GetEmail()
+const std::string CPlayer::GetEmail() const
 {
 	return GetData<std::string>(PlayerData::kEmail);
 }
 
-uint16_t CPlayer::GetGameID()
+uint16_t CPlayer::GetGameID() const
 {
 	return GetData<uint16_t>(PlayerData::kGameID);
 }
 
-uint64_t CPlayer::GetMySQLID()
+uint64_t CPlayer::GetMySQLID() const
 {
 	return GetData<uint64_t>(PlayerData::kMySQLID);
 }
 
-const std::string CPlayer::GetName()
+const std::string CPlayer::GetName() const
 {
 	return GetData<std::string>(PlayerData::kName);
 }
 
-const std::string CPlayer::GetSalt()
+const std::string CPlayer::GetSalt() const
 {
 	return GetData<std::string>(PlayerData::kSalt);
 }
 
-const PlayerSex CPlayer::GetSex()
+const PlayerSex CPlayer::GetSex() const
 {
 	return GetData<PlayerSex>(PlayerData::kSex);
 }
 
-bool CPlayer::IsAuthenticated()
+bool CPlayer::IsAuthenticated() const
 {
 	return GetData<bool>(PlayerData::kAuthenticated);
 }
 
-bool CPlayer::Kick()
+bool CPlayer::Kick() const
 {
 	return sampgdk::Kick(GetGameID());
 }
 
-bool CPlayer::SetPosition(const float X, const float Y, const float Z, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld)
+bool CPlayer::SetPosition(const float X, const float Y, const float Z, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
 {
 	return sampgdk::SetPlayerPos(GetGameID(), X, Y, Z);
 }

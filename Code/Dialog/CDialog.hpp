@@ -3,58 +3,25 @@
 #include <string>
 
 #include <Base/CMap.hpp>
+#include <Base/CData.hpp>
 #include <Dialog/Enums.hpp>
 
-class CDialog : public CMap<DialogID, CDialog>
+class CDialog : public CMap<DialogID, CDialog>, private CData<DialogData>
 {
 public:
 
 	CDialog(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1, const std::string& Button2);
 	~CDialog();
 
-	inline const DialogID& GetID() const
-	{
-		return m_id;
-	}
+	const DialogID GetID() const;
 
-	inline const DialogStyle& GetStyle() const
-	{
-		return m_style;
-	}
+	const DialogStyle GetStyle() const;
 
-	inline const std::string& GetCaption() const
-	{
-		return m_caption;
-	}
+	const std::string GetCaption() const;
 
-	inline const std::string& GetText() const
-	{
-		return m_text;
-	}
+	const std::string GetText() const;
 
-	inline const std::string& GetButton1() const
-	{
-		return m_button1;
-	}
+	const std::string GetButton1() const;
 
-	inline const std::string& GetButton2() const
-	{
-		return m_button2;
-	}
-
-private:
-
-	friend class CMap<DialogID, CDialog>;
-
-	DialogID m_id;
-
-	DialogStyle m_style;
-
-	std::string m_caption;
-
-	std::string m_text;
-
-	std::string m_button1;
-
-	std::string m_button2;
+	const std::string GetButton2() const;
 };

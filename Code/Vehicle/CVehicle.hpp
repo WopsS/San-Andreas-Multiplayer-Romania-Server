@@ -1,20 +1,22 @@
 #pragma once
 
+#include <cstdint>
+#include <memory>
+
 #include <stdafx.hpp>
 #include <Base/CMap.hpp>
+#include <Base/CData.hpp>
+#include <MySQL/CResult.hpp>
+#include <Vehicle/Enums.hpp>
 
-class CVehicle : public CMap<uint16_t, CVehicle>
+class CVehicle : public CMap<uint16_t, CVehicle>, private CData<VehicleData>
 {
 public:
 
-	uint16_t GetID() const;
-
-private:
-
-	friend class CMap<uint16_t, CVehicle>;
-
-	CVehicle(uint16_t aID);
+	CVehicle(uint16_t aID, std::shared_ptr<CResult> Result);
 	~CVehicle();
 
-	uint16_t m_ID;
+	const uint16_t GetID() const;
+
+	const uint64_t GetOwnerID() const;
 };

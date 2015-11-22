@@ -14,32 +14,30 @@ public:
 	CResult();
 	~CResult();
 
-	inline const ULONG& GetAffectedRows() const
+	inline const ULONG GetAffectedRows() const
 	{
 		return m_affectedRows;
 	}
 
-	inline const ULONG& GetFieldCount() const
+	inline const ULONG GetFieldCount() const
 	{
 		return m_fieldsCount;
 	}
 
-	inline const my_ulonglong& GetInsertedID() const
+	inline const my_ulonglong GetInsertedID() const
 	{
 		return m_insertID;
 	}
 
-	inline const ULONG& GetRowCount() const
+	inline const ULONG GetRowCount() const
 	{
 		return m_rowsCount;
 	}
 
-	inline const ULONG& GetWarningCount() const
+	inline const ULONG GetWarningCount() const
 	{
 		return m_warningCount;
 	}
-
-	// TODO: Maybe an enum will be better for this instead the index or name?
 
 	template<typename T>
 	inline std::string GetRowData(const T& FieldIndex) const

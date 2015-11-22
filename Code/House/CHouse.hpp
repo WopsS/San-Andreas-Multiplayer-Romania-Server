@@ -1,19 +1,21 @@
 #pragma once
 
-#include <Base/CMap.hpp>
+#include <cstdint>
+#include <memory>
 
-class CHouse : public CMap<uint16_t, CHouse>
+#include <Base/CMap.hpp>
+#include <Base/CData.hpp>
+#include <House/Enums.hpp>
+#include <MySQL/CResult.hpp>
+
+class CHouse : public CMap<uint16_t, CHouse>, private CData<HouseData>
 {
 public:
 
-	uint16_t GetID() const;
-
-private:
-
-	friend class CMap<uint16_t, CHouse>;
-
-	CHouse(uint16_t aID);
+	CHouse(uint16_t aID, std::shared_ptr<CResult> Result);
 	~CHouse();
 
-	uint16_t m_ID;
+	const uint16_t GetID() const;
+
+	const uint64_t GetOwnerID() const;
 };

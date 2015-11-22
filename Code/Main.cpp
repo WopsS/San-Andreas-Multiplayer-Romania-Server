@@ -19,7 +19,8 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	sampgdk::SetNameTagDrawDistance(40.0);
 	sampgdk::SetWorldTime(std::stoi(Time::GetHour()));
 
-	CServer::GetInstance()->CreateDialogs();
+	// Initialize server things.
+	CServer::GetInstance()->Initialize();
 
 	return true;
 }

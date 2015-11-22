@@ -2,6 +2,16 @@
 
 #include <cstdint>
 
+enum class DialogData : uint16_t
+{
+	kID = 0,
+	kStyle,
+	kCaption,
+	kText,
+	kButton1,
+	kButton2
+};
+
 enum class DialogStyle : uint16_t
 {
 	kMessage = 0, // DIALOG_STYLE_MSGBOX
