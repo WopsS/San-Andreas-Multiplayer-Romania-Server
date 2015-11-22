@@ -74,9 +74,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int PlayerID, const char* CMD
 {
 	auto Player = CPlayer::Get(PlayerID);
 
-	if (Player == nullptr)
+	if (Player != nullptr)
 	{
-		return false;
+		return Player->OnCommand(std::string(CMDText));
 	}
 
 	return false;

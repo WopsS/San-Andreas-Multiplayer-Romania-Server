@@ -12,6 +12,10 @@
 #include <MySQL/CResult.hpp>
 #include <Player/Enums.hpp>
 
+#ifdef SendMessage
+#undef SendMessage
+#endif
+
 /*
 * <remarks>
 * Functions like 'GetName' doesn't return a reference to the type because it is a local variable and it doesn't look like this 'const std::string GetName() const;' because if the kName
@@ -35,6 +39,8 @@ public:
 
 	void OnSpawn();
 
+	bool OnCommand(const std::string& Command);
+
 	const std::string GetEmail() const;
 
 	uint16_t GetGameID() const;
@@ -50,6 +56,12 @@ public:
 	bool IsAuthenticated() const;
 
 	bool Kick() const;
+
+	template<typename... Args>
+	bool SendMessage(int Color, const std::string& Message, Args&& ...args)
+	{
+		return sampgdk::SendClientMessage(GetGameID(), Color, fmt::format(Message, std::forward<Args>(args)...).c_str());
+	}
 
 	bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
 

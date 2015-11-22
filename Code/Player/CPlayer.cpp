@@ -36,27 +36,26 @@ void CPlayer::OnConnect(std::shared_ptr<CResult> Result)
 		for (size_t i = 0; i < Length; i++)
 		{
 			auto Index = static_cast<PlayerData>(i);
+			auto Value = Result->GetRowData(Index);
 
 			// Let's do few custom cases.
 			if (i == static_cast<size_t>(PlayerData::kMySQLID))
 			{
-				SetData<uint64_t>(PlayerData::kMySQLID, std::stoull(Result->GetRowData(Index)));
+				SetData<uint64_t>(PlayerData::kMySQLID, std::stoull(Value));
 			}
 			else if (i == static_cast<size_t>(PlayerData::kSex))
 			{
-				SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Result->GetRowData(Index))));
+				SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Value)));
 			}
 			else
 			{
-				auto Value = Result->GetRowData(Index);
-
 				if (Utils::IsNumber(Value) == true)
 				{
-					SetData<uint32_t>(Index, std::stoul(Result->GetRowData(Index)));
+					SetData<uint32_t>(Index, std::stoul(Value));
 				}
 				else
 				{
-					SetData<std::string>(Index, Result->GetRowData(Index));
+					SetData<std::string>(Index, Value);
 				}
 			}
 		}
@@ -295,6 +294,18 @@ void CPlayer::OnInserted(std::shared_ptr<CResult> Result)
 
 void CPlayer::OnSpawn()
 {
+}
+
+bool CPlayer::OnCommand(const std::string& Command)
+{
+	if (Command.compare("/hello") == 0)
+	{
+		SendMessage(0xFFFFFFFF, "Hello {} ({}).", GetName(), GetGameID());
+
+		return true;
+	}
+
+	return false;
 }
 
 const std::string CPlayer::GetEmail() const
