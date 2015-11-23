@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.5.0.2
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2015 at 05:44 PM
--- Server version: 10.1.8-MariaDB
+-- Generation Time: 23 Noi 2015 la 17:35
+-- Versiune server: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,18 +23,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `businesses`
+-- Structura de tabel pentru tabelul `businesses`
 --
 
 CREATE TABLE `businesses` (
   `ID` int(11) NOT NULL,
-  `OwnerID` int(11) DEFAULT NULL
+  `OwnerID` int(11) DEFAULT NULL,
+  `EntranceX` float NOT NULL,
+  `EntranceY` float NOT NULL,
+  `EntranceZ` float NOT NULL,
+  `ExitX` float NOT NULL,
+  `ExitY` float NOT NULL,
+  `ExitZ` float NOT NULL,
+  `Price` int(11) NOT NULL,
+  `Interior` int(11) NOT NULL,
+  `VirtualWorld` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `factions`
+-- Structura de tabel pentru tabelul `factions`
 --
 
 CREATE TABLE `factions` (
@@ -45,7 +54,7 @@ CREATE TABLE `factions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `faction_vehicles`
+-- Structura de tabel pentru tabelul `faction_vehicles`
 --
 
 CREATE TABLE `faction_vehicles` (
@@ -56,18 +65,27 @@ CREATE TABLE `faction_vehicles` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `houses`
+-- Structura de tabel pentru tabelul `houses`
 --
 
 CREATE TABLE `houses` (
   `ID` int(11) NOT NULL,
-  `OwnerID` int(11) DEFAULT NULL
+  `OwnerID` int(11) DEFAULT NULL,
+  `EntranceX` float NOT NULL,
+  `EntranceY` float NOT NULL,
+  `EntranceZ` float NOT NULL,
+  `ExitX` float NOT NULL,
+  `ExitY` float NOT NULL,
+  `ExitZ` float NOT NULL,
+  `Price` int(11) NOT NULL,
+  `Interior` int(11) NOT NULL,
+  `VirtualWorld` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `players`
+-- Structura de tabel pentru tabelul `players`
 --
 
 CREATE TABLE `players` (
@@ -83,7 +101,7 @@ CREATE TABLE `players` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_vehicles`
+-- Structura de tabel pentru tabelul `player_vehicles`
 --
 
 CREATE TABLE `player_vehicles` (
@@ -170,29 +188,29 @@ ALTER TABLE `players`
 ALTER TABLE `player_vehicles`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- Constraints for dumped tables
+-- Restrictii pentru tabele sterse
 --
 
 --
--- Constraints for table `businesses`
+-- Restrictii pentru tabele `businesses`
 --
 ALTER TABLE `businesses`
   ADD CONSTRAINT `businesses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `faction_vehicles`
+-- Restrictii pentru tabele `faction_vehicles`
 --
 ALTER TABLE `faction_vehicles`
   ADD CONSTRAINT `faction_vehicles_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `factions` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `houses`
+-- Restrictii pentru tabele `houses`
 --
 ALTER TABLE `houses`
   ADD CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `player_vehicles`
+-- Restrictii pentru tabele `player_vehicles`
 --
 ALTER TABLE `player_vehicles`
   ADD CONSTRAINT `player_vehicles_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;

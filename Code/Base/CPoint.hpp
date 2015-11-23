@@ -43,6 +43,7 @@ class Point3D
 {
 public:
 
+	Point3D() { };
 	Point3D(const T X, const T Y, const T Z) : X(X), Y(Y), Z(Z) { };
 	~Point3D() { };
 

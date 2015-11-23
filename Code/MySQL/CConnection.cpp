@@ -193,7 +193,7 @@ void CConnection::ProcessQueries()
 									}
 									else
 									{
-										Result->m_data[RowIndex][j] = NULL;
+										Result->m_data[RowIndex][j] = "";
 									}
 								}
 
