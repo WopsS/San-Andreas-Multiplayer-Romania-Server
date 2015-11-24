@@ -21,13 +21,21 @@ CVehicle::CVehicle(uint16_t aID, std::shared_ptr<CResult> Result)
 		}
 		else
 		{
-			if (Utils::IsNumber(Value) == true)
+			auto IsFloat = Utils::IsFloat(Value);
+			auto IsInteger = Utils::IsInteger(Value);
+			auto IsString = IsFloat == false && IsInteger == false;
+
+			if (IsString == true)
+			{
+				SetData<std::string>(Index, Value);
+			}
+			else if (IsInteger == true) // Check if it is a number after we check if it is as string because if the number is '0' it will return true at 'IsFloat', so probably if it is 0 it is an integer.
 			{
 				SetData<uint32_t>(Index, std::stoul(Value));
 			}
-			else
+			else if (IsFloat == true)
 			{
-				SetData<std::string>(Index, Value);
+				SetData<float>(Index, std::stof(Value));
 			}
 		}
 	}

@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <memory>
-#include <vector>
 
 #include <Base/CSingleton.hpp>
 #include <MySQL/CConnectionPool.hpp>
@@ -25,13 +24,13 @@ public:
 
 	void ProcessCallbacks();
 
-	inline void Query(const QueryType& Type, std::string Query, const std::vector<CParameter>& Parameters)
+	inline void Query(const QueryType& Type, std::string Query, std::initializer_list<CParameter> Parameters)
 	{
 		m_connectionPool->Queue(std::make_shared<CQuery>(Type, Query, Parameters), nullptr, nullptr);
 	}
 
-	template<typename C, typename F, typename... Args>
-	inline void Query(const QueryType& Type, const std::string& Query, const std::vector<CParameter>& Parameters, C Class, F Function, Args&&... args)
+	template<typename F, typename C, typename... Args>
+	inline void Query(const QueryType& Type, const std::string& Query, const std::vector<CParameter>& Parameters, F Function, C Class, Args&&... args)
 	{
 		auto Result = std::make_shared<CResult>();
 

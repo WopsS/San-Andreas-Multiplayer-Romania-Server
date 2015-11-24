@@ -1,10 +1,11 @@
 #pragma once
 
-template <typename T>
+template<typename T>
 class Point
 {
 public:
 
+	Point() { };
 	Point(const T X) : X(X) { };
 	~Point() { };
 
@@ -21,11 +22,12 @@ public:
 	T X;
 };
 
-template <typename T>
+template<typename T>
 class Point2D
 {
 public:
 
+	Point2D() { };
 	Point2D(const T X, const T Y) : X(X), Y(Y) { };
 	~Point2D() { };
 
@@ -38,7 +40,7 @@ public:
 	T Y;
 };
 
-template <typename T>
+template<typename T>
 class Point3D
 {
 public:

@@ -26,8 +26,6 @@ private:
 
 	void InitializeBusinesses(std::shared_ptr<CResult> Result);
 
-	void InitializeDialogs();
-
 	void InitializeHouses(std::shared_ptr<CResult> Result);
 
 	void InitializeVehicles(std::shared_ptr<CResult> Result);

@@ -1,13 +1,8 @@
 #include <Dialog/CDialog.hpp>
 
-CDialog::CDialog(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1, const std::string& Button2)
+CDialog::CDialog(dialogfunction_t Function)
+	: m_function(Function)
 {
-	SetData<DialogID>(DialogData::kID, ID);
-	SetData<DialogStyle>(DialogData::kStyle, Style);
-	SetData<std::string>(DialogData::kCaption, Caption);
-	SetData<std::string>(DialogData::kText, Text);
-	SetData<std::string>(DialogData::kButton1, Button1);
-	SetData<std::string>(DialogData::kButton2, Button2);
 }
 
 CDialog::~CDialog()
@@ -42,4 +37,9 @@ const std::string CDialog::GetButton1() const
 const std::string CDialog::GetButton2() const
 {
 	return GetData<std::string>(DialogData::kButton2);
+}
+
+const dialogfunction_t CDialog::GetFunction() const
+{
+	return m_function;
 }

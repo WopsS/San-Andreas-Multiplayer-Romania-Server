@@ -6,5 +6,9 @@
 
 namespace Utils
 {
-	bool IsNumber(const std::string& Text);
+	const bool IsFloat(const std::string& Text);
+
+	const bool IsInteger(const std::string& Text);
+
+	const std::string ToLower(const std::string& Text);
 }

@@ -1,8 +1,9 @@
 #include <stdafx.hpp>
 
 #include <mysql.h>
+#include <Command/CCommands.hpp>
+#include <Dialog/CDialogs.hpp>
 #include <Log/CLog.hpp>
-#include <Dialog/Enums.hpp>
 #include <MySQL/CMySQL.hpp>
 #include <Player/CPlayer.hpp>
 #include <Server/CServer.hpp>
@@ -36,7 +37,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int PlayerID)
 		return false;
 	}
 
-	CMySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `players` WHERE `Name` = ':name' LIMIT 1", { CMySQL::GetInstance()->MakeParameter("name", Player->GetName()) }, Player, &CPlayer::OnConnect);
+	CMySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `players` WHERE `Name` = ':name' LIMIT 1", { CMySQL::GetInstance()->MakeParameter("name", Player->GetName()) }, &CPlayer::OnConnect, Player);
 
 	return true;
 }
@@ -76,7 +77,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int PlayerID, const char* CMD
 
 	if (Player != nullptr)
 	{
-		return Player->OnCommand(std::string(CMDText));
+		return CCommands::GetInstance()->Execute(Player, std::string(CMDText));
 	}
 
 	return false;
@@ -88,7 +89,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int PlayerID, int DialogID, int 
 
 	if (Player != nullptr)
 	{
-		return Player->OnDialogResponse(static_cast<::DialogID>(DialogID), static_cast<DialogResponse>(Response), static_cast<uint32_t>(ListItem), std::string(InputText));
+		return CDialogs::GetInstance()->Execute(Player, static_cast<::DialogID>(DialogID), static_cast<DialogResponse>(Response), static_cast<uint32_t>(ListItem), std::string(InputText));
 	}
 
 	return false;

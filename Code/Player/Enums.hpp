@@ -27,6 +27,8 @@ enum class PlayerData : uint16_t
 	kEmail,
 	kPin,
 	kSex,
+	kTest,
+	kTest2,
 
 	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
 

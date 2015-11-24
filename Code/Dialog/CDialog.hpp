@@ -1,16 +1,17 @@
 #pragma once
 
+#include <functional>
 #include <string>
 
-#include <Base/CMap.hpp>
 #include <Base/CData.hpp>
+#include <Base/Types.hpp>
 #include <Dialog/Enums.hpp>
 
-class CDialog : public CMap<DialogID, CDialog>, private CData<DialogData>
+class CDialog : public CData<DialogData>
 {
 public:
 
-	CDialog(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1, const std::string& Button2);
+	CDialog(dialogfunction_t Function);
 	~CDialog();
 
 	const DialogID GetID() const;
@@ -24,4 +25,12 @@ public:
 	const std::string GetButton1() const;
 
 	const std::string GetButton2() const;
+
+	const dialogfunction_t GetFunction() const;
+
+private:
+
+	friend class CDialogs;
+
+	dialogfunction_t m_function;
 };

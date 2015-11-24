@@ -80,7 +80,7 @@ void CConnection::Queue(std::shared_ptr<CQuery> Query, std::function<void()> Cal
 	std::lock_guard<std::mutex> lock_guard(m_queryMutex);
 	m_queryQueue.push(Element);
 }
-
+#include <stdafx.hpp>
 void CConnection::ProcessQueries()
 {
 	mysql_thread_init();
@@ -147,7 +147,6 @@ void CConnection::ProcessQueries()
 							MYSQL_FIELD* Field;
 							MYSQL_ROW Row;
 
-							ULONG FieldLength = 0, RowSize = 0;
 							size_t RowIndex = 0;
 
 							Result->m_fieldsCount = mysql_num_fields(StoredResult);
@@ -160,25 +159,15 @@ void CConnection::ProcessQueries()
 							while ((Field = mysql_fetch_field(StoredResult)))
 							{
 								Result->m_fieldsName.push_back(Field->name);
-								RowSize += Field->max_length;
-
-								if (FieldLength < Field->max_length)
-								{
-									FieldLength = Field->max_length;
-								}
 							}
 
-							// Alloc the memmory.
-							Result->m_data = static_cast<char***>(malloc(sizeof(char***) * Result->m_rowsCount));
+							// Resize the vector for rows.
+							Result->m_data.resize(Result->m_rowsCount);
 
 							for (size_t i = 0; i < Result->m_rowsCount; i++)
 							{
-								Result->m_data[i] = static_cast<char**>(malloc(sizeof(char**) * (FieldLength + 1)));
-
-								for (size_t j = 0; j < Result->m_fieldsCount; j++)
-								{
-									Result->m_data[i][j] = static_cast<char*>(malloc(sizeof(char*) * RowSize));
-								}
+								// Resize the vector for columns.
+								Result->m_data[i].resize(Result->m_fieldsCount);
 							}
 
 							// Fill the array with data.
@@ -187,14 +176,7 @@ void CConnection::ProcessQueries()
 								for (size_t j = 0; j < Result->m_fieldsCount; j++)
 								{
 									// Check if the field is null.
-									if (Row[j] != NULL)
-									{
-										strncpy(Result->m_data[RowIndex][j], Row[j], RowSize);
-									}
-									else
-									{
-										Result->m_data[RowIndex][j] = "";
-									}
+									Result->m_data[RowIndex][j] = Row[j] != NULL ? Row[j] : "";
 								}
 
 								RowIndex++;

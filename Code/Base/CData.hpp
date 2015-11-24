@@ -8,7 +8,7 @@
 /// <summary>
 /// Base class to store an undefined amount of objects with any type.
 /// </summary>
-template <typename TK>
+template<typename TK>
 class CData
 {
 public:
@@ -31,9 +31,20 @@ public:
 			return false;
 		}
 
-		m_data.insert(std::make_pair(Index, std::make_unique<CAny<T>>(Value)));
+		m_data.emplace(Index, std::make_shared<CAny<T>>(Value));
 
 		return true;
+	}
+
+	inline const long Test(TK Index)
+	{
+		// Check if the key already exists.
+		if (m_data.find(Index) == m_data.end())
+		{
+			return 0;
+		}
+
+		return m_data.at(Index).use_count();
 	}
 
 	/// <summary>
@@ -52,6 +63,15 @@ public:
 
 		// Return the value at index.
 		return dynamic_cast<CAny<T>&>(*m_data.at(Index)).Get();
+	}
+
+	/// <summary>
+	/// Get the size of the list.
+	/// </summary>
+	/// <returns>Returns size of the list.</returns>
+	inline const size_t GetSize() const
+	{
+		return m_data.size();
 	}
 
 	/// <summary>
@@ -75,5 +95,5 @@ public:
 
 private:
 
-	std::unordered_map<TK, std::unique_ptr<CObject>> m_data;
+	std::unordered_map<TK, std::shared_ptr<CObject>> m_data;
 };

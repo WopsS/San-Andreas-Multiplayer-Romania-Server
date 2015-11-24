@@ -71,8 +71,6 @@ private:
 
 	friend class CConnection;
 
-	char*** m_data;
-
 	ULONG m_affectedRows;
 
 	size_t m_fieldsCount;
@@ -84,4 +82,6 @@ private:
 	ULONG m_warningCount;
 
 	std::vector<std::string> m_fieldsName;
+
+	std::vector<std::vector<std::string>> m_data;
 };
