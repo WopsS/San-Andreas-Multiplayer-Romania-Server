@@ -12,21 +12,17 @@ CBusiness::CBusiness(uint16_t aID, std::shared_ptr<CResult> Result)
 		auto Index = static_cast<BusinessData>(i);
 		auto Value = Result->GetRowData(aID, Index);
 
-		if (i == static_cast<size_t>(BusinessData::kID))
+		if (i == static_cast<size_t>(BusinessData::kID) || i == static_cast<size_t>(BusinessData::kOwnerID))
 		{
-			SetData<uint64_t>(BusinessData::kID, std::stoull(Value));
+			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}
-		else if (i == static_cast<size_t>(BusinessData::kOwnerID))
-		{
-			SetData<uint64_t>(BusinessData::kOwnerID, Value.length() == 0 ? 0 : std::stoull(Value));
-		}
-		else if (i == static_cast<float> (BusinessData::kEnterance))
+		else if (i == static_cast<float> (BusinessData::kEnterance) || i == static_cast<float> (BusinessData::kExit))
 		{
 			auto X = std::stof(Result->GetRowData(aID, i++));
 			auto Y = std::stof(Result->GetRowData(aID, i++));
 			auto Z = std::stof(Result->GetRowData(aID, i));
 
-			SetData<Point3D<float>>(BusinessData::kEnterance, Point3D<float>(X, Y, Z));
+			SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
 		}
 		else
 		{

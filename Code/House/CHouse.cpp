@@ -14,7 +14,7 @@ CHouse::CHouse(uint16_t aID, std::shared_ptr<CResult> Result)
 
 		if (i == static_cast<size_t>(HouseData::kID) || i == static_cast<size_t>(HouseData::kOwnerID))
 		{
-			SetData<uint64_t>(HouseData::kOwnerID, Value.length() == 0 ? 0 : std::stoull(Value));
+			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}
 		else if (i == static_cast<size_t>(HouseData::kEntrance) || i == static_cast<size_t>(HouseData::kExit))
 		{
