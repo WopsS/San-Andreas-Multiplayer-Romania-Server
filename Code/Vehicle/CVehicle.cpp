@@ -11,7 +11,7 @@ CVehicle::CVehicle(uint16_t aID, std::shared_ptr<CResult> Result)
 		auto Index = static_cast<VehicleData>(i);
 		auto Value = Result->GetRowData(aID, Index);
 
-		if (i == static_cast<size_t>(VehicleData::kID) || i == static_cast<size_t>(VehicleData::kOwnerID))
+		if (Index == VehicleData::kID || Index == VehicleData::kOwnerID)
 		{
 			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}

@@ -32,7 +32,7 @@ void CServer::InitializeHouses(std::shared_ptr<CResult> Result)
 		CHouse::Add(i, Result);
 	}
 
-	sampgdk::logprintf("CServer::Initialize: %i houses loaded.", Result.use_count());
+	sampgdk::logprintf(fmt::format("CServer::Initialize: {} houses loaded.", Result->GetRowCount()).c_str());
 }
 
 void CServer::InitializeVehicles(std::shared_ptr<CResult> Result)
