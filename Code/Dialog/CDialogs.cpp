@@ -89,7 +89,7 @@ bool CDialogs::Execute(std::shared_ptr<CPlayer> Player, const DialogID& ID, cons
 
 	auto Dialog = m_dialogs.at(ID);
 
-	if (Dialog->GetFunction())
+	if (Dialog->GetFunction() != nullptr)
 	{
 		// Rebind function with the new parameters.
 		auto Function = std::bind(Dialog->GetFunction(), Player, Response, ItemIndex, Text);

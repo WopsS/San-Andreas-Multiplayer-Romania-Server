@@ -15,7 +15,7 @@ public:
 
 	CDialog Create(const DialogID& ID, const std::string& Text);
 
-	CDialog Create(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1, const std::string& Button2, dialogfunction_t Function);
+	CDialog Create(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1 = "Close", const std::string& Button2 = "", dialogfunction_t Function = nullptr);
 
 	bool Execute(std::shared_ptr<CPlayer> Player, const DialogID& ID, const DialogResponse& Response, const size_t ItemIndex, const std::string& Tex);
 
@@ -28,7 +28,7 @@ private:
 	CDialogs();
 	~CDialogs();
 
-	void Add(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1, const std::string& Button2, dialogfunction_t Function);
+	void Add(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1 = "Close", const std::string& Button2 = "", dialogfunction_t Function = nullptr);
 	
 	template<typename F, typename C>
 	inline dialogfunction_t Bind(F Function, C Class)
