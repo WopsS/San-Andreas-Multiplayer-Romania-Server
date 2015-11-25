@@ -30,7 +30,7 @@ public:
 	}
 
 	template<typename F, typename C, typename... Args>
-	inline void Query(const QueryType& Type, const std::string& Query, const std::vector<CParameter>& Parameters, F Function, C Class, Args&&... args)
+	inline void Query(const QueryType& Type, const std::string& Query, std::initializer_list<CParameter> Parameters, F Function, C Class, Args&&... args)
 	{
 		auto Result = std::make_shared<CResult>();
 

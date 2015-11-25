@@ -80,7 +80,7 @@ void CConnection::Queue(std::shared_ptr<CQuery> Query, std::function<void()> Cal
 	std::lock_guard<std::mutex> lock_guard(m_queryMutex);
 	m_queryQueue.push(Element);
 }
-#include <stdafx.hpp>
+
 void CConnection::ProcessQueries()
 {
 	mysql_thread_init();

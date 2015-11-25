@@ -17,7 +17,7 @@ class CQuery
 {
 public:
 
-	CQuery(const QueryType& Type, const std::string& Query, const std::vector<CParameter>& Parameters);
+	CQuery(const QueryType& Type, const std::string& Query, std::initializer_list<CParameter> Parameters);
 	~CQuery();
 
 	const char* c_str() const;

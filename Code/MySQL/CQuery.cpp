@@ -1,6 +1,6 @@
 #include <MySQL/CQuery.hpp>
 
-CQuery::CQuery(const QueryType& Type, const std::string& Query, const std::vector<CParameter>& Parameters)
+CQuery::CQuery(const QueryType& Type, const std::string& Query, std::initializer_list<CParameter> Parameters)
 	: m_type(Type)
 	, m_query(Query)
 	, m_parameters(Parameters)

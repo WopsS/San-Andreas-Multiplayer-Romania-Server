@@ -46,7 +46,7 @@ public:
 
 		if (Index < m_fieldsCount)
 		{
-			return std::string(m_data[0][Index]);
+			return m_data[0][Index];
 		}
 
 		return std::string();
@@ -59,7 +59,7 @@ public:
 
 		if (RowIndex < m_rowsCount && Index < m_fieldsCount)
 		{
-			return std::string(m_data[RowIndex][Index]);
+			return m_data[RowIndex][Index];
 		}
 
 		return std::string();
