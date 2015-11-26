@@ -7,7 +7,7 @@
 
 CCommands::CCommands()
 {
-	Register("test", {}, std::string("sifs"), Bind(&CCommands::Test, this));
+	Register("test", {}, std::string("sifsp"), Bind(&CCommands::Test, this));
 	Register("test2", {}, Bind(&CCommands::Test2, this));
 }
 
@@ -96,8 +96,21 @@ void CCommands::Test(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandPa
 		return;
 	}
 
-	Player->SendMessage(0xFFFFFFFF, "CCommands::Test - {} | {} | {} | {}", Parameters->GetData<std::string>(0), Parameters->GetData<int>(1), Parameters->GetData<float>(2), Parameters->GetData<std::string>(3));
-	sampgdk::logprintf("CCommands::Test - %s | %i | %f | %s", Parameters->GetData<std::string>(0).c_str(), Parameters->GetData<int>(1), Parameters->GetData<float>(2), Parameters->GetData<std::string>(3).c_str());
+	auto TargetPlayer = Parameters->GetData<std::shared_ptr<CPlayer>>(4);
+
+	if (TargetPlayer == nullptr)
+	{
+		Player->SendMessage(0xFFFFFFFF, "CCommands::Test - player is not connected.");
+		sampgdk::logprintf("CCommands::Test - player is not connected.");
+
+		return;
+	}
+
+	Player->SendMessage(0xFFFFFFFF, "CCommands::Test - {} | {} | {} | {} | {}", 
+		Parameters->GetData<std::string>(0), Parameters->GetData<int>(1), Parameters->GetData<float>(2), Parameters->GetData<std::string>(3), TargetPlayer->GetName());
+
+	sampgdk::logprintf("CCommands::Test - %s | %i | %f | %s | %s", 
+		Parameters->GetData<std::string>(0).c_str(), Parameters->GetData<int>(1), Parameters->GetData<float>(2), Parameters->GetData<std::string>(3).c_str(), TargetPlayer->GetName().c_str());
 }
 
 void CCommands::Test2(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters)

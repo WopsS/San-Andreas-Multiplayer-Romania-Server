@@ -1,4 +1,6 @@
 #include <Command/CCommandParameters.hpp>
+
+#include <Player/CPlayer.hpp>
 #include <Utilities/Utils.hpp>
 
 CCommandParameters::CCommandParameters(const std::string& Format, std::string& Parameters)
@@ -24,16 +26,13 @@ CCommandParameters::CCommandParameters(const std::string& Format, std::string& P
 
 			switch (Format[i])
 			{
-				case 's':
+				case 'f':
 				{
-					// Check if there is only a string formatter or the string formatter is the last one, if it is append text to result.
-					if (i == m_requiredParameters - 1)
+					if (Utils::IsFloat(Result) == true)
 					{
-						Result = Result + " " + Parameters;
-						Parameters.clear();
+						SetData<float>(i, std::stof(Result));
 					}
 
-					SetData<std::string>(i, Result);
 					break;
 				}
 				case 'i':
@@ -45,13 +44,40 @@ CCommandParameters::CCommandParameters(const std::string& Format, std::string& P
 
 					break;
 				}
-				case 'f':
+				case 'p':
 				{
-					if (Utils::IsFloat(Result) == true)
+					// Set the player as not found by default.
+					SetData<std::shared_ptr<CPlayer>>(i, nullptr);
+
+					if (Utils::IsInteger(Result) == true)
 					{
-						SetData<float>(i, std::stof(Result));
+						SetData<std::shared_ptr<CPlayer>>(i, CPlayer::Get(std::stoi(Result)));
+					}
+					else
+					{
+						for(auto& Players : CPlayer::GetList())
+						{
+							if (Players.second->GetName().find(Result) != std::string::npos)
+							{
+								SetData<std::shared_ptr<CPlayer>>(i, Players.second);
+
+								break;
+							}
+						}
 					}
 
+					break;
+				}
+				case 's':
+				{
+					// Check if there is only a string formatter or the string formatter is the last one, if it is append text to result.
+					if (i == m_requiredParameters - 1)
+					{
+						Result = Result + " " + Parameters;
+						Parameters.clear();
+					}
+
+					SetData<std::string>(i, Result);
 					break;
 				}
 				default:

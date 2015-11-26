@@ -8,9 +8,10 @@
 /// Class which store all parameters for a command.
 /// </summary>
 /// <remarks>
-/// A formatter can be:
+/// A specifier can be:
 ///		f - for float.
 ///		i - for integer.
+///		p - for player.
 ///		s - for string.
 /// </remarks>
 class CCommandParameters : public CData<size_t>

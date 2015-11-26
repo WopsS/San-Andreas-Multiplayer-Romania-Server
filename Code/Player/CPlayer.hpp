@@ -26,8 +26,6 @@ public:
 
 	void OnDisconnect(const DisconnectReason& Reason);
 
-	bool OnDialogResponse(const DialogID& ID, const DialogResponse& Response, const uint32_t Item, const std::string& Text);
-
 	void OnInserted(std::shared_ptr<CResult> Result);
 
 	void OnSpawn();
@@ -78,6 +76,7 @@ public:
 
 private:
 
+	friend class CCommands;
 	friend class CDialogs;
 
 	std::shared_ptr<CDialog> GetDialog(const DialogID& ID) const;

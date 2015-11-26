@@ -54,6 +54,15 @@ public:
 	}
 
 	/// <summary>
+	/// Get the list of the objects.
+	/// </summary>
+	/// <returns>Returns list of the objects.</returns>
+	inline static std::unordered_map<T, std::shared_ptr<C>> GetList()
+	{
+		return m_list;
+	}
+
+	/// <summary>
 	/// Remove an object from the list.
 	/// </summary>
 	/// <param name="Index">Index of an object.</param>
