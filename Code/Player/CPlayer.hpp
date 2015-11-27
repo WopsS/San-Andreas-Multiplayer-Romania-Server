@@ -22,13 +22,11 @@ public:
 	CPlayer(uint16_t aID);
 	~CPlayer();
 
-	void OnConnect(std::shared_ptr<CResult> Result);
+	void AttachCameraToObject(int ObjectID);
 
-	void OnDisconnect(const DisconnectReason& Reason);
+	const void CancelEdit() const;
 
-	void OnInserted(std::shared_ptr<CResult> Result);
-
-	void OnSpawn();
+	const bool EditObject(int ObjectID) const;
 
 	const std::string GetEmail() const;
 
@@ -45,6 +43,14 @@ public:
 	bool IsAuthenticated() const;
 
 	bool Kick() const;
+
+	void OnConnect(std::shared_ptr<CResult> Result);
+
+	void OnDisconnect(const DisconnectReason& Reason);
+
+	void OnInserted(std::shared_ptr<CResult> Result);
+
+	void OnSpawn();
 
 	template<typename... Args>
 	inline bool SendMessage(int Color, const std::string& Message, Args&& ...args)

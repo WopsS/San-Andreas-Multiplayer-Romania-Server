@@ -49,6 +49,7 @@ CCommandParameters::CCommandParameters(const std::string& Format, std::string& P
 					// Set the player as not found by default.
 					SetData<std::shared_ptr<CPlayer>>(i, nullptr);
 
+					// Check if the parameter is a integer, if it is then it is the ID, if not, check for the name in players list.
 					if (Utils::IsInteger(Result) == true)
 					{
 						SetData<std::shared_ptr<CPlayer>>(i, CPlayer::Get(std::stoi(Result)));

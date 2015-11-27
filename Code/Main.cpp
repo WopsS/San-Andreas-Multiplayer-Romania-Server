@@ -7,6 +7,8 @@
 #include <MySQL/CMySQL.hpp>
 #include <Player/CPlayer.hpp>
 #include <Server/CServer.hpp>
+#include <Streamer/Object.hpp>
+#include <Streamer/Pickup.hpp>
 #include <Utilities/Time.hpp>
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
@@ -103,6 +105,54 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int PlayerID)
 	{
 		Player->OnSpawn();
 	}
+
+	return true;
+}
+
+PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *params, cell *retval) 
+{
+	auto Name = std::string(name);
+
+	if (Name.compare("OnPlayerEditDynamicObject") == 0)
+	{
+		auto Player = CPlayer::Get(static_cast<uint16_t>(params[1]));
+
+		if (Player != nullptr)
+		{
+			Object::OnPlayerEdit(Player, params[2], static_cast<ObjectEditionResponse>(params[3]), Point3D<float>(amx_ctof(params[4]), amx_ctof(params[5]), amx_ctof(params[6])), 
+				Point3D<float>(amx_ctof(params[7]), amx_ctof(params[8]), amx_ctof(params[9])));
+		}
+	}
+	else if (Name.compare("OnPlayerPickUpDynamicPickup") == 0)
+	{
+		auto Player = CPlayer::Get(static_cast<uint16_t>(params[1]));
+
+		if (Player != nullptr)
+		{
+			Pickup::OnPlayerPickUp(Player, params[2]);
+		}
+	}
+	else if (Name.compare("OnPlayerSelectDynamicObject") == 0)
+	{
+		auto Player = CPlayer::Get(static_cast<uint16_t>(params[1]));
+
+		if (Player != nullptr)
+		{
+			Object::OnPlayerSelect(Player, params[2], params[3], Point3D<float>(amx_ctof(params[4]), amx_ctof(params[5]), amx_ctof(params[6])));
+		}
+	}
+
+	/* Unimplemented:
+			* forward OnDynamicObjectMoved(STREAMER_TAG_OBJECT objectid);
+			* forward OnPlayerShootDynamicObject(playerid, weaponid, STREAMER_TAG_OBJECT objectid, Float:x, Float:y, Float:z);
+			* forward OnPlayerEnterDynamicCP(playerid, STREAMER_TAG_CP checkpointid);
+			* forward OnPlayerLeaveDynamicCP(playerid, STREAMER_TAG_CP checkpointid);
+			* forward OnPlayerEnterDynamicRaceCP(playerid, STREAMER_TAG_RACE_CP checkpointid);
+			* forward OnPlayerLeaveDynamicRaceCP(playerid, STREAMER_TAG_RACE_CP checkpointid);
+			* forward OnPlayerEnterDynamicArea(playerid, STREAMER_TAG_AREA areaid);
+			* forward OnPlayerLeaveDynamicArea(playerid, STREAMER_TAG_AREA areaid);
+			* forward Streamer_OnPluginError(error[]);
+	*/
 
 	return true;
 }

@@ -23,6 +23,23 @@ CPlayer::~CPlayer()
 {
 }
 
+void CPlayer::AttachCameraToObject(int ObjectID)
+{
+	static AMX_NATIVE Native = sampgdk::FindNative("AttachCameraToDynamicObject");
+	sampgdk::InvokeNative(Native, "ii", GetGameID(), ObjectID);
+}
+
+const void CPlayer::CancelEdit() const
+{
+	sampgdk::CancelEdit(GetData<uint16_t>(PlayerData::kGameID));
+}
+
+const bool CPlayer::EditObject(int ObjectID) const
+{
+	static AMX_NATIVE Native = sampgdk::FindNative("EditDynamicObject");
+	return !!sampgdk::InvokeNative(Native, "ii", GetData<uint16_t>(PlayerData::kGameID), ObjectID);
+}
+
 void CPlayer::OnConnect(std::shared_ptr<CResult> Result)
 {
 	if (Result->GetRowCount() > 0) // Player has an account in database, store the information.
