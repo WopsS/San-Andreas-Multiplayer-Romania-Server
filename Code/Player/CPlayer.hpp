@@ -46,6 +46,10 @@ public:
 
 	const bool IsAuthenticated() const;
 
+	const bool IsInRangeOfPoint(const Point3D<float>& Position, float Range = 3.0f);
+
+	const bool IsInRangeOfPoint(float X, float Y, float Z, float Range = 3.0f);
+
 	const bool IsInVehicle() const;
 
 	const bool IsInVehicle(uint16_t VehicleID) const;
@@ -72,7 +76,9 @@ public:
 		return sampgdk::SendClientMessage(GetGameID(), Color, fmt::format(Message, std::forward<Args>(args)...).c_str());
 	}
 
-	bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
+	const bool SetPosition(const Point3D<float>& Position, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const;
+
+	const bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
 
 	template<typename... Args>
 	inline const bool ShowDialog(const DialogID& ID, Args&& ...args) const

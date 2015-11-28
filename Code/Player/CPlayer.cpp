@@ -147,6 +147,16 @@ const bool CPlayer::IsAuthenticated() const
 	return GetData<bool>(PlayerData::kAuthenticated);
 }
 
+const bool CPlayer::IsInRangeOfPoint(const Point3D<float>& Position, float Range)
+{
+	return IsInRangeOfPoint(Position.X, Position.Y, Position.Z, Range);
+}
+
+const bool CPlayer::IsInRangeOfPoint(float X, float Y, float Z, float Range)
+{
+	return sampgdk::IsPlayerInRangeOfPoint(GetGameID(), X, Y, Z, Range);
+}
+
 const bool CPlayer::IsInVehicle() const
 {
 	return sampgdk::IsPlayerInAnyVehicle(GetGameID()) && CVehicle::Contains(sampgdk::GetPlayerVehicleID(GetGameID())) == true;
@@ -162,9 +172,15 @@ const bool CPlayer::Kick() const
 	return sampgdk::Kick(GetGameID());
 }
 
-bool CPlayer::SetPosition(const float X, const float Y, const float Z, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
+const bool CPlayer::SetPosition(const Point3D<float>& Position, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
 {
-	return sampgdk::SetPlayerPos(GetGameID(), X, Y, Z);
+	return SetPosition(Position.X, Position.Y, Position.Z, Angle, Interior, VirtualWorld);
+}
+
+const bool CPlayer::SetPosition(const float X, const float Y, const float Z, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
+{
+	auto ID = GetGameID();
+	return sampgdk::SetPlayerPos(ID, X, Y, Z) && sampgdk::SetPlayerFacingAngle(ID, Angle) && sampgdk::SetPlayerInterior(ID, Interior) && sampgdk::SetPlayerVirtualWorld(ID, VirtualWorld);
 }
 
 bool CPlayer::Spawn()
