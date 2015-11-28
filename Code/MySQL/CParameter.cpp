@@ -5,7 +5,3 @@ CParameter::CParameter(const std::string& Name, const std::string& Value)
 	, m_value(Value)
 {
 }
-
-CParameter::~CParameter()
-{
-}

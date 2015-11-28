@@ -13,7 +13,7 @@ class CHouse : public CMap<uint16_t, CHouse>, private CData<HouseData>
 public:
 
 	CHouse(uint16_t aID, std::shared_ptr<CResult> Result);
-	~CHouse();
+	~CHouse() = default;
 
 	const uint16_t GetID() const;
 

@@ -11,3 +11,4 @@ EXPORTS
 	OnPlayerCommandText
 	OnDialogResponse
 	OnPlayerSpawn
+	OnPlayerKeyStateChange

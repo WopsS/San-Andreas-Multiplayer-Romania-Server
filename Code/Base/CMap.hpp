@@ -38,6 +38,16 @@ public:
 	}
 
 	/// <summary>
+	/// Check if an object exist in list.
+	/// </summary>
+	/// <param name="Index">Index for the object.</param>
+	/// <returns>Returns true if the object exists, false otherwise.</returns>
+	inline static bool Contains(T Index)
+	{
+		return m_list.find(Index) != m_list.end();
+	}
+
+	/// <summary>
 	/// Get the object from the list.
 	/// </summary>
 	/// <param name="Index">Index of an object.</param>

@@ -43,7 +43,7 @@ private:
 	friend class CSingleton<CMySQL>;
 
 	CMySQL();
-	~CMySQL();
+	~CMySQL() = default;
 	
 	std::unique_ptr<CConnectionPool> m_connectionPool;
 };

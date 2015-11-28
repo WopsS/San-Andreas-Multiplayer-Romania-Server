@@ -1,13 +1,5 @@
 #include <MySQL/CResult.hpp>
 
-CResult::CResult()
-{
-}
-
-CResult::~CResult()
-{
-}
-
 std::string CResult::GetRowData(size_t RowIndex, const std::string& FieldName) const
 {
 	if (RowIndex >= m_rowsCount || FieldName.empty() == true)

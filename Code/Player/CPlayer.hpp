@@ -4,12 +4,14 @@
 #include <unordered_map>
 
 #include <stdafx.hpp>
+#include <Colors.hpp>
 #include <format.h>
 #include <Base/CData.hpp>
 #include <Base/CMap.hpp>
 #include <Dialog/CDialog.hpp>
 #include <MySQL/CResult.hpp>
 #include <Player/Enums.hpp>
+#include <Vehicle/CVehicle.hpp>
 
 #ifdef SendMessage
 #undef SendMessage
@@ -19,8 +21,8 @@ class CPlayer : public CMap<uint16_t, CPlayer>, private CData<PlayerData>
 {
 public:
 
-	CPlayer(uint16_t aID);
-	~CPlayer();
+	CPlayer(uint16_t ID);
+	~CPlayer() = default;
 
 	void AttachCameraToObject(int ObjectID);
 
@@ -30,9 +32,11 @@ public:
 
 	const std::string GetEmail() const;
 
-	uint16_t GetGameID() const;
+	const uint16_t GetGameID() const;
 
-	uint64_t GetMySQLID() const;
+	const uint64_t GetMySQLID() const;
+
+	const std::shared_ptr<CVehicle> GetVehicle() const;
 
 	const std::string GetName() const;
 
@@ -40,9 +44,13 @@ public:
 
 	const PlayerSex GetSex() const;
 
-	bool IsAuthenticated() const;
+	const bool IsAuthenticated() const;
 
-	bool Kick() const;
+	const bool IsInVehicle() const;
+
+	const bool IsInVehicle(uint16_t VehicleID) const;
+
+	const bool Kick() const;
 
 	void OnConnect(std::shared_ptr<CResult> Result);
 
@@ -51,6 +59,12 @@ public:
 	void OnInserted(std::shared_ptr<CResult> Result);
 
 	void OnSpawn();
+
+	template<typename... Args>
+	inline bool SendMessage(Colors Color, const std::string& Message, Args&& ...args)
+	{
+		return SendMessage(static_cast<int>(Color), Message, std::forward<Args>(args)...);
+	}
 
 	template<typename... Args>
 	inline bool SendMessage(int Color, const std::string& Message, Args&& ...args)

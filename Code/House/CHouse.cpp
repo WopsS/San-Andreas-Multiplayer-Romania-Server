@@ -3,14 +3,17 @@
 #include <Base/CPoint.hpp>
 #include <Utilities/Utils.hpp>
 
-CHouse::CHouse(uint16_t aID, std::shared_ptr<CResult> Result)
+CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 {
+	// Let's do that because the result vector is from index 0.
+	ID--;
+
 	auto Length = static_cast<size_t>(HouseData::kEndMySQL);
 
 	for (size_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<HouseData>(i);
-		auto Value = Result->GetRowData(aID, Index);
+		auto Value = Result->GetRowData(ID, Index);
 
 		if (Index == HouseData::kID || Index == HouseData::kOwnerID)
 		{
@@ -18,9 +21,9 @@ CHouse::CHouse(uint16_t aID, std::shared_ptr<CResult> Result)
 		}
 		else if (Index == HouseData::kEntrance || Index== HouseData::kExit)
 		{
-			auto X = std::stof(Result->GetRowData(aID, i++));
-			auto Y = std::stof(Result->GetRowData(aID, i++));
-			auto Z = std::stof(Result->GetRowData(aID, i));
+			auto X = std::stof(Result->GetRowData(ID, i++));
+			auto Y = std::stof(Result->GetRowData(ID, i++));
+			auto Z = std::stof(Result->GetRowData(ID, i));
 
 			SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
 		}
@@ -44,10 +47,6 @@ CHouse::CHouse(uint16_t aID, std::shared_ptr<CResult> Result)
 			}
 		}
 	}
-}
-
-CHouse::~CHouse()
-{
 }
 
 const uint16_t CHouse::GetID() const

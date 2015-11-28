@@ -41,10 +41,6 @@ CDialogs::CDialogs()
 		Bind(&CDialogs::Authentication, this));
 }
 
-CDialogs::~CDialogs()
-{
-}
-
 void CDialogs::Add(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1, const std::string& Button2, dialogfunction_t Function)
 {
 	auto Dialog = std::make_shared<CDialog>(Function);

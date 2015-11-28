@@ -6,21 +6,17 @@
 #include <MySQL/CMySQL.hpp>
 #include <Utilities/Utils.hpp>
 
-CPlayer::CPlayer(uint16_t aID)
+CPlayer::CPlayer(uint16_t ID)
 {
 	char Name[MAX_PLAYER_NAME + 1];
-	sampgdk::GetPlayerName(aID, Name, sizeof(Name));
+	sampgdk::GetPlayerName(ID, Name, sizeof(Name));
 
 	std::stringstream StringStream;
 	StringStream << Name;
 
-	AddData<uint16_t>(PlayerData::kGameID, aID);
+	AddData<uint16_t>(PlayerData::kGameID, ID);
 	AddData<std::string>(PlayerData::kName, StringStream.str());
 	AddData<bool>(PlayerData::kAuthenticated, false);
-}
-
-CPlayer::~CPlayer()
-{
 }
 
 void CPlayer::AttachCameraToObject(int ObjectID)
@@ -108,6 +104,7 @@ void CPlayer::OnInserted(std::shared_ptr<CResult> Result)
 
 void CPlayer::OnSpawn()
 {
+	SetPosition(1743.0f, -1862.0f, 13.6f);
 }
 
 const std::string CPlayer::GetEmail() const
@@ -115,14 +112,19 @@ const std::string CPlayer::GetEmail() const
 	return GetData<std::string>(PlayerData::kEmail);
 }
 
-uint16_t CPlayer::GetGameID() const
+const uint16_t CPlayer::GetGameID() const
 {
 	return GetData<uint16_t>(PlayerData::kGameID);
 }
 
-uint64_t CPlayer::GetMySQLID() const
+const uint64_t CPlayer::GetMySQLID() const
 {
 	return GetData<uint64_t>(PlayerData::kMySQLID);
+}
+
+const std::shared_ptr<CVehicle> CPlayer::GetVehicle() const
+{
+	return CVehicle::Get(static_cast<uint16_t>(sampgdk::GetPlayerVehicleID(GetGameID())));
 }
 
 const std::string CPlayer::GetName() const
@@ -140,12 +142,22 @@ const PlayerSex CPlayer::GetSex() const
 	return GetData<PlayerSex>(PlayerData::kSex);
 }
 
-bool CPlayer::IsAuthenticated() const
+const bool CPlayer::IsAuthenticated() const
 {
 	return GetData<bool>(PlayerData::kAuthenticated);
 }
 
-bool CPlayer::Kick() const
+const bool CPlayer::IsInVehicle() const
+{
+	return sampgdk::IsPlayerInAnyVehicle(GetGameID()) && CVehicle::Contains(sampgdk::GetPlayerVehicleID(GetGameID())) == true;
+}
+
+const bool CPlayer::IsInVehicle(uint16_t VehicleID) const
+{
+	return sampgdk::IsPlayerInVehicle(GetGameID(), VehicleID) && CVehicle::Contains(VehicleID) == true;
+}
+
+const bool CPlayer::Kick() const
 {
 	return sampgdk::Kick(GetGameID());
 }
@@ -159,7 +171,7 @@ bool CPlayer::Spawn()
 {
 	if (GetData<bool>(PlayerData::kSpectating) == true)
 	{
-		return ToggleSpectating(false);
+		ToggleSpectating(false);
 	}
 
 	return sampgdk::SpawnPlayer(GetGameID());

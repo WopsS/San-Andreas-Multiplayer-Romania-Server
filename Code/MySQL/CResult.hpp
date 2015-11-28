@@ -11,8 +11,8 @@ class CResult
 {
 public:
 
-	CResult();
-	~CResult();
+	CResult() = default;
+	~CResult() = default;
 
 	inline const ULONG GetAffectedRows() const
 	{

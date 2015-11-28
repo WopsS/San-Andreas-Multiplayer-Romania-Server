@@ -5,10 +5,6 @@ CDialog::CDialog(dialogfunction_t Function)
 {
 }
 
-CDialog::~CDialog()
-{
-}
-
 const DialogID CDialog::GetID() const
 {
 	return GetData<DialogID>(DialogData::kID);

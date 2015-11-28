@@ -3,6 +3,7 @@
 #include <mysql.h>
 #include <Command/CCommands.hpp>
 #include <Dialog/CDialogs.hpp>
+#include <Key/CKeys.hpp>
 #include <Log/CLog.hpp>
 #include <MySQL/CMySQL.hpp>
 #include <Player/CPlayer.hpp>
@@ -104,6 +105,18 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int PlayerID)
 	if (Player != nullptr)
 	{
 		Player->OnSpawn();
+	}
+
+	return true;
+}
+
+PLUGIN_EXPORT bool PLUGIN_CALL  OnPlayerKeyStateChange(int PlayerID, int NewKeys, int OldKeys)
+{
+	auto Player = CPlayer::Get(PlayerID);
+
+	if (Player != nullptr)
+	{
+		CKeys::GetInstance()->OnPresses(Player, NewKeys, OldKeys);
 	}
 
 	return true;

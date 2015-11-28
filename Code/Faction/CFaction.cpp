@@ -1,25 +1,25 @@
-#include <Business/CBusiness.hpp>
+#include <Faction/CFaction.hpp>
 
 #include <Base/CPoint.hpp>
 #include <Utilities/Utils.hpp>
 
-CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
+CFaction::CFaction(uint16_t ID, std::shared_ptr<CResult> Result)
 {
 	// Let's do that because the result vector is from index 0.
 	ID--;
 
-	auto Length = static_cast<size_t>(BusinessData::kEndMySQL);
+	auto Length = static_cast<size_t>(FactionData::kEndMySQL);
 
 	for (size_t i = 0; i < Length; i++)
 	{
-		auto Index = static_cast<BusinessData>(i);
+		auto Index = static_cast<FactionData>(i);
 		auto Value = Result->GetRowData(ID, Index);
 
-		if (Index == BusinessData::kID || Index == BusinessData::kOwnerID)
+		if (Index == FactionData::kID)
 		{
 			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}
-		else if (Index == BusinessData::kEnterance || Index == BusinessData::kExit)
+		else if (Index == FactionData::kEnterance || Index == FactionData::kExit)
 		{
 			auto X = std::stof(Result->GetRowData(ID, i++));
 			auto Y = std::stof(Result->GetRowData(ID, i++));
@@ -49,12 +49,7 @@ CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
 	}
 }
 
-const uint16_t CBusiness::GetID() const
+const std::string CFaction::GetName() const
 {
-	return GetData<uint16_t>(BusinessData::kID);
-}
-
-const uint64_t CBusiness::GetOwnerID() const
-{
-	return GetData<uint64_t>(BusinessData::kOwnerID);
+	return GetData<std::string>(FactionData::kName);
 }

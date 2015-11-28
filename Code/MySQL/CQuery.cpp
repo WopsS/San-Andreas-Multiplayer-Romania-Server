@@ -7,10 +7,6 @@ CQuery::CQuery(const QueryType& Type, const std::string& Query, std::initializer
 {
 }
 
-CQuery::~CQuery()
-{
-}
-
 const char* CQuery::c_str() const
 {
 	return m_query.c_str();

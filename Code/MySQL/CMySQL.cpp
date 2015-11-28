@@ -5,10 +5,6 @@ CMySQL::CMySQL()
 {
 }
 
-CMySQL::~CMySQL()
-{
-}
-
 void CMySQL::ProcessCallbacks()
 {
 	m_connectionPool->ProcessCallbacks();

@@ -3,16 +3,13 @@
 #include <set>
 #include <vector>
 
+#include <Colors.hpp>
 #include <Utilities/Utils.hpp>
 
 CCommands::CCommands()
 {
 	Register("test", {}, std::string("sifsp"), Bind(&CCommands::Test, this));
-	Register("test2", {}, Bind(&CCommands::Test2, this));
-}
-
-CCommands::~CCommands()
-{
+	Register("engine", {}, Bind(&CCommands::Engine, this));
 }
 
 void CCommands::Register(const std::string & Name, std::initializer_list<std::string> Allias, commandfunction_t Function)
@@ -70,13 +67,10 @@ bool CCommands::Execute(std::shared_ptr<CPlayer> Player, const std::string& Comm
 				// Note: If a player type '/command     ' it will take the spaces like a parameters, so with that we will prevent this thing and we guarantee the parameter will not be empty.
 			}
 
-			auto CommandPlaceHolders = std::get<0>(i.second);
-			auto Format = std::get<1>(i.second);
-
 			// Rebind the command with the new arguments.
-			auto CommandFunction = std::bind(CommandPlaceHolders, Player, std::make_shared<CCommandParameters>(Format, Parameters));
+			auto CommandFunction = std::bind(std::get<0>(i.second), Player, std::make_shared<CCommandParameters>(std::get<1>(i.second), Parameters));
 
-			// Call the command;
+			// Call the command's function.
 			CommandFunction();
 
 			return true;
@@ -113,8 +107,18 @@ void CCommands::Test(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandPa
 		Parameters->GetData<std::string>(0).c_str(), Parameters->GetData<int>(1), Parameters->GetData<float>(2), Parameters->GetData<std::string>(3).c_str(), TargetPlayer->GetName().c_str());
 }
 
-void CCommands::Test2(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters)
+void CCommands::Engine(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters)
 {
-	Player->SendMessage(0xFFFFFFFF, "CCommands::Test2");
-	sampgdk::logprintf("CCommands::Test2");
+	if (Player->IsInVehicle() == false)
+	{
+		Player->SendMessage(Colors::kWhite, "* You are not in a vehicle.");
+		return;
+	}
+
+	auto Vehicle = Player->GetVehicle();
+	auto CurrentState = Vehicle->GetParameter(VehicleParameters::kEngine);
+
+	// TODO: Show message on range.
+	Vehicle->SetParameter(VehicleParameters::kEngine, !CurrentState);
+	Player->SendMessage(Colors::kWhite, "* You {} the engine of the vehicle.", CurrentState == false ? "started" : "stopped");
 }

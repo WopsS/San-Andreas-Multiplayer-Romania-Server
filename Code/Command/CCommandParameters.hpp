@@ -19,7 +19,7 @@ class CCommandParameters : public CData<size_t>
 public:
 
 	CCommandParameters(const std::string& Format, std::string& Parameters);
-	~CCommandParameters();
+	~CCommandParameters() = default;
 
 	bool Valid();
 

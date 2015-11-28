@@ -7,7 +7,7 @@ class CParameter
 public:
 
 	CParameter(const std::string& Name, const std::string& Value);
-	~CParameter();
+	~CParameter() = default;
 
 	inline const std::string& GetName() const
 	{

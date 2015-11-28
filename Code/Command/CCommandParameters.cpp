@@ -90,10 +90,6 @@ CCommandParameters::CCommandParameters(const std::string& Format, std::string& P
 	}
 }
 
-CCommandParameters::~CCommandParameters()
-{
-}
-
 bool CCommandParameters::Valid()
 {
 	return m_requiredParameters == GetSize();

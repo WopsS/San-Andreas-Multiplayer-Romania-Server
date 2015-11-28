@@ -26,4 +26,8 @@ namespace MapIcon
 	const bool Destroy(uint32_t ID);
 
 	const bool IsValid(uint32_t ID);
+
+	/* Unimplemented:
+		* native STREAMER_TAG_MAP_ICON CreateDynamicMapIconEx(Float:x, Float:y, Float:z, type, color, style = MAPICON_LOCAL, Float:streamdistance = STREAMER_MAP_ICON_SD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
+	*/
 }

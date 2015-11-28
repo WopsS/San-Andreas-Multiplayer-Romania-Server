@@ -12,7 +12,7 @@ class CDialog : public CData<DialogData>
 public:
 
 	CDialog(dialogfunction_t Function);
-	~CDialog();
+	~CDialog() = default;
 
 	const DialogID GetID() const;
 

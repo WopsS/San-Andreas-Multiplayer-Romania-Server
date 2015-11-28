@@ -23,7 +23,7 @@ private:
 	friend class CSingleton<CCommands>;
 
 	CCommands();
-	~CCommands();
+	~CCommands() = default;
 
 	void Register(const std::string& Name, std::initializer_list<std::string> Allias, commandfunction_t Function);
 	void Register(const std::string& Name, std::initializer_list<std::string> Allias, const std::string& Format, commandfunction_t Function);
@@ -35,7 +35,8 @@ private:
 	}
 
 	void Test(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters);
-	void Test2(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters);
+
+	void Engine(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters);
 
 	std::map<std::vector<std::string>, std::tuple<commandfunction_t, std::string>> m_commands;
 };

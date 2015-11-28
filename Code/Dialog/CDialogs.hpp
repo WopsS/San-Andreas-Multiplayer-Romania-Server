@@ -26,7 +26,7 @@ private:
 	friend class CSingleton<CDialogs>;
 
 	CDialogs();
-	~CDialogs();
+	~CDialogs() = default;
 
 	void Add(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1 = "Close", const std::string& Button2 = "", dialogfunction_t Function = nullptr);
 	
