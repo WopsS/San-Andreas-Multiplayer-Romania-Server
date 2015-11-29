@@ -1,5 +1,9 @@
 #include <House/CHouse.hpp>
 
+#include <Streamer/Pickup.hpp>
+#include <Streamer/MapIcon.hpp>
+#include <Streamer/TextLabel.hpp>
+
 #include <Base/CPoint.hpp>
 #include <Utilities/Utils.hpp>
 
@@ -19,7 +23,7 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 		{
 			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}
-		else if (Index == HouseData::kEntrance || Index== HouseData::kExit)
+		else if (Index == HouseData::kEntrance || Index == HouseData::kExit)
 		{
 			auto X = std::stof(Result->GetRowData(ID, i++));
 			auto Y = std::stof(Result->GetRowData(ID, i++));
@@ -47,6 +51,19 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 			}
 		}
 	}
+
+	auto OwnerID = GetData<uint64_t>(HouseData::kOwnerID);
+	auto Position = GetData<Point3D<float>>(HouseData::kEntrance);
+	auto Position2 = GetData<Point3D<float>>(HouseData::kExit);
+
+	MapIcon::Create(Point3D<float>(Position.X, Position.Y, Position.Z), 31);
+	Pickup::Create(19470, OwnerID == 0 ? 2 : 2, Point3D<float>(Position.X, Position.Y, Position.Z));
+	TextLabel::Create(OwnerID == 0 ? "Casa de vanzare!" : "Casa cumparata", 0xFFFFFF, Point3D<float>(Position.X, Position.Y, Position.Z));
+
+	Pickup::Create(1318, OwnerID == 0 ? 23 : 23, Point3D<float>(Position2.X, Position2.Y, Position2.Z));
+
+	TextLabel::Create("Exit" , 0xFFFFFF, Point3D<float>(Position2.X, Position2.Y, Position2.Z));
+
 }
 
 const uint16_t CHouse::GetID() const

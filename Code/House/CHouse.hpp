@@ -18,4 +18,8 @@ public:
 	const uint16_t GetID() const;
 
 	const uint64_t GetOwnerID() const;
+
+private:
+
+	friend class CKeys;
 };

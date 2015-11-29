@@ -4,6 +4,8 @@
 #include <vector>
 
 #include <Colors.hpp>
+#include <Base/CPoint.hpp>
+#include <House/CHouse.hpp>
 #include <Utilities/Utils.hpp>
 
 CCommands::CCommands()
@@ -122,3 +124,5 @@ void CCommands::Engine(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommand
 	Vehicle->SetParameter(VehicleParameters::kEngine, !CurrentState);
 	Player->SendMessage(Colors::kWhite, "* You {} the engine of the vehicle.", CurrentState == false ? "started" : "stopped");
 }
+
+

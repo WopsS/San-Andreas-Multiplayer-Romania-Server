@@ -1,4 +1,8 @@
 #include <Key/CKeys.hpp>
+#include <Base/Cpoint.hpp>
+#include <Base/CData.hpp>
+#include <House/CHouse.hpp>
+#include <Business/CBusiness.hpp>
 
 CKeys::CKeys()
 {
@@ -54,4 +58,89 @@ void CKeys::Test2(std::shared_ptr<CPlayer> Player)
 void CKeys::Test3(std::shared_ptr<CPlayer> Player)
 {
 	Player->SendMessage(Colors::kWhite, "Test3 - Old key");
+}
+
+void CKeys::Enter(std::shared_ptr<CPlayer> Player)
+{
+	std::shared_ptr<CHouse> House = nullptr;
+
+	for (auto& i : CHouse::GetList())
+	{
+		auto Position = House->GetData<Point3D<float>>(HouseData::kEntrance);
+		auto Lock = House->GetData<uint16_t>(HouseData::kLock);
+
+		House = i.second;
+
+		if (Lock == 1)
+		{
+			Player->SendMessage(0xFFFFFF, "This door is lock!");
+		}
+		if (Player->IsInRangeOfPoint(Position, 2.0f))
+		{
+			Player->SetPosition(Position);
+		}
+	}
+
+	std::shared_ptr<CBusiness> Bizz = nullptr;
+
+	for (auto& i : CBusiness::GetList())
+	{
+		auto Position = Bizz->GetData<Point3D<float>>(BusinessData::kEnterance);
+		auto Lock = Bizz->GetData<uint16_t>(BusinessData::kLock);
+
+		Bizz = i.second;
+
+		if (Lock == 1)
+		{
+			Player->SendMessage(0xFFFFFF, "This door is lock!");
+		}
+		if (Player->IsInRangeOfPoint(Position, 2.0f))
+		{
+			Player->SetPosition(Position);
+		}
+	}
+}
+
+void CKeys::Exit(std::shared_ptr<CPlayer> Player)
+{
+	std::shared_ptr<CHouse> House = nullptr;
+
+	for (auto& i : CHouse::GetList())
+	{
+		House = i.second;
+
+		auto Position = House->GetData<Point3D<float>>(HouseData::kExit);
+
+		if (Player->IsInRangeOfPoint(Position))
+		{
+			if (House->GetData<uint16_t>(HouseData::kLock) == 1)
+			{
+				Player->SendMessage(0xFFFFFF, "This door is lock!");
+			}
+			else
+			{
+				Player->SetPosition(Position);
+			}
+
+			return;
+		}
+	}
+	std::shared_ptr<CBusiness> Business = nullptr;
+
+	for (auto& i : CBusiness::GetList())
+	{
+		Business = i.second;
+
+		auto Position = Business->GetData<Point3D<float>>(BusinessData::kExit);
+		auto Lock = Business->GetData<uint16_t>(BusinessData::kLock);
+
+		if (Lock == 1)
+		{
+			Player->SendMessage(0xFFFFFF, "This door is lock!");
+		}
+		if (Player->IsInRangeOfPoint(Position, 2.0f))
+		{
+			Player->SetPosition(Position);
+		}
+	}
 }

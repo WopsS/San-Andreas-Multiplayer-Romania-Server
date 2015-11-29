@@ -1,5 +1,9 @@
 #include <Business/CBusiness.hpp>
 
+#include <Streamer/Pickup.hpp>
+#include <Streamer/TextLabel.hpp>
+#include <Streamer/MapIcon.hpp>
+
 #include <Base/CPoint.hpp>
 #include <Utilities/Utils.hpp>
 
@@ -47,6 +51,25 @@ CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
 			}
 		}
 	}
+	
+	auto Entrance = GetData<Point3D<float>>(BusinessData::kEnterance);
+	auto Exit = GetData<Point3D<float>>(BusinessData::kExit);
+	auto OwnerID = GetData<uint16_t>(BusinessData::kOwnerID);
+
+	Pickup::Create(1239, 23, Entrance);
+
+	TextLabel::Create(OwnerID == 0 ? "Bizz de vanzare" : "Bizz cumarat", 0xFFFFFF, Entrance);
+
+	uint16_t IconID = 0;
+
+	switch (GetData<BusinessType>(BusinessData::kType))
+	{
+		case BusinessType::kBank:
+		{
+			IconID = 32;
+		}
+	}
+	SetData<uint32_t>(BusinessData::kIconID, MapIcon::Create(Entrance, IconID));
 }
 
 const uint16_t CBusiness::GetID() const

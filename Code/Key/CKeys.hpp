@@ -6,6 +6,7 @@
 
 #include <Base/CSingleton.hpp>
 #include <Player/CPlayer.hpp>
+#include <House/CHouse.hpp>
 
 #define KEY_NONE 0
 
@@ -36,5 +37,8 @@ private:
 
 	void Test3(std::shared_ptr<CPlayer> Player);
 
+	void Enter(std::shared_ptr<CPlayer> Player);
+	void Exit(std::shared_ptr<CPlayer> Player);
+	
 	std::map<int, std::tuple<bool, keyfunction_t, int>> m_keys;
 };

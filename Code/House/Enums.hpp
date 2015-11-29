@@ -11,6 +11,6 @@ enum class HouseData : uint16_t
 	kPrice = kExit + 3,
 	kInterior,
 	kVirtualWorld,
-	
+	kLock,
 	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
 };
