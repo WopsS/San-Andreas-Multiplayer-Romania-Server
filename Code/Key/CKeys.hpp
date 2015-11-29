@@ -31,13 +31,8 @@ private:
 		return std::bind(Function, Class, std::placeholders::_1);
 	}
 
-	void Test1(std::shared_ptr<CPlayer> Player);
-
-	void Test2(std::shared_ptr<CPlayer> Player);
-
-	void Test3(std::shared_ptr<CPlayer> Player);
-
 	void Enter(std::shared_ptr<CPlayer> Player);
+
 	void Exit(std::shared_ptr<CPlayer> Player);
 	
 	std::map<int, std::tuple<bool, keyfunction_t, int>> m_keys;

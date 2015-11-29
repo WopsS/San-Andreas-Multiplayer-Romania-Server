@@ -187,7 +187,7 @@ bool CPlayer::Spawn()
 {
 	if (GetData<bool>(PlayerData::kSpectating) == true)
 	{
-		ToggleSpectating(false);
+		return ToggleSpectating(false);
 	}
 
 	return sampgdk::SpawnPlayer(GetGameID());

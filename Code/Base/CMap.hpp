@@ -4,8 +4,6 @@
 #include <memory>
 #include <unordered_map>
 
-#include <Base/CAny.hpp>
-
 /// <summary>
 /// Base class to store an undefined amount of objects with the same type.
 /// </summary>

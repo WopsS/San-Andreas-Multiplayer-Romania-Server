@@ -38,7 +38,5 @@ private:
 
 	void Engine(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters);
 
-	void Enter(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters);
-
 	std::map<std::vector<std::string>, std::tuple<commandfunction_t, std::string>> m_commands;
 };

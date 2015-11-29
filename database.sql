@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2015 at 08:32 PM
+-- Generation Time: Nov 29, 2015 at 08:04 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -29,16 +29,40 @@ SET time_zone = "+00:00";
 CREATE TABLE `businesses` (
   `ID` int(11) NOT NULL,
   `OwnerID` int(11) DEFAULT NULL,
+  `Name` varchar(128) NOT NULL,
+  `Type` int(11) NOT NULL,
   `EntranceX` float NOT NULL,
   `EntranceY` float NOT NULL,
   `EntranceZ` float NOT NULL,
   `ExitX` float NOT NULL,
   `ExitY` float NOT NULL,
   `ExitZ` float NOT NULL,
-  `Price` int(11) NOT NULL,
   `Interior` int(11) NOT NULL,
-  `VirtualWorld` int(11) NOT NULL
+  `VirtualWorld` int(11) NOT NULL,
+  `Locked` tinyint(1) NOT NULL DEFAULT '0',
+  `Price` int(11) NOT NULL,
+  `Level` tinyint(11) NOT NULL,
+  `Payout` int(11) NOT NULL DEFAULT '50'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `business_types`
+--
+
+CREATE TABLE `business_types` (
+  `ID` int(11) NOT NULL,
+  `Name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `business_types`
+--
+
+INSERT INTO `business_types` (`ID`, `Name`) VALUES
+(1, 'Bank'),
+(2, 'Gun shop');
 
 -- --------------------------------------------------------
 
@@ -90,9 +114,11 @@ CREATE TABLE `houses` (
   `ExitX` float NOT NULL,
   `ExitY` float NOT NULL,
   `ExitZ` float NOT NULL,
-  `Price` int(11) NOT NULL,
   `Interior` int(11) NOT NULL,
-  `VirtualWorld` int(11) NOT NULL
+  `VirtualWorld` int(11) NOT NULL,
+  `Locked` tinyint(1) NOT NULL DEFAULT '0',
+  `Price` int(11) NOT NULL,
+  `Level` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -131,7 +157,14 @@ CREATE TABLE `player_vehicles` (
 --
 ALTER TABLE `businesses`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `OwnerID` (`OwnerID`);
+  ADD KEY `OwnerID` (`OwnerID`),
+  ADD KEY `Type` (`Type`);
+
+--
+-- Indexes for table `business_types`
+--
+ALTER TABLE `business_types`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `factions`
@@ -176,6 +209,11 @@ ALTER TABLE `player_vehicles`
 ALTER TABLE `businesses`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `business_types`
+--
+ALTER TABLE `business_types`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `factions`
 --
 ALTER TABLE `factions`
@@ -208,7 +246,8 @@ ALTER TABLE `player_vehicles`
 -- Constraints for table `businesses`
 --
 ALTER TABLE `businesses`
-  ADD CONSTRAINT `businesses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `businesses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `businesses_ibfk_2` FOREIGN KEY (`Type`) REFERENCES `business_types` (`ID`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `faction_vehicles`

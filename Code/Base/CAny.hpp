@@ -27,14 +27,14 @@ public:
 	~CAny() { };
 
 	/// <summary>
-	/// Get value for the object.
+	/// Get value of the object.
 	/// </summary>
 	/// <returns>Returns value of the object.</returns>
 	inline const T Get() const
 	{
 		return m_value;
 	}
-
+		
 	/// <summary>
 	/// Set value for the object.
 	/// </summary>

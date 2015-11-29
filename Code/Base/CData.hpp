@@ -21,7 +21,7 @@ public:
 	/// </summary>
 	/// <param name="Index">Index for the data.</param>
 	/// <param name="Value">Value for the data.</param>
-	/// <returns>Returns true if the data is added with success, false if it already exists.</returns>
+	/// <returns>Returns true if the data is added with success, false if already exists.</returns>
 	template<typename T>
 	inline const bool AddData(TK Index, T Value)
 	{
@@ -36,22 +36,11 @@ public:
 		return true;
 	}
 
-	inline const long Test(TK Index)
-	{
-		// Check if the key already exists.
-		if (m_data.find(Index) == m_data.end())
-		{
-			return 0;
-		}
-
-		return m_data.at(Index).use_count();
-	}
-
 	/// <summary>
-	/// Get the object value from the list.
+	/// Get the value from the list.
 	/// </summary>
 	/// <param name="Index">Index for the data.</param>
-	/// <returns>Returns value of the data if it exist, if it doesn't exist returns a new value of specific type.</returns>
+	/// <returns>Returns value of the data if exists, if it doesn't exist returns a new value of specific type.</returns>
 	template<typename T>
 	inline const T GetData(TK Index) const
 	{
@@ -85,12 +74,14 @@ public:
 		// Check if the key exists, if not add it.
 		if (m_data.find(Index) == m_data.end())
 		{
-			AddData(Index, T());
+			AddData(Index, Value);
 		}
-
-		// Set the new value.
-		auto Any = dynamic_cast<CAny<T>*>(m_data.at(Index).get());
-		Any->Set(Value);
+		else
+		{
+			// Set the new value.
+			auto Any = dynamic_cast<CAny<T>*>(m_data.at(Index).get());
+			Any->Set(Value);
+		}
 	}
 
 private:

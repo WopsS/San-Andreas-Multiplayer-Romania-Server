@@ -8,9 +8,15 @@ enum class HouseData : uint16_t
 	kOwnerID,
 	kEntrance,
 	kExit = kEntrance + 3,
-	kPrice = kExit + 3,
-	kInterior,
+	kInterior = kExit + 3,
 	kVirtualWorld,
-	kLock,
+	kLocked,
+	kPrice,
+	kLevel,
+
 	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
+
+	kMapIconID,
+	kPickupID,
+	kTextLabelID
 };

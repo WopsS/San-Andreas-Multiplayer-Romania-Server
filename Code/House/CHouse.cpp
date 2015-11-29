@@ -75,3 +75,36 @@ const uint64_t CHouse::GetOwnerID() const
 {
 	return GetData<uint64_t>(HouseData::kOwnerID);
 }
+
+void CHouse::Manage()
+{
+	uint16_t MapIconID;
+	std::string Text;
+
+	// TODO: Create a function to format the number with comma, eg.: 1000 => 1,000.
+
+	if (GetData<uint64_t>(HouseData::kOwnerID) == 0)
+	{
+		Text = fmt::format("{FFFFFF}This house is for sale\n{0F90FA}Price: {FFFFFF}${}\n{0F90FA}Level: {FFFFFF}{}\n{0F90FA}to buy this house type /COMMAND_HERE.",
+			GetData<uint64_t>(HouseData::kID), GetData<uint64_t>(HouseData::kPrice), GetData<uint64_t>(HouseData::kLevel));
+
+		MapIconID = 31;
+	}
+	else
+	{
+		// TODO: Check if the house is locked and set a specific message, also check if it can be rented.
+		Text = fmt::format("{FFFFFF}House %i\n{0F90FA}Owner: {FFFFFF}%s\n{0F90FA}Level: {FFFFFF}%i", GetData<uint64_t>(HouseData::kID), GetData<uint64_t>(HouseData::kOwnerID));
+
+		MapIconID = 32;
+	}
+
+	auto Entrance = GetData<Point3D<float>>(HouseData::kEntrance);
+	auto Exit = GetData<Point3D<float>>(HouseData::kExit);
+
+	SetData<uint32_t>(HouseData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
+	SetData<uint32_t>(HouseData::kPickupID, Pickup::Create(1239, 1, Entrance));
+	SetData<uint32_t>(HouseData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
+
+	// Create exit pickup.
+	Pickup::Create(1239, 1, Exit);
+}

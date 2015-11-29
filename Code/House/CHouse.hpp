@@ -22,4 +22,6 @@ public:
 private:
 
 	friend class CKeys;
+
+	void Manage();
 };

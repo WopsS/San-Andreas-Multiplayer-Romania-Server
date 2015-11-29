@@ -5,7 +5,7 @@
 
 #include <Base/CData.hpp>
 #include <Base/CMap.hpp>
-#include <Faction/Enum.hpp>
+#include <Faction/Enums.hpp>
 #include <MySQL/CResult.hpp>
 
 class CFaction : public CMap<uint16_t, CFaction>, private CData<FactionData>

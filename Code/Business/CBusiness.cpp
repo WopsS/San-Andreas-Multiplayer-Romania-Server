@@ -1,10 +1,9 @@
 #include <Business/CBusiness.hpp>
 
+#include <Base/CPoint.hpp>
+#include <Streamer/MapIcon.hpp>
 #include <Streamer/Pickup.hpp>
 #include <Streamer/TextLabel.hpp>
-#include <Streamer/MapIcon.hpp>
-
-#include <Base/CPoint.hpp>
 #include <Utilities/Utils.hpp>
 
 CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
@@ -23,7 +22,11 @@ CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
 		{
 			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}
-		else if (Index == BusinessData::kEnterance || Index == BusinessData::kExit)
+		else if (Index == BusinessData::kType)
+		{
+			SetData<BusinessType>(Index, static_cast<BusinessType>(std::stoi(Value)));
+		}
+		else if (Index == BusinessData::kEntrance || Index == BusinessData::kExit)
 		{
 			auto X = std::stof(Result->GetRowData(ID, i++));
 			auto Y = std::stof(Result->GetRowData(ID, i++));
@@ -52,24 +55,7 @@ CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
 		}
 	}
 	
-	auto Entrance = GetData<Point3D<float>>(BusinessData::kEnterance);
-	auto Exit = GetData<Point3D<float>>(BusinessData::kExit);
-	auto OwnerID = GetData<uint16_t>(BusinessData::kOwnerID);
-
-	Pickup::Create(1239, 23, Entrance);
-
-	TextLabel::Create(OwnerID == 0 ? "Bizz de vanzare" : "Bizz cumarat", 0xFFFFFF, Entrance);
-
-	uint16_t IconID = 0;
-
-	switch (GetData<BusinessType>(BusinessData::kType))
-	{
-		case BusinessType::kBank:
-		{
-			IconID = 32;
-		}
-	}
-	SetData<uint32_t>(BusinessData::kIconID, MapIcon::Create(Entrance, IconID));
+	Manage();
 }
 
 const uint16_t CBusiness::GetID() const
@@ -80,4 +66,54 @@ const uint16_t CBusiness::GetID() const
 const uint64_t CBusiness::GetOwnerID() const
 {
 	return GetData<uint64_t>(BusinessData::kOwnerID);
+}
+
+void CBusiness::Manage()
+{
+	uint16_t MapIconID;
+
+	switch (GetData<BusinessType>(BusinessData::kType))
+	{
+		case BusinessType::kBank:
+		{
+			MapIconID = 52;
+			break;
+		}
+		case BusinessType::kGunShop:
+		{
+			MapIconID = 6;
+			break;
+		}
+		default:
+		{
+			MapIconID = 36;
+			break;
+		}
+	}
+
+	std::string Text;
+
+	// TODO: Create a function to format the number with comma, eg.: 1000 => 1,000.
+
+	if (GetData<uint64_t>(BusinessData::kOwnerID) == 0)
+	{
+		Text = fmt::format("Business {}\nThis business is for sale\nName: {FFFFFF}{}\n{0F90FA}Price: {FFFFFF}${}\n{0F90FA}Level: {FFFFFF}{}\n{0F90FA}to buy this business type /COMMAND_HERE",
+			GetData<uint64_t>(BusinessData::kID), GetData<uint64_t>(BusinessData::kName), GetData<uint64_t>(BusinessData::kPrice), GetData<uint64_t>(BusinessData::kLevel));
+	}
+	else
+	{
+		// TODO: Check if the business is locked and set a specific message.
+		Text = fmt::format("Business {}\n{0F90FA}Name: {FFFFFF}{}\n{0F90FA}Owner: {FFFFFF}{}\n{0F90FA}Fee: {FFFFFF}${}", GetData<uint64_t>(BusinessData::kID), GetData<uint64_t>(BusinessData::kName), 
+			GetData<uint64_t>(BusinessData::kOwnerID), GetData<uint64_t>(BusinessData::kPayout));
+	}
+
+	auto Entrance = GetData<Point3D<float>>(BusinessData::kEntrance);
+	auto Exit = GetData<Point3D<float>>(BusinessData::kExit);
+
+	SetData<uint32_t>(BusinessData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
+	SetData<uint32_t>(BusinessData::kPickupID, Pickup::Create(1239, 1, Entrance));
+	SetData<uint32_t>(BusinessData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
+
+	// Create exit pickup.
+	Pickup::Create(1239, 1, Exit);
 }
