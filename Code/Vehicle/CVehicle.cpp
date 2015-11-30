@@ -18,6 +18,24 @@ CVehicle::CVehicle(uint16_t ID, std::shared_ptr<CResult> Result)
 		{
 			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}
+		else if (Index == VehicleData::kModel)
+		{
+			SetData<uint16_t>(Index, static_cast<uint16_t>(std::stoi(Value)));
+		}
+		else if (Index == VehicleData::kPosition)
+		{
+			auto X = std::stof(Result->GetRowData(ID, i++));
+			auto Y = std::stof(Result->GetRowData(ID, i++));
+			auto Z = std::stof(Result->GetRowData(ID, i++));
+			auto Rotation = std::stof(Result->GetRowData(ID, i));
+
+			SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
+			SetData<float>(VehicleData::kRotation, Rotation);
+		}
+		else if (Index == VehicleData::kSiren)
+		{
+			SetData<bool>(Index, !!std::stoi(Result->GetRowData(ID, i++)));
+		}
 		else
 		{
 			auto IsFloat = Utils::IsFloat(Value);
@@ -38,6 +56,11 @@ CVehicle::CVehicle(uint16_t ID, std::shared_ptr<CResult> Result)
 			}
 		}
 	}
+
+	auto Position = GetData<Point3D<float>>(VehicleData::kPosition);
+
+	SetData<uint16_t>(VehicleData::kGameID, sampgdk::CreateVehicle(GetData<uint16_t>(VehicleData::kModel), Position.X, Position.Y, Position.Z, GetData<float>(VehicleData::kRotation), 
+		GetData<uint32_t>(VehicleData::kColor1), GetData<uint32_t>(VehicleData::kColor2), GetData<uint32_t>(VehicleData::kRespawnTime), GetData<bool>(VehicleData::kSiren)));
 }
 
 CVehicle::CVehicle(int Model, const Point3D<float>& Position, float Rotation, int Color1, int Color2, int RespawnTine, bool Siren)
