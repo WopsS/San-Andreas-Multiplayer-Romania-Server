@@ -11,7 +11,7 @@ CConnectionPool::CConnectionPool(uint32_t Size)
 
 	for (uint32_t i = 1; i <= Size; i++)
 	{
-		Node->Connection = std::make_shared<CConnection>("127.0.0.1", "sampromania", "root", "");
+		Node->Connection = std::make_shared<CConnection>("sa-mp.ro", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
 		Node->Next = (i + 1) > Size ? m_normalNode : std::make_shared<ConnectionNode>();
 
 		Node = Node->Next;
@@ -23,7 +23,7 @@ CConnectionPool::CConnectionPool(uint32_t Size)
 
 	for (uint32_t i = 1; i <= Size; i++)
 	{
-		Node->Connection = std::make_shared<CConnection>("127.0.0.1", "sampromania", "root", "");
+		Node->Connection = std::make_shared<CConnection>("sa-mp.ro", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
 		Node->Next = (i + 1) > Size ? m_logNode : std::make_shared<ConnectionNode>();
 
 		Node = Node->Next;

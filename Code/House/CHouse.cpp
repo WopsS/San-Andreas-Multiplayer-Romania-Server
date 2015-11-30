@@ -33,7 +33,7 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 		}
 		if (Index == HouseData::kRentPrice)
 		{
-			SetData<uint16_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+			SetData<uint16_t>(Index, Value.length() == 0 ? 0 : std::stoi(Value));
 		}
 		else
 		{
