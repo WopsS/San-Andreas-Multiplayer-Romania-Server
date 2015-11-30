@@ -3,13 +3,12 @@
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
-#include <random>
 
 #include <Utilities/SHA256.hpp>
 
 const std::string Encryption::Encrypt(const std::string& Data, const std::string& Salt)
 {
-	size_t SaltLength = Salt.length(), Position = 8, Addition = 6;
+	size_t SaltLength = Salt.length(), Position = 8, OriginalAddition = 6, Addition = 6;
 
 	std::string Result(Salt);
 
@@ -26,11 +25,8 @@ const std::string Encryption::Encrypt(const std::string& Data, const std::string
 
 			if (Addition <= 0)
 			{
-				std::random_device RandomDevice;
-				std::default_random_engine RandomEngine(RandomDevice());
-				std::uniform_int_distribution<int> uniform_dist(5, 12);
-
-				Addition = uniform_dist(RandomEngine);
+				OriginalAddition++;
+				Addition = OriginalAddition;
 			}
 		}
 	}

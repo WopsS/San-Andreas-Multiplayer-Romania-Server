@@ -66,6 +66,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestClass(int PlayerID, int ClassID)
 
 	if (Player != nullptr)
 	{
+		sampgdk::SetPlayerCameraPos(PlayerID, 1500.7156f, -1778.1880f, 80.3080f);
+		sampgdk::SetPlayerCameraLookAt(PlayerID, 1500.7156f, -1778.1880f, 80.3080f);
+
 		// Set spawn info to prevent a 'temporary' ban for player if he is spawned at 0.0 coords.
 		sampgdk::SetSpawnInfo(PlayerID, NO_TEAM, 250, 1743.0f, -1862.0f, 13.6f, 0.0f, 0, 0, 0, 0, 0, 0);
 		Player->ToggleSpectating(true);

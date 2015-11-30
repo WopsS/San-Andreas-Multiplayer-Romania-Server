@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.0.2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 30 Noi 2015 la 17:40
--- Versiune server: 10.0.17-MariaDB
+-- Generation Time: Nov 30, 2015 at 06:20 PM
+-- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,12 +23,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structura de tabel pentru tabelul `businesses`
+-- Table structure for table `businesses`
 --
 
 CREATE TABLE `businesses` (
   `ID` int(11) NOT NULL,
   `OwnerID` int(11) DEFAULT NULL,
+  `Name` varchar(128) NOT NULL,
+  `Type` int(11) NOT NULL,
   `EntranceX` float NOT NULL,
   `EntranceY` float NOT NULL,
   `EntranceZ` float NOT NULL,
@@ -36,8 +38,8 @@ CREATE TABLE `businesses` (
   `ExitY` float NOT NULL,
   `ExitZ` float NOT NULL,
   `Interior` tinyint(11) NOT NULL,
-  `VirtualWorld` tinyint(11) NOT NULL,
-  `Locked` tinyint(11) NOT NULL,
+  `VirtualWorld` int(11) NOT NULL,
+  `Locked` tinyint(1) NOT NULL DEFAULT '0',
   `Price` int(11) NOT NULL,
   `Level` tinyint(11) NOT NULL,
   `Payout` int(11) NOT NULL DEFAULT '25'
@@ -46,18 +48,50 @@ CREATE TABLE `businesses` (
 -- --------------------------------------------------------
 
 --
--- Structura de tabel pentru tabelul `factions`
+-- Table structure for table `business_types`
 --
 
-CREATE TABLE `factions` (
+CREATE TABLE `business_types` (
   `ID` int(11) NOT NULL,
-  `Name` text NOT NULL
+  `Name` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `business_types`
+--
+
+INSERT INTO `business_types` (`ID`, `Name`) VALUES
+(1, 'Bank'),
+(2, 'Gun shop');
 
 -- --------------------------------------------------------
 
 --
--- Structura de tabel pentru tabelul `faction_vehicles`
+-- Table structure for table `factions`
+--
+
+CREATE TABLE `factions` (
+  `ID` int(11) NOT NULL,
+  `Name` text NOT NULL,
+  `EntranceX` float NOT NULL,
+  `EntranceY` float NOT NULL,
+  `EntranceZ` float NOT NULL,
+  `ExitX` float NOT NULL,
+  `ExitY` float NOT NULL,
+  `ExitZ` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `factions`
+--
+
+INSERT INTO `factions` (`ID`, `Name`, `EntranceX`, `EntranceY`, `EntranceZ`, `ExitX`, `ExitY`, `ExitZ`) VALUES
+(1, 'Los Santos Police Department', 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faction_vehicles`
 --
 
 CREATE TABLE `faction_vehicles` (
@@ -68,7 +102,7 @@ CREATE TABLE `faction_vehicles` (
 -- --------------------------------------------------------
 
 --
--- Structura de tabel pentru tabelul `houses`
+-- Table structure for table `houses`
 --
 
 CREATE TABLE `houses` (
@@ -81,17 +115,17 @@ CREATE TABLE `houses` (
   `ExitY` float NOT NULL,
   `ExitZ` float NOT NULL,
   `Interior` tinyint(11) NOT NULL,
-  `VirtualWorld` tinyint(11) NOT NULL,
-  `Lock` tinyint(11) NOT NULL,
+  `VirtualWorld` int(11) NOT NULL,
+  `Locked` tinyint(1) NOT NULL DEFAULT '0',
   `Price` int(11) NOT NULL,
-  `Level` tinyint(11) NOT NULL,
-  `RentPrice` int(11) NOT NULL DEFAULT '0'
+  `Level` tinyint(4) NOT NULL,
+  `RentPrice` smallint(6) NOT NULL DEFAULT '25'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Structura de tabel pentru tabelul `players`
+-- Table structure for table `players`
 --
 
 CREATE TABLE `players` (
@@ -101,22 +135,13 @@ CREATE TABLE `players` (
   `Salt` text NOT NULL,
   `Email` text NOT NULL,
   `Pin` text NOT NULL,
-  `Sex` tinyint(4) NOT NULL,
-  `Cash` int(11) NOT NULL DEFAULT '0',
-  `Account` int(11) NOT NULL DEFAULT '0'
+  `Sex` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Salvarea datelor din tabel `players`
---
-
-INSERT INTO `players` (`ID`, `Name`, `Password`, `Salt`, `Email`, `Pin`, `Sex`, `Cash`, `Account`) VALUES
-(1, 'WiDuAlK', 'd82eef184bd2edd4f4e37a32e48ab13a18a435b94f08e562747af987976de596', 'X6c7hcH4zkjBd8o5HgYPWWrgsn91Hfz9RV0N8C271AI4UhZtmcrsP0bDWBEU4O7GxHe7xeQ1I2kHrpntBcg5g', 'claudiu_sharingen@yahoo.com', '8e4a8b2be51350cea8db69db227ad2b54cf515c93632a49b5308bff4162eef47', 1, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Structura de tabel pentru tabelul `player_vehicles`
+-- Table structure for table `player_vehicles`
 --
 
 CREATE TABLE `player_vehicles` (
@@ -133,7 +158,14 @@ CREATE TABLE `player_vehicles` (
 --
 ALTER TABLE `businesses`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `OwnerID` (`OwnerID`);
+  ADD KEY `OwnerID` (`OwnerID`),
+  ADD KEY `Type` (`Type`);
+
+--
+-- Indexes for table `business_types`
+--
+ALTER TABLE `business_types`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `factions`
@@ -178,10 +210,15 @@ ALTER TABLE `player_vehicles`
 ALTER TABLE `businesses`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `business_types`
+--
+ALTER TABLE `business_types`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `factions`
 --
 ALTER TABLE `factions`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `faction_vehicles`
 --
@@ -196,36 +233,37 @@ ALTER TABLE `houses`
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `player_vehicles`
 --
 ALTER TABLE `player_vehicles`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- Restrictii pentru tabele sterse
+-- Constraints for dumped tables
 --
 
 --
--- Restrictii pentru tabele `businesses`
+-- Constraints for table `businesses`
 --
 ALTER TABLE `businesses`
-  ADD CONSTRAINT `businesses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `businesses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `businesses_ibfk_2` FOREIGN KEY (`Type`) REFERENCES `business_types` (`ID`) ON UPDATE CASCADE;
 
 --
--- Restrictii pentru tabele `faction_vehicles`
+-- Constraints for table `faction_vehicles`
 --
 ALTER TABLE `faction_vehicles`
   ADD CONSTRAINT `faction_vehicles_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `factions` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Restrictii pentru tabele `houses`
+-- Constraints for table `houses`
 --
 ALTER TABLE `houses`
   ADD CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Restrictii pentru tabele `player_vehicles`
+-- Constraints for table `player_vehicles`
 --
 ALTER TABLE `player_vehicles`
   ADD CONSTRAINT `player_vehicles_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `players` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
