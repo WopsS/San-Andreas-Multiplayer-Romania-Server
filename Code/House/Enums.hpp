@@ -6,6 +6,7 @@ enum class HouseData : uint16_t
 {
 	kID = 0,
 	kOwnerID,
+	kRentID,
 	kEntrance,
 	kExit = kEntrance + 3,
 	kInterior = kExit + 3,

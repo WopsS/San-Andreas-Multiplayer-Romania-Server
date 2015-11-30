@@ -23,6 +23,10 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 		{
 			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 		}
+		if (Index == HouseData::kID || Index == HouseData::kRentID)
+		{
+			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+		}
 		else if (Index == HouseData::kEntrance || Index == HouseData::kExit)
 		{
 			auto X = std::stof(Result->GetRowData(ID, i++));
