@@ -50,13 +50,21 @@ void CPlayer::OnConnect(std::shared_ptr<CResult> Result)
 			auto Value = Result->GetRowData(Index);
 
 			// Let's do few custom cases.
-			if (i == static_cast<size_t>(PlayerData::kMySQLID))
+			if (Index == PlayerData::kMySQLID)
 			{
 				SetData<uint64_t>(PlayerData::kMySQLID, std::stoull(Value));
 			}
-			else if (i == static_cast<size_t>(PlayerData::kSex))
+			else if (Index == PlayerData::kSex)
 			{
 				SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Value)));
+			}
+			else if (Index == PlayerData::kCash)
+			{
+				SetData<int>(Index, std::stoi(Value));
+			}
+			else if (Index == PlayerData::kAccount)
+			{
+				SetData<long long>(Index, std::stoll(Value));
 			}
 			else
 			{
@@ -127,6 +135,16 @@ const std::shared_ptr<CVehicle> CPlayer::GetVehicle() const
 	return CVehicle::Get(static_cast<uint16_t>(sampgdk::GetPlayerVehicleID(GetGameID())));
 }
 
+const long long CPlayer::GetAccountCash() const
+{
+	return GetData<long long>(PlayerData::kAccount);
+}
+
+const int CPlayer::GetCash() const
+{
+	return GetData<int>(PlayerData::kCash);
+}
+
 const std::string CPlayer::GetName() const
 {
 	return GetData<std::string>(PlayerData::kName);
@@ -140,6 +158,22 @@ const std::string CPlayer::GetSalt() const
 const PlayerSex CPlayer::GetSex() const
 {
 	return GetData<PlayerSex>(PlayerData::kSex);
+}
+
+void CPlayer::GiveAccountCash(long long Amount)
+{
+	SetData<long long>(PlayerData::kAccount, GetData<int>(PlayerData::kAccount) + Amount);
+}
+
+void CPlayer::GiveCash(int Amount)
+{
+	SetData<int>(PlayerData::kCash, GetData<int>(PlayerData::kCash) + Amount);
+	sampgdk::GivePlayerMoney(GetGameID(), GetData<int>(PlayerData::kCash));
+}
+
+const bool CPlayer::IsAdmin() const
+{
+	return GetData<int>(PlayerData::kAdminLevel) >= 1;
 }
 
 const bool CPlayer::IsAuthenticated() const
@@ -170,6 +204,19 @@ const bool CPlayer::IsInVehicle(uint16_t VehicleID) const
 const bool CPlayer::Kick() const
 {
 	return sampgdk::Kick(GetGameID());
+}
+
+void CPlayer::SetAccountCash(long long Amount)
+{
+	SetData<long long>(PlayerData::kAccount, Amount);
+}
+
+void CPlayer::SetCash(int Amount)
+{
+	SetData<int>(PlayerData::kCash, Amount);
+
+	sampgdk::ResetPlayerMoney(GetGameID());
+	sampgdk::GivePlayerMoney(GetGameID(), Amount);
 }
 
 const bool CPlayer::SetPosition(const Point3D<float>& Position, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const

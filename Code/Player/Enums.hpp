@@ -27,12 +27,13 @@ enum class PlayerData : uint16_t
 	kEmail,
 	kPin,
 	kSex,
-	kTest,
-	kTest2,
+	kAdminLevel,
+	kCash,
+	kAccount, // Money in the bank.
 
 	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
 
-	// Variables used temporary in game.
+			   // Variables used temporary in game.
 	kGameID,
 	kAuthenticated,
 	kSpectating

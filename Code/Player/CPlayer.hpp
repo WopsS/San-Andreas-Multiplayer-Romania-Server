@@ -38,11 +38,21 @@ public:
 
 	const std::shared_ptr<CVehicle> GetVehicle() const;
 
+	const long long GetAccountCash() const;
+
+	const int GetCash() const;
+
 	const std::string GetName() const;
 
 	const std::string GetSalt() const;
 
 	const PlayerSex GetSex() const;
+
+	void GiveAccountCash(long long Amount);
+
+	void GiveCash(int Amount);
+
+	const bool IsAdmin() const;
 
 	const bool IsAuthenticated() const;
 
@@ -76,6 +86,10 @@ public:
 		return sampgdk::SendClientMessage(GetGameID(), Color, fmt::format(Message, std::forward<Args>(args)...).c_str());
 	}
 
+	void SetAccountCash(long long Amount);
+
+	void SetCash(int Amount);
+
 	const bool SetPosition(const Point3D<float>& Position, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
 
 	const bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
@@ -92,7 +106,7 @@ public:
 	template<typename... Args>
 	inline const bool ShowDialog(const CDialog& Dialog, Args&& ...args) const
 	{
-		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(Dialog.GetID()), static_cast<int>(Dialog.GetStyle()), Dialog.GetCaption().c_str(), 
+		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(Dialog.GetID()), static_cast<int>(Dialog.GetStyle()), Dialog.GetCaption().c_str(),
 			fmt::format(Dialog.GetText(), std::forward<Args>(args)...).c_str(), Dialog.GetButton1().c_str(), Dialog.GetButton2().c_str());
 	}
 
@@ -103,6 +117,7 @@ public:
 private:
 
 	friend class CCommands;
+
 	friend class CDialogs;
 
 	std::shared_ptr<CDialog> GetDialog(const DialogID& ID) const;
