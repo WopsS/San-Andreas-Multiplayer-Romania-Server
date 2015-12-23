@@ -42,9 +42,9 @@ void CPlayer::OnConnect(std::shared_ptr<CResult> Result)
 	{
 		// Load user information from database.
 
-		auto Length = static_cast<size_t>(PlayerData::kEndMySQL);
+		auto Length = static_cast<uint8_t>(PlayerData::kEndMySQL);
 
-		for (size_t i = 0; i < Length; i++)
+		for (uint8_t i = 0; i < Length; i++)
 		{
 			auto Index = static_cast<PlayerData>(i);
 			auto Value = Result->GetRowData(Index);

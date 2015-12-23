@@ -150,7 +150,7 @@ void CConnection::ProcessQueries()
 							size_t RowIndex = 0;
 
 							Result->m_fieldsCount = mysql_num_fields(StoredResult);
-							Result->m_rowsCount = static_cast<ULONG>(mysql_num_rows(StoredResult));
+							Result->m_rowsCount = mysql_num_rows(StoredResult);
 
 							// Set the capacity of the vector.
 							Result->m_fieldsName.reserve(Result->m_fieldsCount);
@@ -162,24 +162,21 @@ void CConnection::ProcessQueries()
 							}
 
 							// Resize the vector for rows.
-							Result->m_data.resize(Result->m_rowsCount);
+							Result->m_data.resize(static_cast<size_t>(Result->m_rowsCount));
 
 							for (size_t i = 0; i < Result->m_rowsCount; i++)
 							{
 								// Resize the vector for columns.
 								Result->m_data[i].resize(Result->m_fieldsCount);
-							}
 
-							// Fill the array with data.
-							while ((Row = mysql_fetch_row(StoredResult)))
-							{
+								// Fill the array with data.
+								Row = mysql_fetch_row(StoredResult);
+
 								for (size_t j = 0; j < Result->m_fieldsCount; j++)
 								{
 									// Check if the field is null.
-									Result->m_data[RowIndex][j] = Row[j] != NULL ? Row[j] : "";
+									Result->m_data[i][j] = Row[j] != NULL ? Row[j] : "";
 								}
-
-								RowIndex++;
 							}
 
 							mysql_free_result(StoredResult);
@@ -188,8 +185,8 @@ void CConnection::ProcessQueries()
 						{
 							if (mysql_field_count(m_connection) == 0)
 							{
-								Result->m_affectedRows = static_cast<ULONG>(mysql_affected_rows(m_connection));
-								Result->m_insertID = static_cast<size_t>(mysql_insert_id(m_connection));
+								Result->m_affectedRows = mysql_affected_rows(m_connection);
+								Result->m_insertID = mysql_insert_id(m_connection);
 								Result->m_warningCount = mysql_warning_count(m_connection);
 							}
 						}

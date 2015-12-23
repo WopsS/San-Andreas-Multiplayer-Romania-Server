@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-enum class HouseData : uint16_t
+enum class HouseData : uint8_t
 {
 	kID = 0,
 	kOwnerID,

@@ -7,7 +7,7 @@ std::string CResult::GetRowData(size_t RowIndex, const std::string& FieldName) c
 		return std::string();
 	}
 
-	for (size_t i = 0; i < m_fieldsCount; ++i)
+	for (size_t i = 0; i < m_fieldsCount; i++)
 	{
 		if (m_fieldsName.at(i).compare(FieldName) == 0)
 		{

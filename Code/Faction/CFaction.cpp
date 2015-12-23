@@ -8,9 +8,9 @@ CFaction::CFaction(uint16_t ID, std::shared_ptr<CResult> Result)
 	// Let's do that because the result vector is from index 0.
 	ID--;
 
-	auto Length = static_cast<size_t>(FactionData::kEndMySQL);
+	auto Length = static_cast<uint8_t>(FactionData::kEndMySQL);
 
-	for (size_t i = 0; i < Length; i++)
+	for (uint8_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<FactionData>(i);
 		auto Value = Result->GetRowData(ID, Index);

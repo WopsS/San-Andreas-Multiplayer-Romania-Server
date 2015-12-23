@@ -14,7 +14,7 @@ public:
 	CResult() = default;
 	~CResult() = default;
 
-	inline const ULONG GetAffectedRows() const
+	inline const my_ulonglong GetAffectedRows() const
 	{
 		return m_affectedRows;
 	}
@@ -29,12 +29,12 @@ public:
 		return m_insertID;
 	}
 
-	inline const ULONG GetRowCount() const
+	inline const my_ulonglong GetRowCount() const
 	{
 		return m_rowsCount;
 	}
 
-	inline const ULONG GetWarningCount() const
+	inline const uint32_t GetWarningCount() const
 	{
 		return m_warningCount;
 	}
@@ -71,15 +71,15 @@ private:
 
 	friend class CConnection;
 
-	ULONG m_affectedRows;
+	my_ulonglong m_affectedRows;
 
 	size_t m_fieldsCount;
 
 	my_ulonglong m_insertID;
 
-	ULONG m_rowsCount;
+	my_ulonglong m_rowsCount;
 
-	ULONG m_warningCount;
+	uint32_t m_warningCount;
 
 	std::vector<std::string> m_fieldsName;
 

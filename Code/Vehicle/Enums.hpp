@@ -19,7 +19,7 @@ enum class VehicleData : uint16_t
 	kGameID
 };
 
-enum class VehicleParameters : uint16_t
+enum class VehicleParameters : uint8_t
 {
 	kEngine,
 	kLights,

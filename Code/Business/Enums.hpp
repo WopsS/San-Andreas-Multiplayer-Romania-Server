@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-enum class BusinessData : uint16_t
+enum class BusinessData : uint8_t
 {
 	kID = 0,
 	kOwnerID,
@@ -24,7 +24,7 @@ enum class BusinessData : uint16_t
 	kTextLabelID
 };
 
-enum class BusinessType : uint16_t
+enum class BusinessType : uint8_t
 {
 	kBank = 1,
 	kGunShop

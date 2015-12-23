@@ -84,7 +84,7 @@ const uint64_t CVehicle::GetOwnerID() const
 
 const bool CVehicle::GetParameter(VehicleParameters Parameter) const
 {
-	return GetParameters()[static_cast<int>(Parameter)] == 1;
+	return GetParameters()[static_cast<uint16_t>(Parameter)] == 1;
 }
 
 const std::vector<bool> CVehicle::GetParameters() const
@@ -107,7 +107,7 @@ const std::vector<bool> CVehicle::GetParameters() const
 const bool CVehicle::SetParameter(VehicleParameters Parameter, bool Status) const
 {
 	auto Parameters = GetParameters();
-	Parameters[static_cast<int>(Parameter)] = Status;
+	Parameters[static_cast<uint8_t>(Parameter)] = Status;
 
 	return sampgdk::SetVehicleParamsEx(GetGameID(), Parameters[0], Parameters[1], Parameters[2], Parameters[3], Parameters[4], Parameters[5], Parameters[6]);
 }

@@ -11,9 +11,9 @@ CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
 	// Let's do that because the result vector is from index 0.
 	ID--;
 
-	auto Length = static_cast<size_t>(BusinessData::kEndMySQL);
+	auto Length = static_cast<uint8_t>(BusinessData::kEndMySQL);
 
-	for (size_t i = 0; i < Length; i++)
+	for (uint8_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<BusinessData>(i);
 		auto Value = Result->GetRowData(ID, Index);

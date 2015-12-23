@@ -12,9 +12,9 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 	// Let's do that because the result vector is from index 0.
 	ID--;
 
-	auto Length = static_cast<size_t>(HouseData::kEndMySQL);
+	auto Length = static_cast<uint8_t>(HouseData::kEndMySQL);
 
-	for (size_t i = 0; i < Length; i++)
+	for (uint8_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<HouseData>(i);
 		auto Value = Result->GetRowData(ID, Index);
