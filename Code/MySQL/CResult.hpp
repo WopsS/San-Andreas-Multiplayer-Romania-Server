@@ -19,7 +19,7 @@ public:
 		return m_affectedRows;
 	}
 
-	inline const ULONG GetFieldCount() const
+	inline const size_t GetFieldCount() const
 	{
 		return m_fieldsCount;
 	}
