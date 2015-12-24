@@ -30,6 +30,8 @@ public:
 
 	const bool EditObject(int ObjectID) const;
 
+	const int8_t GetAdminLevel() const;
+
 	const std::string GetEmail() const;
 
 	const uint16_t GetGameID() const;
@@ -38,9 +40,9 @@ public:
 
 	const std::shared_ptr<CVehicle> GetVehicle() const;
 
-	const long long GetAccountCash() const;
+	const int32_t GetCash() const;
 
-	const int GetCash() const;
+	const int64_t GetMoney() const;
 
 	const std::string GetName() const;
 
@@ -48,9 +50,9 @@ public:
 
 	const PlayerSex GetSex() const;
 
-	void GiveAccountCash(long long Amount);
+	void GiveCash(int32_t Amount);
 
-	void GiveCash(int Amount);
+	void GiveMoney(int64_t Amount);
 
 	const bool IsAdmin() const;
 
@@ -74,6 +76,8 @@ public:
 
 	void OnSpawn();
 
+	void SetCash(int32_t Amount);
+
 	template<typename... Args>
 	inline bool SendMessage(Colors Color, const std::string& Message, Args&& ...args)
 	{
@@ -86,9 +90,7 @@ public:
 		return sampgdk::SendClientMessage(GetGameID(), Color, fmt::format(Message, std::forward<Args>(args)...).c_str());
 	}
 
-	void SetAccountCash(long long Amount);
-
-	void SetCash(int Amount);
+	void SetMoney(int64_t Amount);
 
 	const bool SetPosition(const Point3D<float>& Position, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
 

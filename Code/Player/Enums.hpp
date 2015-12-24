@@ -29,7 +29,7 @@ enum class PlayerData : uint8_t
 	kSex,
 	kAdminLevel,
 	kCash,
-	kAccount, // Money in the bank.
+	kMoney,
 
 	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
 

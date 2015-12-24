@@ -136,6 +136,11 @@ void CPlayer::OnSpawn()
 	SetPosition(1743.0f, -1862.0f, 13.6f);
 }
 
+const int8_t CPlayer::GetAdminLevel() const
+{
+	return GetData<int8_t>(PlayerData::kAdminLevel);
+}
+
 const std::string CPlayer::GetEmail() const
 {
 	return GetData<std::string>(PlayerData::kEmail);
@@ -156,14 +161,14 @@ const std::shared_ptr<CVehicle> CPlayer::GetVehicle() const
 	return CVehicle::Get(static_cast<uint16_t>(sampgdk::GetPlayerVehicleID(GetGameID())));
 }
 
-const long long CPlayer::GetAccountCash() const
+const int32_t CPlayer::GetCash() const
 {
-	return GetData<long long>(PlayerData::kAccount);
+	return GetData<int32_t>(PlayerData::kCash);
 }
 
-const int CPlayer::GetCash() const
+const int64_t CPlayer::GetMoney() const
 {
-	return GetData<int>(PlayerData::kCash);
+	return GetData<int64_t>(PlayerData::kMoney);
 }
 
 const std::string CPlayer::GetName() const
@@ -181,20 +186,20 @@ const PlayerSex CPlayer::GetSex() const
 	return GetData<PlayerSex>(PlayerData::kSex);
 }
 
-void CPlayer::GiveAccountCash(long long Amount)
-{
-	SetData<long long>(PlayerData::kAccount, GetData<int>(PlayerData::kAccount) + Amount);
-}
-
-void CPlayer::GiveCash(int Amount)
+void CPlayer::GiveCash(int32_t Amount)
 {
 	SetData<int>(PlayerData::kCash, GetData<int>(PlayerData::kCash) + Amount);
 	sampgdk::GivePlayerMoney(GetGameID(), GetData<int>(PlayerData::kCash));
 }
 
+void CPlayer::GiveMoney(int64_t Amount)
+{
+	SetData<int64_t>(PlayerData::kMoney, GetData<int64_t>(PlayerData::kMoney) + Amount);
+}
+
 const bool CPlayer::IsAdmin() const
 {
-	return GetData<int>(PlayerData::kAdminLevel) >= 1;
+	return GetData<int8_t>(PlayerData::kAdminLevel) >= 1;
 }
 
 const bool CPlayer::IsAuthenticated() const
@@ -227,17 +232,22 @@ const bool CPlayer::Kick() const
 	return sampgdk::Kick(GetGameID());
 }
 
-void CPlayer::SetAccountCash(long long Amount)
+void CPlayer::SetAdminLevel(int8_t Level)
 {
-	SetData<long long>(PlayerData::kAccount, Amount);
+	SetData<int8_t>(PlayerData::kAdminLevel, Level);
 }
 
-void CPlayer::SetCash(int Amount)
+void CPlayer::SetCash(int32_t Amount)
 {
-	SetData<int>(PlayerData::kCash, Amount);
+	SetData<int32_t>(PlayerData::kCash, Amount);
 
 	sampgdk::ResetPlayerMoney(GetGameID());
 	sampgdk::GivePlayerMoney(GetGameID(), Amount);
+}
+
+void CPlayer::SetMoney(int64_t Amount)
+{
+	SetData<int64_t>(PlayerData::kMoney, Amount);
 }
 
 const bool CPlayer::SetPosition(const Point3D<float>& Position, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
