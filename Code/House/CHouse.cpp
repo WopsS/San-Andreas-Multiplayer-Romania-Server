@@ -19,39 +19,72 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 		auto Index = static_cast<HouseData>(i);
 		auto Value = Result->GetRowData(ID, Index);
 
-		if (Index == HouseData::kID || Index == HouseData::kOwnerID)
+		switch (Index)
 		{
-			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
-		}
-		else if (Index == HouseData::kEntrance || Index == HouseData::kExit)
-		{
-			auto X = std::stof(Result->GetRowData(ID, i++));
-			auto Y = std::stof(Result->GetRowData(ID, i++));
-			auto Z = std::stof(Result->GetRowData(ID, i));
-
-			SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
-		}
-		if (Index == HouseData::kRentPrice)
-		{
-			SetData<uint16_t>(Index, Value.length() == 0 ? 0 : std::stoi(Value));
-		}
-		else
-		{
-			auto IsFloat = Utils::IsFloat(Value);
-			auto IsInteger = Utils::IsInteger(Value);
-			auto IsString = IsFloat == false && IsInteger == false;
-
-			if (IsString == true)
+			case HouseData::kID:
+			case HouseData::kOwnerID:
 			{
-				SetData<std::string>(Index, Value);
+				SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+				break;
 			}
-			else if (IsInteger == true) // Check if it is a number after we check if it is as string because if the number is '0' it will return true at 'IsFloat', so probably if it is 0 it is an integer.
+			case HouseData::kEntrance:
+			case HouseData::kExit:
 			{
-				SetData<uint32_t>(Index, std::stoul(Value));
+				auto X = std::stof(Result->GetRowData(ID, i++));
+				auto Y = std::stof(Result->GetRowData(ID, i++));
+				auto Z = std::stof(Result->GetRowData(ID, i));
+
+				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
+				break;
 			}
-			else if (IsFloat == true)
+			case HouseData::kRentPrice:
 			{
-				SetData<float>(Index, std::stof(Value));
+				SetData<uint16_t>(Index, Value.length() == 0 ? 0 : std::stoi(Value));
+				break;
+			}
+			default:
+			{
+				switch (Result->GetFieldType(Index))
+				{
+					case enum_field_types::MYSQL_TYPE_DOUBLE:
+					{
+						SetData<double>(Index, std::stod(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_FLOAT:
+					{
+						SetData<float>(Index, std::stof(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_INT24:
+					case enum_field_types::MYSQL_TYPE_LONG:
+					{
+						SetData<int32_t>(Index, std::stoi(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_LONGLONG:
+					{
+						SetData<int64_t>(Index, std::stoll(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_SHORT:
+					{
+						SetData<int16_t>(Index, std::stoi(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_TINY:
+					{
+						SetData<int8_t>(Index, std::stoi(Value));
+						break;
+					}
+					default:
+					{
+						SetData<std::string>(Index, Value);
+						break;
+					}
+				}
+
+				break;
 			}
 		}
 	}

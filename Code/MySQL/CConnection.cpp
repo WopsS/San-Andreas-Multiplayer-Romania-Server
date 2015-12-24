@@ -153,12 +153,16 @@ void CConnection::ProcessQueries()
 							Result->m_rowsCount = mysql_num_rows(StoredResult);
 
 							// Set the capacity of the vector.
-							Result->m_fieldsName.reserve(Result->m_fieldsCount);
+							Result->m_fields.reserve(Result->m_fieldsCount);
 							
 							// Let's store the fields name.
 							while ((Field = mysql_fetch_field(StoredResult)))
 							{
-								Result->m_fieldsName.push_back(Field->name);
+								FieldInformation CurrentField;
+								CurrentField.Name = Field->name;
+								CurrentField.Type = Field->type;
+
+								Result->m_fields.push_back(CurrentField);
 							}
 
 							// Resize the vector for rows.

@@ -49,40 +49,61 @@ void CPlayer::OnConnect(std::shared_ptr<CResult> Result)
 			auto Index = static_cast<PlayerData>(i);
 			auto Value = Result->GetRowData(Index);
 
-			// Let's do few custom cases.
-			if (Index == PlayerData::kMySQLID)
+			switch (Index)
 			{
-				SetData<uint64_t>(PlayerData::kMySQLID, std::stoull(Value));
-			}
-			else if (Index == PlayerData::kSex)
-			{
-				SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Value)));
-			}
-			else if (Index == PlayerData::kCash)
-			{
-				SetData<int>(Index, std::stoi(Value));
-			}
-			else if (Index == PlayerData::kAccount)
-			{
-				SetData<long long>(Index, std::stoll(Value));
-			}
-			else
-			{
-				auto IsFloat = Utils::IsFloat(Value);
-				auto IsInteger = Utils::IsInteger(Value);
-				auto IsString = IsFloat == false && IsInteger == false;
+				case PlayerData::kMySQLID:
+				{
+					SetData<uint64_t>(PlayerData::kMySQLID, std::stoull(Value));
+					break;
+				}
+				case PlayerData::kSex:
+				{
+					SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Value)));
+					break;
+				}
+				default:
+				{
+					switch (Result->GetFieldType(Index))
+					{
+						case enum_field_types::MYSQL_TYPE_DOUBLE:
+						{
+							SetData<double>(Index, std::stod(Value));
+							break;
+						}
+						case enum_field_types::MYSQL_TYPE_FLOAT:
+						{
+							SetData<float>(Index, std::stof(Value));
+							break;
+						}
+						case enum_field_types::MYSQL_TYPE_INT24:
+						case enum_field_types::MYSQL_TYPE_LONG:
+						{
+							SetData<int32_t>(Index, std::stoi(Value));
+							break;
+						}
+						case enum_field_types::MYSQL_TYPE_LONGLONG:
+						{
+							SetData<int64_t>(Index, std::stoll(Value));
+							break;
+						}
+						case enum_field_types::MYSQL_TYPE_SHORT:
+						{
+							SetData<int16_t>(Index, std::stoi(Value));
+							break;
+						}
+						case enum_field_types::MYSQL_TYPE_TINY:
+						{
+							SetData<int8_t>(Index, std::stoi(Value));
+							break;
+						}
+						default:
+						{
+							SetData<std::string>(Index, Value);
+							break;
+						}
+					}
 
-				if (IsString == true)
-				{
-					SetData<std::string>(Index, Value);
-				}
-				else if (IsInteger == true) // Check if it is a number after we check if it is as string because if the number is '0' it will return true at 'IsFloat', so probably if it is 0 it is an integer.
-				{
-					SetData<uint32_t>(Index, std::stoul(Value));
-				}
-				else if (IsFloat == true)
-				{
-					SetData<float>(Index, std::stof(Value));
+					break;
 				}
 			}
 		}

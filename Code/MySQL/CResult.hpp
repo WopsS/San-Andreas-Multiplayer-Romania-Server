@@ -7,6 +7,13 @@
 
 class CConnection;
 
+struct FieldInformation
+{
+	std::string Name;
+
+	enum_field_types Type;
+};
+
 class CResult
 {
 public:
@@ -40,7 +47,22 @@ public:
 	}
 
 	template<typename T>
-	inline std::string GetRowData(const T& FieldIndex) const
+	inline const enum_field_types GetFieldType(const T& Index) const
+	{
+		auto FieldIndex = static_cast<size_t>(Index);
+
+		if (FieldIndex < m_fieldsCount)
+		{
+			return m_fields.at(FieldIndex).Type;
+		}
+
+		return enum_field_types::MYSQL_TYPE_BIT;
+	}
+
+	const enum_field_types GetFieldType(const std::string& Name) const;
+
+	template<typename T>
+	inline const std::string GetRowData(const T& FieldIndex) const
 	{
 		auto Index = static_cast<size_t>(FieldIndex);
 
@@ -53,7 +75,7 @@ public:
 	}
 
 	template<typename T>
-	inline std::string GetRowData(size_t RowIndex, const T& FieldIndex) const
+	inline const std::string GetRowData(size_t RowIndex, const T& FieldIndex) const
 	{
 		auto Index = static_cast<size_t>(FieldIndex);
 
@@ -65,7 +87,7 @@ public:
 		return std::string();
 	}
 
-	std::string GetRowData(size_t RowIndex, const std::string& FieldName) const;
+	const std::string GetRowData(size_t RowIndex, const std::string& FieldName) const;
 
 private:
 
@@ -81,7 +103,7 @@ private:
 
 	uint32_t m_warningCount;
 
-	std::vector<std::string> m_fieldsName;
+	std::vector<FieldInformation> m_fields;
 
 	std::vector<std::vector<std::string>> m_data;
 };

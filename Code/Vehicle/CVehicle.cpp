@@ -14,45 +14,74 @@ CVehicle::CVehicle(uint16_t ID, std::shared_ptr<CResult> Result)
 		auto Index = static_cast<VehicleData>(i);
 		auto Value = Result->GetRowData(ID, Index);
 
-		if (Index == VehicleData::kID || Index == VehicleData::kOwnerID)
+		switch (Index)
 		{
-			SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
-		}
-		else if (Index == VehicleData::kModel)
-		{
-			SetData<uint16_t>(Index, static_cast<uint16_t>(std::stoi(Value)));
-		}
-		else if (Index == VehicleData::kPosition)
-		{
-			auto X = std::stof(Result->GetRowData(ID, i++));
-			auto Y = std::stof(Result->GetRowData(ID, i++));
-			auto Z = std::stof(Result->GetRowData(ID, i++));
-			auto Rotation = std::stof(Result->GetRowData(ID, i));
-
-			SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
-			SetData<float>(VehicleData::kRotation, Rotation);
-		}
-		else if (Index == VehicleData::kSiren)
-		{
-			SetData<bool>(Index, !!std::stoi(Result->GetRowData(ID, i++)));
-		}
-		else
-		{
-			auto IsFloat = Utils::IsFloat(Value);
-			auto IsInteger = Utils::IsInteger(Value);
-			auto IsString = IsFloat == false && IsInteger == false;
-
-			if (IsString == true)
+			case VehicleData::kID:
+			case VehicleData::kOwnerID:
 			{
-				SetData<std::string>(Index, Value);
+				SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+				break;
 			}
-			else if (IsInteger == true) // Check if it is a number after we check if it is as string because if the number is '0' it will return true at 'IsFloat', so probably if it is 0 it is an integer.
+			case VehicleData::kPosition:
 			{
-				SetData<uint32_t>(Index, std::stoul(Value));
+				auto X = std::stof(Result->GetRowData(ID, i++));
+				auto Y = std::stof(Result->GetRowData(ID, i++));
+				auto Z = std::stof(Result->GetRowData(ID, i++));
+				auto Rotation = std::stof(Result->GetRowData(ID, i));
+
+				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
+				SetData<float>(VehicleData::kRotation, Rotation);
+
+				break;
 			}
-			else if (IsFloat == true)
+			case VehicleData::kSiren:
 			{
-				SetData<float>(Index, std::stof(Value));
+				SetData<bool>(Index, !!std::stoi(Result->GetRowData(ID, i++)));
+				break;
+			}
+			default:
+			{
+				switch (Result->GetFieldType(Index))
+				{
+					case enum_field_types::MYSQL_TYPE_DOUBLE:
+					{
+						SetData<double>(Index, std::stod(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_FLOAT:
+					{
+						SetData<float>(Index, std::stof(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_INT24:
+					case enum_field_types::MYSQL_TYPE_LONG:
+					{
+						SetData<int32_t>(Index, std::stoi(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_LONGLONG:
+					{
+						SetData<int64_t>(Index, std::stoll(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_SHORT:
+					{
+						SetData<int16_t>(Index, std::stoi(Value));
+						break;
+					}
+					case enum_field_types::MYSQL_TYPE_TINY:
+					{
+						SetData<int8_t>(Index, std::stoi(Value));
+						break;
+					}
+					default:
+					{
+						SetData<std::string>(Index, Value);
+						break;
+					}
+				}
+
+				break;
 			}
 		}
 	}
