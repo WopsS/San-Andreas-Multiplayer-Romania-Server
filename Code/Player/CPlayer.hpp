@@ -76,8 +76,6 @@ public:
 
 	void OnSpawn();
 
-	void SetCash(int32_t Amount);
-
 	template<typename... Args>
 	inline bool SendMessage(Colors Color, const std::string& Message, Args&& ...args)
 	{
@@ -89,6 +87,10 @@ public:
 	{
 		return sampgdk::SendClientMessage(GetGameID(), Color, fmt::format(Message, std::forward<Args>(args)...).c_str());
 	}
+
+	void SetAdminLevel(int8_t Level);
+
+	void SetCash(int32_t Amount);
 
 	void SetMoney(int64_t Amount);
 
