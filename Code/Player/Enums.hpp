@@ -2,6 +2,17 @@
 
 #include <cstdint>
 
+enum class AdminLevel : uint8_t
+{
+	kLevelZero = 0,
+	kLevelOne,
+	kLevelTwo,
+	kLevelThree,
+	kLevelFour,
+	kLevelFive,
+	kLevelSix
+};
+
 // See <a href="http://wiki.sa-mp.com/wiki/OnPlayerDisconnect">OnPlayerDisconnect on SA-MP Wiki</a>.
 enum class DisconnectReason : uint8_t
 {

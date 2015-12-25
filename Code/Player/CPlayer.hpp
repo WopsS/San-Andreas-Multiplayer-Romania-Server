@@ -30,7 +30,7 @@ public:
 
 	const bool EditObject(int ObjectID) const;
 
-	const int8_t GetAdminLevel() const;
+	const AdminLevel GetAdminLevel() const;
 
 	const std::string GetEmail() const;
 
@@ -58,6 +58,8 @@ public:
 
 	const bool IsAuthenticated() const;
 
+	const bool IsInAnyFaction() const;
+
 	const bool IsInRangeOfPoint(const Point3D<float>& Position, float Range = 3.0f);
 
 	const bool IsInRangeOfPoint(float X, float Y, float Z, float Range = 3.0f);
@@ -65,6 +67,10 @@ public:
 	const bool IsInVehicle() const;
 
 	const bool IsInVehicle(uint16_t VehicleID) const;
+
+	const bool IsLeader() const;
+
+	const bool IsSubleader() const;
 
 	const bool Kick() const;
 
@@ -88,7 +94,7 @@ public:
 		return sampgdk::SendClientMessage(GetGameID(), Color, fmt::format(Message, std::forward<Args>(args)...).c_str());
 	}
 
-	void SetAdminLevel(int8_t Level);
+	void SetAdminLevel(AdminLevel Level);
 
 	void SetCash(int32_t Amount);
 

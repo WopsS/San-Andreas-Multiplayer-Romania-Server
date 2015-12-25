@@ -10,55 +10,62 @@
 
 CCommands::CCommands()
 {
-	Register("test", {}, std::string("sifsp"), Bind(&CCommands::Test, this));
-	Register("engine", {}, Bind(&CCommands::Engine, this));
+	Register({ "test" }, CommandFlags::kLeader | CommandFlags::kAdmin, Bind(&CCommands::Test, this), std::string("sifsp"), { "/test <string> <integer> <float> <string> <Player ID / name>" }, "", [](std::shared_ptr<CPlayer> Player)->bool { return Player->GetAdminLevel() >= AdminLevel::kLevelFive; });
+	Register({ "engine" }, CommandFlags::kPlayer, Bind(&CCommands::Engine, this));
 }
 
-void CCommands::Register(const std::string & Name, std::initializer_list<std::string> Allias, commandfunction_t Function)
+void CCommands::Register(std::initializer_list<std::string> Names, CommandFlags AccessLevel, commandfunction_t Function, const std::string& UnauthorizedMessage, commandaccess_t CustomAccess)
 {
-	Register(Name, Allias, std::string(), Function);
+	Register(Names, static_cast<int>(AccessLevel), Function, std::string(), {}, UnauthorizedMessage, CustomAccess);
 }
 
-void CCommands::Register(const std::string& Name, std::initializer_list<std::string> Allias, const std::string& Format, commandfunction_t Function)
+void CCommands::Register(std::initializer_list<std::string> Names, int AccessLevel, commandfunction_t Function, const std::string& UnauthorizedMessage, commandaccess_t CustomAccess)
 {
-	std::vector<std::string> CommandAllias;
-	CommandAllias.push_back(Name);
+	Register(Names, AccessLevel, Function, std::string(), {}, UnauthorizedMessage, CustomAccess);
+}
 
-	if (Allias.size() > 0)
+void CCommands::Register(std::initializer_list<std::string> Names, CommandFlags AccessLevel, commandfunction_t Function, const std::string& Format, const std::vector<std::string>& UsageMessages, const std::string& UnauthorizedMessage, commandaccess_t CustomAccess)
+{
+	Register(Names, static_cast<int>(AccessLevel), Function, Format, UsageMessages, UnauthorizedMessage, CustomAccess);
+}
+
+void CCommands::Register(std::initializer_list<std::string> Names, int AccessLevel, commandfunction_t Function, const std::string& Format, const std::vector<std::string>& UsageMessages, const std::string& UnauthorizedMessage, commandaccess_t CustomAccess)
+{
+	std::vector<std::string> NewNames;
+
+	// Add names to the vector and make them lower case.
+	for (auto& Name : Names)
 	{
-		for (auto& i : Allias)
-		{
-			CommandAllias.push_back(i);
-		}
+		NewNames.push_back(Utils::ToLower(Name));
 	}
 
-	m_commands.emplace(CommandAllias, std::make_tuple(Function, Format));
+	m_commands.push_back(std::make_shared<CCommand>(NewNames, AccessLevel, Function, Format, UsageMessages, UnauthorizedMessage, CustomAccess));
 }
 
 bool CCommands::Execute(std::shared_ptr<CPlayer> Player, const std::string& Command)
 {
-	auto lCommand = Command;
+	auto CommandName = Command;
 
 	// Remove slash from the command name.
-	lCommand.erase(0, 1);
+	CommandName.erase(0, 1);
 
-	auto Parameters = lCommand;
+	auto Parameters = CommandName;
 
 	// Delete parameters from command.
-	auto Position = lCommand.find(" ");
+	auto Position = CommandName.find(" ");
 
 	// Check if in the command exists a space.
 	if (Position != std::string::npos)
 	{
-		lCommand.erase(Position, lCommand.length());
+		CommandName.erase(Position, CommandName.length());
 	}
 
 	// Delete command from parameters. If we don't have a space, delete just command text to leave the parameters empty.
-	Parameters.erase(0, Position == std::string::npos ? lCommand.length() : lCommand.length() + 1);
+	Parameters.erase(0, Position == std::string::npos ? CommandName.length() : CommandName.length() + 1);
 
 	for (auto& i : m_commands)
 	{
-		if (std::find(i.first.begin(), i.first.end(), Utils::ToLower(lCommand)) != i.first.end())
+		if (std::find(i->m_names.begin(), i->m_names.end(), Utils::ToLower(CommandName)) != i->m_names.end())
 		{
 			// Check if the parameters contains only whitespaces.
 			if (Parameters.find_first_not_of(' ') == std::string::npos)
@@ -69,11 +76,10 @@ bool CCommands::Execute(std::shared_ptr<CPlayer> Player, const std::string& Comm
 				// Note: If a player type '/command     ' it will take the spaces like a parameters, so with that we will prevent this thing and we guarantee the parameter will not be empty.
 			}
 
-			// Rebind the command with the new arguments.
-			auto CommandFunction = std::bind(std::get<0>(i.second), Player, std::make_shared<CCommandParameters>(std::get<1>(i.second), Parameters));
-
-			// Call the command's function.
-			CommandFunction();
+			if (i->HasAccess(Player) == true)
+			{
+				i->Execute(Player, Parameters);
+			}
 
 			return true;
 		}
@@ -84,14 +90,6 @@ bool CCommands::Execute(std::shared_ptr<CPlayer> Player, const std::string& Comm
 
 void CCommands::Test(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters)
 {
-	if (Parameters->Valid() == false)
-	{
-		Player->SendMessage(0xFFFFFFFF, "CCommands::Test - four parameters required.");
-		sampgdk::logprintf("CCommands::Test - four parameters required.");
-
-		return;
-	}
-
 	auto TargetPlayer = Parameters->GetData<std::shared_ptr<CPlayer>>(4);
 
 	if (TargetPlayer == nullptr)

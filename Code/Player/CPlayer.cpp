@@ -61,6 +61,11 @@ void CPlayer::OnConnect(std::shared_ptr<CResult> Result)
 					SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Value)));
 					break;
 				}
+				case PlayerData::kAdminLevel:
+				{
+					SetData<AdminLevel>(PlayerData::kAdminLevel, static_cast<AdminLevel>(std::stoi(Value)));
+					break;
+				}
 				default:
 				{
 					switch (Result->GetFieldType(Index))
@@ -136,9 +141,9 @@ void CPlayer::OnSpawn()
 	SetPosition(1743.0f, -1862.0f, 13.6f);
 }
 
-const int8_t CPlayer::GetAdminLevel() const
+const AdminLevel CPlayer::GetAdminLevel() const
 {
-	return GetData<int8_t>(PlayerData::kAdminLevel);
+	return GetData<AdminLevel>(PlayerData::kAdminLevel);
 }
 
 const std::string CPlayer::GetEmail() const
@@ -199,12 +204,18 @@ void CPlayer::GiveMoney(int64_t Amount)
 
 const bool CPlayer::IsAdmin() const
 {
-	return GetData<int8_t>(PlayerData::kAdminLevel) >= 1;
+	return GetData<AdminLevel>(PlayerData::kAdminLevel) >= AdminLevel::kLevelOne;
 }
 
 const bool CPlayer::IsAuthenticated() const
 {
 	return GetData<bool>(PlayerData::kAuthenticated);
+}
+
+const bool CPlayer::IsInAnyFaction() const
+{
+	// TODO: Check if the player is in any faction.
+	return false;
 }
 
 const bool CPlayer::IsInRangeOfPoint(const Point3D<float>& Position, float Range)
@@ -227,14 +238,26 @@ const bool CPlayer::IsInVehicle(uint16_t VehicleID) const
 	return sampgdk::IsPlayerInVehicle(GetGameID(), VehicleID) && CVehicle::Contains(VehicleID) == true;
 }
 
+const bool CPlayer::IsLeader() const
+{
+	// TODO: Check if the player is leader.
+	return false;
+}
+
+const bool CPlayer::IsSubleader() const
+{
+	// TODO: Check if the player is subleader.
+	return false;
+}
+
 const bool CPlayer::Kick() const
 {
 	return sampgdk::Kick(GetGameID());
 }
 
-void CPlayer::SetAdminLevel(int8_t Level)
+void CPlayer::SetAdminLevel(AdminLevel Level)
 {
-	SetData<int8_t>(PlayerData::kAdminLevel, Level);
+	SetData<AdminLevel>(PlayerData::kAdminLevel, Level);
 }
 
 void CPlayer::SetCash(int32_t Amount)
