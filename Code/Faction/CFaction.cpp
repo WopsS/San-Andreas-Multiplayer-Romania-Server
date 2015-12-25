@@ -59,12 +59,12 @@ CFaction::CFaction(uint16_t ID, std::shared_ptr<CResult> Result)
 					}
 					case enum_field_types::MYSQL_TYPE_SHORT:
 					{
-						SetData<int16_t>(Index, std::stoi(Value));
+						SetData<int16_t>(Index, static_cast<int16_t>(std::stoi(Value)));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_TINY:
 					{
-						SetData<int8_t>(Index, std::stoi(Value));
+						SetData<int8_t>(Index, static_cast<int8_t>(std::stoi(Value)));
 						break;
 					}
 					default:

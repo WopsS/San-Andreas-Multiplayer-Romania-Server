@@ -66,12 +66,12 @@ CVehicle::CVehicle(uint16_t ID, std::shared_ptr<CResult> Result)
 					}
 					case enum_field_types::MYSQL_TYPE_SHORT:
 					{
-						SetData<int16_t>(Index, std::stoi(Value));
+						SetData<int16_t>(Index, static_cast<int16_t>(std::stoi(Value)));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_TINY:
 					{
-						SetData<int8_t>(Index, std::stoi(Value));
+						SetData<int8_t>(Index, static_cast<int8_t>(std::stoi(Value)));
 						break;
 					}
 					default:
@@ -88,8 +88,8 @@ CVehicle::CVehicle(uint16_t ID, std::shared_ptr<CResult> Result)
 
 	auto Position = GetData<Point3D<float>>(VehicleData::kPosition);
 
-	SetData<uint16_t>(VehicleData::kGameID, sampgdk::CreateVehicle(GetData<uint16_t>(VehicleData::kModel), Position.X, Position.Y, Position.Z, GetData<float>(VehicleData::kRotation), 
-		GetData<uint32_t>(VehicleData::kColor1), GetData<uint32_t>(VehicleData::kColor2), GetData<uint32_t>(VehicleData::kRespawnTime), GetData<bool>(VehicleData::kSiren)));
+	SetData<uint16_t>(VehicleData::kGameID, sampgdk::CreateVehicle(GetData<int16_t>(VehicleData::kModel), Position.X, Position.Y, Position.Z, GetData<float>(VehicleData::kRotation),
+		GetData<int32_t>(VehicleData::kColor1), GetData<int32_t>(VehicleData::kColor2), GetData<int32_t>(VehicleData::kRespawnTime), GetData<bool>(VehicleData::kSiren)));
 }
 
 CVehicle::CVehicle(int Model, const Point3D<float>& Position, float Rotation, int Color1, int Color2, int RespawnTine, bool Siren)
