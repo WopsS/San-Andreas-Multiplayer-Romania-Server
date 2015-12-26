@@ -24,8 +24,8 @@ public:
 	{
 		/*
 		Note:
-		We don't use an 'if' for 'HasCustomAccess' because if we have a function which check if the player is part of a faction, the command need know if
-		the command is for faction's leader or for members without write anything more in the function.
+			We don't use an 'if' for 'HasCustomAccess' because if we have a function which check if the player is part of a faction, the command need know if
+			the command is for faction's leader or for members without write anything more in the function.
 		*/
 
 		if (m_accessLevel & CommandFlags::kPlayer && CustomAccess(Player) == true)
@@ -57,7 +57,6 @@ public:
 	inline void ShowUnauthorizedMessage(std::shared_ptr<CPlayer> Player, Args&& ...args)
 	{
 		Player->SendMessage(Colors::kWhite, "ERROR: " + m_unauthorizedMessage, std::forward<Args>(args)...);
-		sampgdk::logprintf(fmt::format("ERROR: " + m_unauthorizedMessage, std::forward<Args>(args)...).c_str());
 	}
 
 	inline void ShowUsageMessages(std::shared_ptr<CPlayer> Player)
@@ -66,7 +65,6 @@ public:
 		for (auto& Message : m_usageMessages)
 		{
 			Player->SendMessage(Colors::kWhite, Message);
-			sampgdk::logprintf(Message.c_str());
 		}
 	}
 
