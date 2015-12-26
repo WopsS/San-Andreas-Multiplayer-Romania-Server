@@ -11,12 +11,12 @@ TestCommand::TestCommand()
 
 const bool TestCommand::CustomAccess(std::shared_ptr<CPlayer> Player) const
 {
-	return false;
+	return true;
 }
 
 void TestCommand::Execute(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters)
 {
-	auto TargetPlayer = Parameters->GetData<std::shared_ptr<CPlayer>>(4);
+	auto TargetPlayer = Parameters->GetAt<std::shared_ptr<CPlayer>>(4);
 
 	if (TargetPlayer == nullptr)
 	{
@@ -26,6 +26,6 @@ void TestCommand::Execute(std::shared_ptr<CPlayer> Player, std::shared_ptr<CComm
 		return;
 	}
 
-	Player->SendMessage(0xFFFFFFFF, "CCommands::Test - {} | {} | {} | {} | {}", Parameters->GetData<std::string>(0), Parameters->GetData<int>(1), Parameters->GetData<float>(2), Parameters->GetData<std::string>(3), TargetPlayer->GetName());
-	sampgdk::logprintf("CCommands::Test - %s | %i | %f | %s | %s", Parameters->GetData<std::string>(0).c_str(), Parameters->GetData<int>(1), Parameters->GetData<float>(2), Parameters->GetData<std::string>(3).c_str(), TargetPlayer->GetName().c_str());
+	Player->SendMessage(0xFFFFFFFF, "CCommands::Test - {} | {} | {} | {} | {}", Parameters->GetAt<std::string>(0), Parameters->GetAt<int>(1), Parameters->GetAt<float>(2), Parameters->GetAt<std::string>(3), TargetPlayer->GetName());
+	sampgdk::logprintf("CCommands::Test - %s | %i | %f | %s | %s", Parameters->GetAt<std::string>(0).c_str(), Parameters->GetAt<int>(1), Parameters->GetAt<float>(2), Parameters->GetAt<std::string>(3).c_str(), TargetPlayer->GetName().c_str());
 }

@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-enum class DialogData : uint16_t
+enum class DialogData : uint8_t
 {
 	kID = 0,
 	kStyle,
@@ -12,7 +12,7 @@ enum class DialogData : uint16_t
 	kButton2
 };
 
-enum class DialogStyle : uint16_t
+enum class DialogStyle : uint8_t
 {
 	kMessage = 0, // DIALOG_STYLE_MSGBOX
 	kInput, // DIALOG_STYLE_INPUT
@@ -28,7 +28,7 @@ enum class DialogResponse : uint16_t
 	kLeft // Used to select an item from the list, go to the next step of the dialog, etc..
 };
 
-enum class DialogID : uint32_t
+enum class DialogID : uint16_t
 {
 	kRegister = 1,
 	kRegisterConfirmation,

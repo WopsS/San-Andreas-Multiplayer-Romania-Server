@@ -14,12 +14,18 @@
 ///		p - for player.
 ///		s - for string.
 /// </remarks>
-class CCommandParameters : public CData<size_t>
+class CCommandParameters : private CData<size_t>
 {
 public:
 
 	CCommandParameters(const std::string& Format, std::string& Parameters);
 	~CCommandParameters() = default;
+
+	template<typename T>
+	const T GetAt(size_t Index) const
+	{
+		return GetData<T>(Index);
+	}
 
 	bool Valid();
 
