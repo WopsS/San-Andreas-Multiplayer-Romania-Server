@@ -9,9 +9,9 @@ TestCommand::TestCommand()
 	m_unauthorizedMessage = "You are not authorized to use this command.";
 }
 
-bool TestCommand::CustomAccess(std::shared_ptr<CPlayer> Player)
+const bool TestCommand::CustomAccess(std::shared_ptr<CPlayer> Player) const
 {
-	return true;
+	return false;
 }
 
 void TestCommand::Execute(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters)

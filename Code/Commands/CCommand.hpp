@@ -16,6 +16,8 @@ public:
 	CCommand() = default;
 	virtual ~CCommand() = default;
 
+	virtual const bool CustomAccess(std::shared_ptr<CPlayer> Player) const = 0;
+
 	virtual void Execute(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters) = 0;
 
 	bool CheckAccess(std::shared_ptr<CPlayer> Player)
@@ -49,11 +51,6 @@ public:
 
 		ShowUnauthorizedMessage(Player);
 		return false;
-	}
-
-	inline const bool CustomAccess(std::shared_ptr<CPlayer> Player) const
-	{
-		return true;
 	}
 
 	template<typename... Args>
