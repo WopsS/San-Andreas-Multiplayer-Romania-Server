@@ -1,4 +1,4 @@
-#include <Command/CCommandParameters.hpp>
+#include <Commands/CParameters.hpp>
 
 #include <Player/CPlayer.hpp>
 #include <Utilities/Utils.hpp>
