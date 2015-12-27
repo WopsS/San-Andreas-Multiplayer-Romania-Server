@@ -1,7 +1,7 @@
 #include <stdafx.hpp>
 
 #include <mysql.h>
-#include <Command/CCommands.hpp>
+#include <Commands/CCommands.hpp>
 #include <Dialog/CDialogs.hpp>
 #include <Key/CKeys.hpp>
 #include <Log/CLog.hpp>
@@ -22,7 +22,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	sampgdk::ManualVehicleEngineAndLights();
 	sampgdk::SetNameTagDrawDistance(40.0);
 	sampgdk::SetWorldTime(std::stoi(Time::GetHour()));
-
+	
 	// Initialize server things.
 	CServer::GetInstance()->Initialize();
 
