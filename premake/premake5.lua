@@ -28,13 +28,13 @@ solution "San Andreas Multiplayer Romania"
     configuration "Debug"
         defines { "DEBUG" }
         flags { "Symbols" }
-		links { "format_d" }
+		links { "cppformat_d" }
         targetsuffix "_d"
 		
 	configuration "Release"
         defines { "NDEBUG" }
 		flags { "Symbols" } -- Debug Propose
-		links { "format" }
+		links { "cppformat" }
         optimize "On"
  
 	------------------------------------------------------------------
