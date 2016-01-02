@@ -9,13 +9,17 @@ public:
 	CHouse(uint16_t aID, std::shared_ptr<CResult> Result);
 	~CHouse() = default;
 
+	const Point3D<float> GetExit() const;
+
+	const Point3D<float> GetEntrance() const;
+
 	const uint16_t GetID() const;
 
 	const uint64_t GetOwnerID() const;
 
-private:
+	const bool IsLocked() const;
 
-	friend class CKeys;
+private:
 
 	void Manage();
 };

@@ -47,15 +47,15 @@ void CKeys::Enter(std::shared_ptr<CPlayer> Player)
 	{
 		auto House = i.second;
 
-		if (Player->IsInRangeOfPoint(House->GetData<Point3D<float>>(HouseData::kEntrance)))
+		if (Player->IsInRangeOfPoint(House->GetEntrance()))
 		{
-			if (!!House->GetData<uint16_t>(HouseData::kLocked) == true)
+			if (House->IsLocked() == true)
 			{
 				Player->SendMessage(0xFFFFFF, "* The house's door is locked, you cannot enter.");
 			}
 			else
 			{
-				Player->SetPosition(House->GetData<Point3D<float>>(HouseData::kExit));
+				Player->SetPosition(House->GetExit());
 			}
 
 			return;
@@ -66,15 +66,15 @@ void CKeys::Enter(std::shared_ptr<CPlayer> Player)
 	{
 		auto Business = i.second;
 
-		if (Player->IsInRangeOfPoint(Business->GetData<Point3D<float>>(BusinessData::kEntrance)))
+		if (Player->IsInRangeOfPoint(Business->GetEntrance()))
 		{
-			if (!!Business->GetData<uint16_t>(BusinessData::kLocked) == true)
+			if (Business->IsLocked() == true)
 			{
 				Player->SendMessage(0xFFFFFF, "The business's door is locked, you cannot enter.");
 			}
 			else
 			{
-				Player->SetPosition(Business->GetData<Point3D<float>>(BusinessData::kExit));
+				Player->SetPosition(Business->GetExit());
 			}
 
 			return;
@@ -88,9 +88,9 @@ void CKeys::Exit(std::shared_ptr<CPlayer> Player)
 	{
 		auto House = i.second;
 
-		if (Player->IsInRangeOfPoint(House->GetData<Point3D<float>>(HouseData::kExit)))
+		if (Player->IsInRangeOfPoint(House->GetExit()))
 		{
-			Player->SetPosition(House->GetData<Point3D<float>>(HouseData::kEntrance));
+			Player->SetPosition(House->GetEntrance());
 			return;
 		}
 	}
@@ -99,9 +99,9 @@ void CKeys::Exit(std::shared_ptr<CPlayer> Player)
 	{
 		auto Business = i.second;
 
-		if (Player->IsInRangeOfPoint(Business->GetData<Point3D<float>>(BusinessData::kExit)))
+		if (Player->IsInRangeOfPoint(Business->GetExit()))
 		{
-			Player->SetPosition(Business->GetData<Point3D<float>>(BusinessData::kEntrance));
+			Player->SetPosition(Business->GetEntrance());
 			return;
 		}
 	}

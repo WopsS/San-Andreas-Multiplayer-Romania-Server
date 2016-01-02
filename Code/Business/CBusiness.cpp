@@ -40,6 +40,11 @@ CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
 				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
 				break;
 			}
+			case BusinessData::kLocked:
+			{
+				SetData<bool>(Index, !!std::stoi(Value));
+				break;
+			}
 			default:
 			{
 				switch (Result->GetFieldType(Index))
@@ -90,6 +95,16 @@ CBusiness::CBusiness(uint16_t ID, std::shared_ptr<CResult> Result)
 	Manage();
 }
 
+const Point3D<float> CBusiness::GetExit() const
+{
+	return GetData<Point3D<float>>(BusinessData::kExit);
+}
+
+const Point3D<float> CBusiness::GetEntrance() const
+{
+	return GetData<Point3D<float>>(BusinessData::kEntrance);
+}
+
 const uint16_t CBusiness::GetID() const
 {
 	return GetData<uint16_t>(BusinessData::kID);
@@ -98,6 +113,11 @@ const uint16_t CBusiness::GetID() const
 const uint64_t CBusiness::GetOwnerID() const
 {
 	return GetData<uint64_t>(BusinessData::kOwnerID);
+}
+
+const bool CBusiness::IsLocked() const
+{
+	return GetData<bool>(BusinessData::kLocked);
 }
 
 void CBusiness::Manage()

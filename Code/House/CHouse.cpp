@@ -35,6 +35,11 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
 				break;
 			}
+			case HouseData::kLocked:
+			{
+				SetData<bool>(Index, !!std::stoi(Value));
+				break;
+			}
 			case HouseData::kRentPrice:
 			{
 				SetData<uint16_t>(Index, Value.length() == 0 ? 0 : std::stoi(Value));
@@ -101,6 +106,16 @@ CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)
 
 }
 
+const Point3D<float> CHouse::GetExit() const
+{
+	return GetData<Point3D<float>>(HouseData::kExit);
+}
+
+const Point3D<float> CHouse::GetEntrance() const
+{
+	return GetData<Point3D<float>>(HouseData::kEntrance);
+}
+
 const uint16_t CHouse::GetID() const
 {
 	return GetData<uint16_t>(HouseData::kID);
@@ -109,6 +124,11 @@ const uint16_t CHouse::GetID() const
 const uint64_t CHouse::GetOwnerID() const
 {
 	return GetData<uint64_t>(HouseData::kOwnerID);
+}
+
+const bool CHouse::IsLocked() const
+{
+	return GetData<bool>(HouseData::kLocked);
 }
 
 void CHouse::Manage()
