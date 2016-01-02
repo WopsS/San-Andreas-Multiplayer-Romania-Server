@@ -1,5 +1,4 @@
 #include <MySQL/CConnectionPool.hpp>
-#include <Log/CLog.hpp>
 
 CConnectionPool::CConnectionPool(uint32_t Size)
 {

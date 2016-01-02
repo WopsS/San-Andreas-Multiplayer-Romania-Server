@@ -1,10 +1,5 @@
 #include <Utilities/Time.hpp>
 
-#include <chrono>
-#include <ctime>
-#include <iomanip>
-#include <sstream>
-
 std::string Time::GetHour()
 {
 	auto timeNow = std::chrono::system_clock::now();

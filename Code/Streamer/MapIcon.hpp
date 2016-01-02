@@ -1,10 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
-#include <stdafx.hpp>
-#include <Base/CPoint.hpp>
-
 #ifndef STREAMER_MAP_ICON_SD
 #define STREAMER_MAP_ICON_SD 200.0f
 #endif

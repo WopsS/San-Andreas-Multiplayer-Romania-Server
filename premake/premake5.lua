@@ -45,6 +45,8 @@ solution "San Andreas Multiplayer Romania"
 		kind "SharedLib"
 		language "C++"
 		targetdir "../Build/bin"
+		pchheader "stdafx.hpp"
+		pchsource "../Code/stdafx.cpp"
 		
 		defines
 		{
@@ -57,6 +59,11 @@ solution "San Andreas Multiplayer Romania"
 			"../Includes/cppformat",
 			"../Includes/MySQL",
 			"../Includes/sampgdk"
+		}
+		
+		forceincludes
+		{
+			"stdafx.hpp"
 		}
 		
 		files 
@@ -84,3 +91,4 @@ solution "San Andreas Multiplayer Romania"
 				"libmysql",
 				"sampgdk4"
 			}
+		

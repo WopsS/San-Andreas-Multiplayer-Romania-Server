@@ -1,10 +1,5 @@
 #pragma once
 
-#include <map>
-#include <memory>
-
-#include <Base/CSingleton.hpp>
-#include <Base/Types.hpp>
 #include <Dialog/CDialog.hpp>
 #include <Dialog/Enums.hpp>
 #include <Player/CPlayer.hpp>

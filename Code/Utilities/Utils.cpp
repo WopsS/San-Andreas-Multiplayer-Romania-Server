@@ -1,8 +1,5 @@
 #include <Utilities/Utils.hpp>
 
-#include <algorithm>
-#include <sstream>
-
 const bool Utils::IsFloat(const std::string& Text)
 {
 	float Number;

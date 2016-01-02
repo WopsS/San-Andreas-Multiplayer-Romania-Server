@@ -1,9 +1,4 @@
 #include <Utilities/Encryption.hpp>
-
-#include <algorithm>
-#include <chrono>
-#include <cstdint>
-
 #include <Utilities/SHA256.hpp>
 
 const std::string Encryption::Encrypt(const std::string& Data, const std::string& Salt)

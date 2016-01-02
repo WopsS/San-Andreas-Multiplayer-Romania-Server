@@ -1,12 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <functional>
-#include <string>
-
-#include <MySQL/CParameter.hpp>
-#include <MySQL/CResult.hpp>
-
 enum QueryType : uint16_t
 {
 	kNormal = 1,

@@ -1,10 +1,5 @@
 #pragma once
 
-#include <map>
-#include <memory>
-#include <tuple>
-
-#include <Base/CSingleton.hpp>
 #include <Player/CPlayer.hpp>
 #include <House/CHouse.hpp>
 

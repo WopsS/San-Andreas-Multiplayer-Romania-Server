@@ -1,16 +1,5 @@
 #pragma once
 
-#include <atomic>
-#include <cstdint>
-#include <fstream>
-#include <memory>
-#include <mutex>
-#include <queue>
-#include <thread>
-
-#include <format.h>
-#include <Base/CSingleton.hpp>
-
 enum LogLevel : uint16_t
 {
 	kDebug = 1,

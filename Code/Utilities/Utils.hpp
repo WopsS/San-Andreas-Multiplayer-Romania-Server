@@ -1,9 +1,5 @@
 #pragma once
 
-#include <cctype>
-#include <cstdint>
-#include <string>
-
 namespace Utils
 {
 	const bool IsFloat(const std::string& Text);

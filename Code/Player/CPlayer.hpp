@@ -1,15 +1,6 @@
 #pragma once
 
-#include <memory>
-#include <unordered_map>
-
-#include <stdafx.hpp>
-#include <Colors.hpp>
-#include <format.h>
-#include <Base/CData.hpp>
-#include <Base/CMap.hpp>
 #include <Dialog/CDialog.hpp>
-#include <MySQL/CResult.hpp>
 #include <Player/Enums.hpp>
 #include <Vehicle/CVehicle.hpp>
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 enum class HouseData : uint8_t
 {
 	kID = 0,

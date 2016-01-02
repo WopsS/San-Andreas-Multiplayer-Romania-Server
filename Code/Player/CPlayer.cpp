@@ -1,9 +1,6 @@
 #include <Player/CPlayer.hpp>
 
-#include <sstream>
-
 #include <Dialog/CDialogs.hpp>
-#include <MySQL/CMySQL.hpp>
 #include <Utilities/Utils.hpp>
 
 CPlayer::CPlayer(uint16_t ID)

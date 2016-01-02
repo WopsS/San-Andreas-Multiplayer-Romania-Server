@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 enum class CommandFlags : uint8_t
 {
 	kPlayer = 1 << 0,

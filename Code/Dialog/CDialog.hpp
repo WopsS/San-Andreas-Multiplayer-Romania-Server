@@ -1,10 +1,5 @@
 #pragma once
 
-#include <functional>
-#include <string>
-
-#include <Base/CData.hpp>
-#include <Base/Types.hpp>
 #include <Dialog/Enums.hpp>
 
 class CDialog : public CData<DialogData>

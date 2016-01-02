@@ -1,5 +1,4 @@
 #include <MySQL/CConnection.hpp>
-#include <Log/CLog.hpp>
 
 CConnection::CConnection(const std::string& Host, const std::string& Database, const std::string& Username, const std::string& Password, const uint32_t Port)
 	: m_connection(nullptr)

@@ -1,12 +1,6 @@
 #pragma once
 
-#include <cstdlib>
-#include <string>
-
-#include <Base/CData.hpp>
-#include <Base/CMap.hpp>
 #include <Faction/Enums.hpp>
-#include <MySQL/CResult.hpp>
 
 class CFaction : public CMap<uint16_t, CFaction>, private CData<FactionData>
 {

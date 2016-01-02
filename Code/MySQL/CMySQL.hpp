@@ -1,14 +1,5 @@
 #pragma once
 
-#include <functional>
-#include <memory>
-
-#include <Base/CSingleton.hpp>
-#include <MySQL/CConnectionPool.hpp>
-#include <MySQL/CParameter.hpp>
-#include <MySQL/CQuery.hpp>
-#include <MySQL/CResult.hpp>
-
 class CMySQL : public CSingleton<CMySQL>
 {
 public:

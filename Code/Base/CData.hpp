@@ -1,10 +1,5 @@
 #pragma once
 
-#include <memory>
-#include <unordered_map>
-
-#include <Base/CAny.hpp>
-
 /// <summary>
 /// Base class to store an undefined amount of objects with any type.
 /// </summary>

@@ -1,13 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <functional>
-#include <memory>
-#include <string>
-#include <vector>
-
-#include <Base/CSingleton.hpp>
-#include <Base/Types.hpp>
 #include <Commands/CCommand.hpp>
 #include <Player/CPlayer.hpp>
 

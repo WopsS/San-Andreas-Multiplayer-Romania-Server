@@ -1,6 +1,4 @@
 #include <Faction/CFaction.hpp>
-
-#include <Base/CPoint.hpp>
 #include <Utilities/Utils.hpp>
 
 CFaction::CFaction(uint16_t ID, std::shared_ptr<CResult> Result)

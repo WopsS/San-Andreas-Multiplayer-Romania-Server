@@ -1,9 +1,5 @@
 #include <Dialog/CDialogs.hpp>
 
-#include <random>
-#include <regex>
-
-#include <MySQL/CMySQL.hpp>
 #include <Utilities/Encryption.hpp>
 #include <Utilities/Utils.hpp>
 

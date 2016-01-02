@@ -1,9 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <memory>
-#include <unordered_map>
-
 /// <summary>
 /// Base class to store an undefined amount of objects with the same type.
 /// </summary>

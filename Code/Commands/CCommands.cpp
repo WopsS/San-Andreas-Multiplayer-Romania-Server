@@ -1,10 +1,5 @@
 #include <Commands/CCommands.hpp>
 
-#include <set>
-#include <vector>
-
-#include <Colors.hpp>
-#include <Base/CPoint.hpp>
 #include <House/CHouse.hpp>
 #include <Utilities/Utils.hpp>
 

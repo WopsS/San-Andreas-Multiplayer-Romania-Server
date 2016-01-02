@@ -36,7 +36,6 @@
 */
 
 #include <cstring>
-#include <fstream>
 #include "SHA256.hpp"
 
 const unsigned int SHA256::sha256_k[64] = //UL = uint32

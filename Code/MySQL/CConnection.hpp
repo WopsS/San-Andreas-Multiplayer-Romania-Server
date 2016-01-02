@@ -1,17 +1,5 @@
 #pragma once
 
-#include <atomic>
-#include <memory>
-#include <mutex>
-#include <queue>
-#include <string>
-#include <thread>
-#include <tuple>
-
-#include <mysql.h>
-#include <MySQL/CQuery.hpp>
-#include <MySQL/CResult.hpp>
-
 class CConnection
 {
 public:

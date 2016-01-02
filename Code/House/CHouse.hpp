@@ -1,12 +1,6 @@
 #pragma once
 
-#include <cstdint>
-#include <memory>
-
-#include <Base/CMap.hpp>
-#include <Base/CData.hpp>
 #include <House/Enums.hpp>
-#include <MySQL/CResult.hpp>
 
 class CHouse : public CMap<uint16_t, CHouse>, private CData<HouseData>
 {

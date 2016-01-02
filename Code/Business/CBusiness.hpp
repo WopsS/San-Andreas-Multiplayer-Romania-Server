@@ -1,12 +1,6 @@
 #pragma once
 
-#include <cstdint>
-#include <memory>
-
-#include <Base/CData.hpp>
-#include <Base/CMap.hpp>
 #include <Business/Enums.hpp>
-#include <MySQL/CResult.hpp>
 
 class CBusiness : public CMap<uint16_t, CBusiness>, private CData<BusinessData>
 {

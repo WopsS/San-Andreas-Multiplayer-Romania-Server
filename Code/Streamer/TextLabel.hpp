@@ -1,11 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <memory>
-#include <string>
-
-#include <stdafx.hpp>
-#include <Base/CPoint.hpp>
 #include <Player/CPlayer.hpp>
 
 #ifndef STREAMER_3D_TEXT_LABEL_SD

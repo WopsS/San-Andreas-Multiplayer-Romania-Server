@@ -3,8 +3,6 @@
 #include <Streamer/Pickup.hpp>
 #include <Streamer/MapIcon.hpp>
 #include <Streamer/TextLabel.hpp>
-
-#include <Base/CPoint.hpp>
 #include <Utilities/Utils.hpp>
 
 CHouse::CHouse(uint16_t ID, std::shared_ptr<CResult> Result)

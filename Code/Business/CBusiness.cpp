@@ -1,6 +1,5 @@
 #include <Business/CBusiness.hpp>
 
-#include <Base/CPoint.hpp>
 #include <Streamer/MapIcon.hpp>
 #include <Streamer/Pickup.hpp>
 #include <Streamer/TextLabel.hpp>

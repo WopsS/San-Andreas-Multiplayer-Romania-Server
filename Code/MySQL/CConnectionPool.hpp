@@ -1,11 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <memory>
-
-#include <MySQL/CConnection.hpp>
-#include <MySQL/CQuery.hpp>
-
 class CConnectionPool
 {
 public:

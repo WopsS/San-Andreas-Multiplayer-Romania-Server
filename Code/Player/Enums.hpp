@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 enum class AdminLevel : uint8_t
 {
 	kLevelZero = 0,

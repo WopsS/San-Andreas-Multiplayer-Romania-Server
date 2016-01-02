@@ -1,9 +1,5 @@
 #pragma once
 
-#include <memory>
-
-#include <stdafx.hpp>
-#include <Base/CPoint.hpp>
 #include <Player/CPlayer.hpp>
 
 namespace Pickup

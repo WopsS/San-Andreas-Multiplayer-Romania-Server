@@ -1,7 +1,5 @@
 #include <Streamer/TextLabel.hpp>
 
-#include <sstream>
-
 uint32_t TextLabel::Create(const std::string& Text, int Color, Point3D<float> Position, float DrawDistance, uint16_t AttachedPlayer, uint16_t AttachedVehicle, bool TestLOS, int VirtualWorld, int Interior, std::shared_ptr<CPlayer> Player, float StreamDistance)
 {
 	return Create(Text, Color, Position.X, Position.Y, Position.Z, DrawDistance, AttachedPlayer, AttachedVehicle, TestLOS, VirtualWorld, Interior, Player, StreamDistance);

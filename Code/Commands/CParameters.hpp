@@ -1,9 +1,5 @@
 #pragma once
 
-#include <string>
-
-#include <Base/CData.hpp>
-
 /// <summary>
 /// Class which store all parameters for a command.
 /// </summary>

@@ -1,10 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <mysql.h>
-
 class CConnection;
 
 struct FieldInformation

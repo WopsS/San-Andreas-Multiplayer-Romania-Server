@@ -1,12 +1,5 @@
 #pragma once
 
-#include <memory>
-
-#include <stdafx.hpp>
-#include <format.h>
-#include <Base/CSingleton.hpp>
-#include <MySQL/CMySQL.hpp>
-
 class CServer : public CSingleton<CServer>
 {
 public:

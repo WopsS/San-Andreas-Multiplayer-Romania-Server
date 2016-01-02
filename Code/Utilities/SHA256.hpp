@@ -37,8 +37,6 @@
 
 #pragma once
 
-#include <string>
-
 class SHA256
 {
 protected:

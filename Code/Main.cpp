@@ -1,11 +1,8 @@
 #include <stdafx.hpp>
 
-#include <mysql.h>
 #include <Commands/CCommands.hpp>
 #include <Dialog/CDialogs.hpp>
 #include <Key/CKeys.hpp>
-#include <Log/CLog.hpp>
-#include <MySQL/CMySQL.hpp>
 #include <Player/CPlayer.hpp>
 #include <Server/CServer.hpp>
 #include <Streamer/Object.hpp>

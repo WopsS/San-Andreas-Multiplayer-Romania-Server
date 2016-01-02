@@ -1,14 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <memory>
-#include <vector>
-
-#include <stdafx.hpp>
-#include <Base/CData.hpp>
-#include <Base/CMap.hpp>
-#include <Base/CPoint.hpp>
-#include <MySQL/CResult.hpp>
 #include <Vehicle/Enums.hpp>
 
 class CVehicle : public CMap<uint16_t, CVehicle>, private CData<VehicleData>

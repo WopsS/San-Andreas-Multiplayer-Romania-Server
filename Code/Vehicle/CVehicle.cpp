@@ -1,5 +1,4 @@
 #include <Vehicle/CVehicle.hpp>
-
 #include <Utilities/Utils.hpp>
 
 CVehicle::CVehicle(uint16_t ID, std::shared_ptr<CResult> Result)
