@@ -18,6 +18,6 @@ const bool Pickup::IsValid(int ID)
 	return !!sampgdk::InvokeNative(Native, "i", ID);
 }
 
-void Pickup::OnPlayerPickUp(std::shared_ptr<CPlayer> Player, int ID)
+void Pickup::OnPlayerPickUp(std::shared_ptr<Player> Player, int ID)
 {
 }

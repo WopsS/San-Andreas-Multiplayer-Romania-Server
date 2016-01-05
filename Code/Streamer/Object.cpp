@@ -6,7 +6,7 @@ const bool Object::AttachToObject(uint32_t ID, uint32_t AttachToID, float X, flo
 	return !!sampgdk::InvokeNative(Native, "iiffffffb", ID, AttachToID, X, Y, Z, RotationX, RotationY, RotationZ, SyncRotation);
 }
 
-const bool Object::AttachToPlayer(uint32_t ID, std::shared_ptr<CPlayer> Player, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
+const bool Object::AttachToPlayer(uint32_t ID, std::shared_ptr<Player> Player, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("AttachDynamicObjectToPlayer");
 	return !!sampgdk::InvokeNative(Native, "iiffffff", ID, Player->GetGameID(), X, Y, Z, RotationX, RotationY, RotationZ);
@@ -85,7 +85,7 @@ void Object::Move(uint32_t ID, float X, float Y, float Z, float Speed, float Rot
 	sampgdk::InvokeNative(Native, "ifffffff", ID, X, Y, Z, Speed, RotationX, RotationY, RotationZ);
 }
 
-void Object::OnPlayerEdit(std::shared_ptr<CPlayer> Player, uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
+void Object::OnPlayerEdit(std::shared_ptr<Player> Player, uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
 {
 	if (IsValid(ObjectID) == true)
 	{
@@ -101,7 +101,7 @@ void Object::OnPlayerEdit(std::shared_ptr<CPlayer> Player, uint32_t ObjectID, Ob
 	}
 }
 
-void Object::OnPlayerSelect(std::shared_ptr<CPlayer> Player, uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position)
+void Object::OnPlayerSelect(std::shared_ptr<Player> Player, uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position)
 {
 	if (IsValid(ObjectID) == true)
 	{

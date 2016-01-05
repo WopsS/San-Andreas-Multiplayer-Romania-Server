@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Player/CPlayer.hpp>
+#include <Player/Player.hpp>
 
 namespace Pickup
 {
@@ -10,7 +10,7 @@ namespace Pickup
 
 	const bool IsValid(int ID);
 
-	void OnPlayerPickUp(std::shared_ptr<CPlayer> Player, int ID);
+	void OnPlayerPickUp(std::shared_ptr<Player> Player, int ID);
 
 	/* Unimplemented:
 		* native STREAMER_TAG_PICKUP CreateDynamicPickupEx(modelid, type, Float:x, Float:y, Float:z, Float:streamdistance = STREAMER_PICKUP_SD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);

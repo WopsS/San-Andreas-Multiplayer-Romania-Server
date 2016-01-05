@@ -5,7 +5,7 @@ EngineCommand::EngineCommand()
 	m_names = { "engine" };
 }
 
-void EngineCommand::Execute(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters)
+void EngineCommand::Execute(std::shared_ptr<Player> Player, std::shared_ptr<CommandParameters> Parameters)
 {
 	if (Player->IsInVehicle() == false)
 	{

@@ -25,20 +25,20 @@
 #include <format.h>
 #include <mysql.h>
 #include <Colors.hpp>
-#include <Base/CAny.hpp>
-#include <Base/CData.hpp>
-#include <Base/CMap.hpp>
-#include <Base/CPoint.hpp>
-#include <Base/CSingleton.hpp>
+#include <Base/Any.hpp>
+#include <Base/Data.hpp>
+#include <Base/Map.hpp>
+#include <Base/Point.hpp>
+#include <Base/Singleton.hpp>
 #include <Base/Types.hpp>
-#include <Log/CLog.hpp>
+#include <Log/Log.hpp>
 
-#include <MySQL/CParameter.hpp>
-#include <MySQL/CQuery.hpp>
-#include <MySQL/CResult.hpp>
-#include <MySQL/CConnection.hpp>
-#include <MySQL/CConnectionPool.hpp>
-#include <MySQL/CMySQL.hpp>
+#include <MySQL/Parameter.hpp>
+#include <MySQL/Query.hpp>
+#include <MySQL/Result.hpp>
+#include <MySQL/Connection.hpp>
+#include <MySQL/ConnectionPool.hpp>
+#include <MySQL/MySQL.hpp>
 
 #define SAMPGDK_CPP_WRAPPERS
 

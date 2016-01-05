@@ -1,10 +1,10 @@
 #include <stdafx.hpp>
 
-#include <Commands/CCommands.hpp>
-#include <Dialog/CDialogs.hpp>
-#include <Key/CKeys.hpp>
-#include <Player/CPlayer.hpp>
-#include <Server/CServer.hpp>
+#include <Commands/Commands.hpp>
+#include <Dialog/Dialogs.hpp>
+#include <Key/Keys.hpp>
+#include <Player/Player.hpp>
+#include <Server/Server.hpp>
 #include <Streamer/Object.hpp>
 #include <Streamer/Pickup.hpp>
 #include <Utilities/Time.hpp>
@@ -21,30 +21,30 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	sampgdk::SetWorldTime(std::stoi(Time::GetHour()));
 	
 	// Initialize server things.
-	CServer::GetInstance()->Initialize();
+	Server::GetInstance()->Initialize();
 
 	return true;
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int PlayerID)
 {
-	CPlayer::Add(static_cast<uint16_t>(PlayerID));
+	Player::Add(static_cast<uint16_t>(PlayerID));
 
-	auto Player = CPlayer::Get(PlayerID);
+	auto Player = Player::Get(PlayerID);
 
 	if (Player == nullptr)
 	{
 		return false;
 	}
 
-	CMySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `players` WHERE `Name` = ':name' LIMIT 1", { CMySQL::GetInstance()->MakeParameter("name", Player->GetName()) }, &CPlayer::OnConnect, Player);
+	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `players` WHERE `Name` = ':name' LIMIT 1", { MySQL::GetInstance()->MakeParameter("name", Player->GetName()) }, &Player::OnConnect, Player);
 
 	return true;
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int PlayerID, int Reason)
 {
-	auto Player = CPlayer::Get(PlayerID);
+	auto Player = Player::Get(PlayerID);
 
 	if (Player == nullptr)
 	{
@@ -52,14 +52,14 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int PlayerID, int Reason)
 	}
 
 	Player->OnDisconnect(static_cast<DisconnectReason>(Reason));
-	CPlayer::Remove(static_cast<uint16_t>(PlayerID));
+	Player::Remove(static_cast<uint16_t>(PlayerID));
 
 	return true;
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestClass(int PlayerID, int ClassID)
 {
-	auto Player = CPlayer::Get(PlayerID);
+	auto Player = Player::Get(PlayerID);
 
 	if (Player != nullptr)
 	{
@@ -76,11 +76,11 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestClass(int PlayerID, int ClassID)
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int PlayerID, const char* CMDText)
 {
-	auto Player = CPlayer::Get(PlayerID);
+	auto Player = Player::Get(PlayerID);
 
 	if (Player != nullptr)
 	{
-		return CCommands::GetInstance()->Execute(Player, std::string(CMDText));
+		return Commands::GetInstance()->Execute(Player, std::string(CMDText));
 	}
 
 	return false;
@@ -88,11 +88,11 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int PlayerID, const char* CMD
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int PlayerID, int DialogID, int Response, int ListItem, const char* InputText)
 {
-	auto Player = CPlayer::Get(PlayerID);
+	auto Player = Player::Get(PlayerID);
 
 	if (Player != nullptr)
 	{
-		return CDialogs::GetInstance()->Execute(Player, static_cast<::DialogID>(DialogID), static_cast<DialogResponse>(Response), static_cast<uint32_t>(ListItem), std::string(InputText));
+		return Dialogs::GetInstance()->Execute(Player, static_cast<::DialogID>(DialogID), static_cast<DialogResponse>(Response), static_cast<uint32_t>(ListItem), std::string(InputText));
 	}
 
 	return false;
@@ -100,7 +100,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int PlayerID, int DialogID, int 
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int PlayerID)
 {
-	auto Player = CPlayer::Get(PlayerID);
+	auto Player = Player::Get(PlayerID);
 
 	if (Player != nullptr)
 	{
@@ -112,11 +112,11 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int PlayerID)
 
 PLUGIN_EXPORT bool PLUGIN_CALL  OnPlayerKeyStateChange(int PlayerID, int NewKeys, int OldKeys)
 {
-	auto Player = CPlayer::Get(PlayerID);
+	auto Player = Player::Get(PlayerID);
 
 	if (Player != nullptr)
 	{
-		CKeys::GetInstance()->OnPresses(Player, NewKeys, OldKeys);
+		Keys::GetInstance()->OnPresses(Player, NewKeys, OldKeys);
 	}
 
 	return true;
@@ -128,7 +128,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 
 	if (Name.compare("OnPlayerEditDynamicObject") == 0)
 	{
-		auto Player = CPlayer::Get(static_cast<uint16_t>(params[1]));
+		auto Player = Player::Get(static_cast<uint16_t>(params[1]));
 
 		if (Player != nullptr)
 		{
@@ -138,7 +138,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 	}
 	else if (Name.compare("OnPlayerPickUpDynamicPickup") == 0)
 	{
-		auto Player = CPlayer::Get(static_cast<uint16_t>(params[1]));
+		auto Player = Player::Get(static_cast<uint16_t>(params[1]));
 
 		if (Player != nullptr)
 		{
@@ -147,7 +147,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 	}
 	else if (Name.compare("OnPlayerSelectDynamicObject") == 0)
 	{
-		auto Player = CPlayer::Get(static_cast<uint16_t>(params[1]));
+		auto Player = Player::Get(static_cast<uint16_t>(params[1]));
 
 		if (Player != nullptr)
 		{
@@ -190,8 +190,8 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 {
 	sampgdk::logprintf("  SAMPRomania: Unloading plugin...", SERVER_VERSION);
 
-	CMySQL::DestroyInstance();
-	CLog::DestroyInstance();
+	MySQL::DestroyInstance();
+	Logger::DestroyInstance();
 
 	mysql_library_end();
 
@@ -202,5 +202,5 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 PLUGIN_EXPORT void PLUGIN_CALL ProcessTick()
 {
 	sampgdk::ProcessTick();
-	CMySQL::GetInstance()->ProcessCallbacks();
+	MySQL::GetInstance()->ProcessCallbacks();
 }

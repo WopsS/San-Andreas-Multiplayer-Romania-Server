@@ -1,15 +1,15 @@
 #pragma once
 
-#include <Commands/CCommand.hpp>
+#include <Commands/Command.hpp>
 
-class TestCommand : public CCommand
+class TestCommand : public Command
 {
 public:
 
 	TestCommand();
 	~TestCommand() = default;
 
-	const bool CustomAccess(std::shared_ptr<CPlayer> Player) const;
+	const bool CustomAccess(std::shared_ptr<Player> Player) const;
 
-	void Execute(std::shared_ptr<CPlayer> Player, std::shared_ptr<CCommandParameters> Parameters);
+	void Execute(std::shared_ptr<Player> Player, std::shared_ptr<CommandParameters> Parameters);
 };
