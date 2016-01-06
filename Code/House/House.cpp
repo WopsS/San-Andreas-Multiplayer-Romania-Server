@@ -89,7 +89,7 @@ void House::Manage()
 
 	if (GetOwnerID() == 0)
 	{
-		Text = fmt::format("{{FFFFFF}}This house is for sale\n{{0F90FA}}Price: {{FFFFFF}}${}\n{{0F90FA}}Level: {{FFFFFF}}{}\n{{0F90FA}}to buy this house type /COMMAND_HERE.", GetID(), GetPrice(), GetLevel());
+		Text = fmt::format("{{FFFFFF}}This house is for sale\n{{0F90FA}}Price: {{FFFFFF}}${}\n{{0F90FA}}Level: {{FFFFFF}}{}\n{{0F90FA}}to buy this house type /COMMAND_HERE.", GetID(), Utils::FormatNumber(GetPrice()), GetLevel());
 
 		MapIconID = 31;
 	}

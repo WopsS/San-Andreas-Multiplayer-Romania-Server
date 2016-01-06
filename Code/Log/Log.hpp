@@ -2,7 +2,7 @@
 
 enum LogLevel : unsigned char
 {
-	kDebug = 0,
+	kDebug = 1,
 	kWarning,
 	kError
 };
