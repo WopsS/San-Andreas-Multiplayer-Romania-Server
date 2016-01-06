@@ -12,6 +12,10 @@ Business::Business(std::unique_ptr<MySQLResult> Result)
 		switch (Index)
 		{
 			case BusinessData::kID:
+			{
+				SetData<unsigned short>(Index, std::stoi(Value));
+				break;
+			}
 			case BusinessData::kOwnerID:
 			{
 				SetData<unsigned long long>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
@@ -35,6 +39,19 @@ Business::Business(std::unique_ptr<MySQLResult> Result)
 			case BusinessData::kLocked:
 			{
 				SetData<bool>(Index, !!std::stoi(Value));
+				break;
+			}
+			case BusinessData::kInterior:
+			case BusinessData::kLevel:
+			{
+				SetData<unsigned char>(Index, std::stoi(Value));
+				break;
+			}
+			case BusinessData::kPayout:
+			case BusinessData::kPrice:
+			case BusinessData::kVirtualWorld:
+			{
+				SetData<unsigned int>(Index, std::stoul(Value));
 				break;
 			}
 			default:
@@ -102,9 +119,44 @@ const unsigned short Business::GetID() const
 	return GetData<unsigned short>(BusinessData::kID);
 }
 
+const unsigned char Business::GetInterior() const
+{
+	return GetData<unsigned char>(BusinessData::kInterior);
+}
+
+const unsigned char Business::GetLevel() const
+{
+	return GetData<unsigned char>(BusinessData::kLevel);
+}
+
+const std::string Business::GetName() const
+{
+	return GetData<std::string>(BusinessData::kName);
+}
+
 const unsigned long long Business::GetOwnerID() const
 {
 	return GetData<unsigned long long>(BusinessData::kOwnerID);
+}
+
+const unsigned int Business::GetPayout() const
+{
+	return GetData<unsigned int>(BusinessData::kPayout);
+}
+
+const unsigned int Business::GetPrice() const
+{
+	return GetData<unsigned int>(BusinessData::kPrice);
+}
+
+const BusinessType Business::GetType() const
+{
+	return GetData<BusinessType>(BusinessData::kType);
+}
+
+const unsigned int Business::GetVirtualWorld() const
+{
+	return GetData<unsigned int>(BusinessData::kVirtualWorld);
 }
 
 const bool Business::IsLocked() const
@@ -114,9 +166,9 @@ const bool Business::IsLocked() const
 
 void Business::Manage()
 {
-	unsigned short MapIconID;
+	unsigned char MapIconID;
 
-	switch (GetData<BusinessType>(BusinessData::kType))
+	switch (GetType())
 	{
 		case BusinessType::kBank:
 		{
@@ -141,16 +193,16 @@ void Business::Manage()
 
 	if (GetOwnerID() == 0)
 	{
-		Text = fmt::format("Business {}\nThis business is for sale\nName: {FFFFFF}{}\n{0F90FA}Price: {FFFFFF}${}\n{0F90FA}Level: {FFFFFF}{}\n{0F90FA}to buy this business type /COMMAND_HERE", GetData<unsigned long long>(BusinessData::kID), GetData<std::string>(BusinessData::kName), GetData<unsigned long long>(BusinessData::kPrice), GetData<unsigned long long>(BusinessData::kLevel));
+		Text = fmt::format("Business {}\nThis business is for sale\nName: {FFFFFF}{}\n{0F90FA}Price: {FFFFFF}${}\n{0F90FA}Level: {FFFFFF}{}\n{0F90FA}to buy this business type /COMMAND_HERE", GetID(), GetName(), GetPrice(), GetLevel());
 	}
 	else
 	{
 		// TODO: Check if the business is locked and set a specific message.
-		Text = fmt::format("Business {}\n{0F90FA}Name: {FFFFFF}{}\n{0F90FA}Owner: {FFFFFF}{}\n{0F90FA}Fee: {FFFFFF}${}", GetData<int>(BusinessData::kID), GetData<std::string>(BusinessData::kName), GetOwnerID(), GetData<unsigned long long>(BusinessData::kPayout));
+		Text = fmt::format("Business {}\n{0F90FA}Name: {FFFFFF}{}\n{0F90FA}Owner: {FFFFFF}{}\n{0F90FA}Fee: {FFFFFF}${}", GetID(), GetName(), GetOwnerID(), GetPayout());
 	}
 
-	auto Entrance = GetData<Point3D<float>>(BusinessData::kEntrance);
-	auto Exit = GetData<Point3D<float>>(BusinessData::kExit);
+	auto Entrance = GetEntrance();
+	auto Exit = GetExit();
 
 	SetData<unsigned int>(BusinessData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
 	SetData<unsigned int>(BusinessData::kPickupID, Pickup::Create(1239, 1, Entrance));

@@ -15,7 +15,21 @@ public:
 
 	const unsigned short GetID() const;
 
+	const unsigned char GetInterior() const;
+
+	const unsigned char GetLevel() const;
+
+	const std::string GetName() const;
+
 	const unsigned long long GetOwnerID() const;
+
+	const unsigned int GetPayout() const;
+
+	const unsigned int GetPrice() const;
+
+	const BusinessType GetType() const;
+
+	const unsigned int GetVirtualWorld() const;
 
 	const bool IsLocked() const;
 
