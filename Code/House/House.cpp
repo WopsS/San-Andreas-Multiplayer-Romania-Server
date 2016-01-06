@@ -12,6 +12,10 @@ House::House(std::unique_ptr<MySQLResult> Result)
 		switch (Index)
 		{
 			case HouseData::kID:
+			{
+				SetData<unsigned short>(Index, std::stoi(Value));
+				break;
+			}
 			case HouseData::kOwnerID:
 			{
 				SetData<unsigned long long>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
@@ -32,9 +36,17 @@ House::House(std::unique_ptr<MySQLResult> Result)
 				SetData<bool>(Index, !!std::stoi(Value));
 				break;
 			}
-			case HouseData::kRentPrice:
+			case HouseData::kInterior:
+			case HouseData::kLevel:
 			{
-				SetData<unsigned short>(Index, Value.length() == 0 ? 0 : std::stoi(Value));
+				SetData<unsigned char>(Index, std::stoi(Value));
+				break;
+			}
+			case HouseData::kPrice:
+			case HouseData::kRentPrice:
+			case HouseData::kVirtualWorld:
+			{
+				SetData<unsigned int>(Index, std::stoul(Value));
 				break;
 			}
 			default:
@@ -87,14 +99,14 @@ House::House(std::unique_ptr<MySQLResult> Result)
 	Manage();
 }
 
-const Point3D<float> House::GetExit() const
-{
-	return GetData<Point3D<float>>(HouseData::kExit);
-}
-
 const Point3D<float> House::GetEntrance() const
 {
 	return GetData<Point3D<float>>(HouseData::kEntrance);
+}
+
+const Point3D<float> House::GetExit() const
+{
+	return GetData<Point3D<float>>(HouseData::kExit);
 }
 
 const unsigned short House::GetID() const
@@ -102,9 +114,34 @@ const unsigned short House::GetID() const
 	return GetData<unsigned short>(HouseData::kID);
 }
 
+const unsigned char House::GetInterior() const
+{
+	return GetData<unsigned char>(HouseData::kInterior);
+}
+
+const unsigned char House::GetLevel() const
+{
+	return GetData<unsigned char>(HouseData::kLevel);
+}
+
 const unsigned long long House::GetOwnerID() const
 {
 	return GetData<unsigned long long>(HouseData::kOwnerID);
+}
+
+const unsigned int House::GetPrice() const
+{
+	return GetData<unsigned int>(HouseData::kPrice);
+}
+
+const unsigned int House::GetRentPrice() const
+{
+	return GetData<unsigned int>(HouseData::kRentPrice);
+}
+
+const unsigned int House::GetVirtualWorld() const
+{
+	return GetData<unsigned int>(HouseData::kVirtualWorld);
 }
 
 const bool House::IsLocked() const
