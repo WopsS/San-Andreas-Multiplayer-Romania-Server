@@ -87,18 +87,7 @@ House::House(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 		}
 	}
 
-	auto OwnerID = GetData<uint64_t>(HouseData::kOwnerID);
-	auto Position = GetData<Point3D<float>>(HouseData::kEntrance);
-	auto Position2 = GetData<Point3D<float>>(HouseData::kExit);
-
-	MapIcon::Create(Point3D<float>(Position.X, Position.Y, Position.Z), 31);
-	Pickup::Create(19470, OwnerID == 0 ? 2 : 2, Point3D<float>(Position.X, Position.Y, Position.Z));
-	TextLabel::Create(OwnerID == 0 ? "Casa de vanzare!" : "Casa cumparata", 0xFFFFFF, Point3D<float>(Position.X, Position.Y, Position.Z));
-
-	Pickup::Create(1318, OwnerID == 0 ? 23 : 23, Point3D<float>(Position2.X, Position2.Y, Position2.Z));
-
-	TextLabel::Create("Exit" , 0xFFFFFF, Point3D<float>(Position2.X, Position2.Y, Position2.Z));
-
+	Manage();
 }
 
 const Point3D<float> House::GetExit() const

@@ -1,5 +1,4 @@
 #include <Streamer/Object.hpp>
-#include <Player/Player.hpp>
 
 const bool Object::AttachToObject(uint32_t ID, uint32_t AttachToID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ, bool SyncRotation)
 {

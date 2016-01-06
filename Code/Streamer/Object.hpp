@@ -1,7 +1,5 @@
 #pragma once
 
-class Player;
-
 #ifndef STREAMER_OBJECT_DD
 #define STREAMER_OBJECT_DD 0.0f
 #endif

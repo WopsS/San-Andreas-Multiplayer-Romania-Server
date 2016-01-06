@@ -39,3 +39,6 @@ enum class DialogID : uint16_t
 
 	kAuthentication
 };
+
+class Player;
+typedef std::function<void(std::shared_ptr<Player>, DialogResponse, size_t, std::string)> dialogfunction_t;

@@ -113,7 +113,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL  OnPlayerKeyStateChange(int PlayerID, int NewKeys
 
 	if (Player != nullptr)
 	{
-		Keys::GetInstance()->OnPresses(Player, NewKeys, OldKeys);
+		Keys::GetInstance()->OnPress(Player, NewKeys, OldKeys);
 	}
 
 	return true;

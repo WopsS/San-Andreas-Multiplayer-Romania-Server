@@ -9,11 +9,13 @@ class Keys : public Singleton<Keys>
 {
 public:
 
-	void OnPresses(std::shared_ptr<Player> Player, int NewKeys, int OldKeys);
+	void OnPress(std::shared_ptr<Player> Player, int NewKeys, int OldKeys);
 
 private:
 
 	friend class Singleton<Keys>;
+
+	typedef std::function<void(std::shared_ptr<Player>)> keyfunction_t;
 
 	Keys();
 	~Keys() = default;

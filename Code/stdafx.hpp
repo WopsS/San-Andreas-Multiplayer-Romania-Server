@@ -30,7 +30,6 @@
 #include <Base/Map.hpp>
 #include <Base/Point.hpp>
 #include <Base/Singleton.hpp>
-#include <Base/Types.hpp>
 #include <Log/Log.hpp>
 
 #include <MySQL/Parameter.hpp>

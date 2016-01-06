@@ -14,7 +14,7 @@ void Keys::Register(int Keys, bool Holding, keyfunction_t Function, int OldKeys)
 	m_keys.emplace(Keys, std::make_tuple(Holding, Function, OldKeys));
 }
 
-void Keys::OnPresses(std::shared_ptr<Player> Player, int NewKeys, int OldKeys)
+void Keys::OnPress(std::shared_ptr<Player> Player, int NewKeys, int OldKeys)
 {
 	bool NeedHolding = false;
 	int lOldKeys;

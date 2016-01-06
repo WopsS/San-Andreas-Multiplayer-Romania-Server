@@ -1,15 +1,15 @@
 #include <Streamer/TextLabel.hpp>
 #include <Player/Player.hpp>
 
-uint32_t TextLabel::Create(const std::string& Text, int Color, Point3D<float> Position, float DrawDistance, uint16_t AttachedPlayer, uint16_t AttachedVehicle, bool TestLOS, int VirtualWorld, int Interior, std::shared_ptr<Player> Player, float StreamDistance)
+uint32_t TextLabel::Create(const std::string& Text, int Color, Point3D<float> Position, float DrawDistance, uint16_t AttachedPlayer, uint16_t AttachedVehicle, bool TestLOS, int VirtualWorld, int Interior, uint16_t PlayerID, float StreamDistance)
 {
-	return Create(Text, Color, Position.X, Position.Y, Position.Z, DrawDistance, AttachedPlayer, AttachedVehicle, TestLOS, VirtualWorld, Interior, Player, StreamDistance);
+	return Create(Text, Color, Position.X, Position.Y, Position.Z, DrawDistance, AttachedPlayer, AttachedVehicle, TestLOS, VirtualWorld, Interior, PlayerID, StreamDistance);
 }
 
-uint32_t TextLabel::Create(const std::string& Text, int Color, float X, float Y, float Z, float DrawDistance, uint16_t AttachedPlayer, uint16_t AttachedVehicle, bool TestLOS, int VirtualWorld, int Interior, std::shared_ptr<Player> Player, float StreamDistance)
+uint32_t TextLabel::Create(const std::string& Text, int Color, float X, float Y, float Z, float DrawDistance, uint16_t AttachedPlayer, uint16_t AttachedVehicle, bool TestLOS, int VirtualWorld, int Interior, uint16_t PlayerID, float StreamDistance)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("CreateDynamic3DTextLabel");
-	return !!sampgdk::InvokeNative(Native, "siffffiibiiif", Text.c_str(), Color, X, Y, Z, DrawDistance, AttachedPlayer, AttachedVehicle, TestLOS, VirtualWorld, Interior, Player == nullptr ? INVALID_PLAYER_ID : Player->GetGameID(), StreamDistance);
+	return !!sampgdk::InvokeNative(Native, "siffffiibiiif", Text.c_str(), Color, X, Y, Z, DrawDistance, AttachedPlayer, AttachedVehicle, TestLOS, VirtualWorld, Interior, PlayerID != -1 ? Player::Get(PlayerID)->GetGameID() : -1, StreamDistance);
 }
 
 const bool TextLabel::Destroy(uint32_t ID)
