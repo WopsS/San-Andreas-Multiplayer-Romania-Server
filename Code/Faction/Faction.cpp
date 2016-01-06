@@ -23,8 +23,6 @@ Faction::Faction(std::unique_ptr<MySQLResult> Result)
 				auto Y = std::stof(Result->GetRowData(i++));
 				auto Z = std::stof(Result->GetRowData(i));
 
-
-
 				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
 				break;
 			}
