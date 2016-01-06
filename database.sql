@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 06, 2016 at 11:32 AM
+-- Generation Time: Jan 06, 2016 at 01:15 PM
 -- Server version: 5.5.46-0+deb8u1
 -- PHP Version: 5.6.14-0+deb8u1
 
@@ -106,14 +106,14 @@ CREATE TABLE IF NOT EXISTS `faction_vehicles` (
 `ID` bigint(20) unsigned NOT NULL,
   `OwnerID` smallint(5) unsigned DEFAULT NULL,
   `Model` smallint(5) unsigned NOT NULL,
-  `X` int(11) NOT NULL,
-  `Y` int(11) NOT NULL,
-  `Z` int(11) NOT NULL,
+  `X` float NOT NULL,
+  `Y` float NOT NULL,
+  `Z` float NOT NULL,
   `Rotation` float NOT NULL,
   `Color1` tinyint(3) unsigned NOT NULL,
   `Color2` tinyint(3) unsigned NOT NULL,
   `RespawnTime` int(10) unsigned NOT NULL,
-  `Siren` tinyint(3) unsigned NOT NULL DEFAULT '0'
+  `Siren` tinyint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8;
 
 --
@@ -359,7 +359,7 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `ExitZ` float NOT NULL,
   `Interior` tinyint(3) unsigned NOT NULL,
   `VirtualWorld` int(10) unsigned NOT NULL,
-  `Locked` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `Locked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `Price` int(10) unsigned NOT NULL,
   `Level` tinyint(3) unsigned NOT NULL,
   `RentPrice` smallint(5) unsigned NOT NULL DEFAULT '25'
