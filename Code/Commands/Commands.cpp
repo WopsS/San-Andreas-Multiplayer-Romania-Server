@@ -1,7 +1,5 @@
 #include <Commands/Commands.hpp>
-
 #include <House/House.hpp>
-#include <Utilities/Utils.hpp>
 
 // Include commands below in alphabetical order.
 #include <Commands/Player/Engine.hpp>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Player/Player.hpp>
+class Player;
 
 #ifndef STREAMER_3D_TEXT_LABEL_SD
 #define STREAMER_3D_TEXT_LABEL_SD 200.0f

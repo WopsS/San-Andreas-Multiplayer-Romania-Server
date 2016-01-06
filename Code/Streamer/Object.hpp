@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Player/Player.hpp>
+class Player;
 
 #ifndef STREAMER_OBJECT_DD
 #define STREAMER_OBJECT_DD 0.0f
@@ -21,8 +21,6 @@ enum class ObjectEditionResponse : uint16_t
 namespace Object
 {
 	const bool AttachToObject(uint32_t ID, uint32_t AttachToID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ, bool SyncRotation = true);
-
-	const bool AttachToPlayer(uint32_t ID, std::shared_ptr<Player> Player, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ);
 
 	const bool AttachToVehicle(uint32_t ID, uint32_t VehicleID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ);
 
@@ -45,10 +43,6 @@ namespace Object
 	void Move(uint32_t ID, const Point3D<float>& Position, float Speed, const Point3D<float>& Rotation = { -1000.0, -1000.0, -1000.0 });
 
 	void Move(uint32_t ID, float X, float Y, float Z, float Speed, float RotationX = -1000.0, float RotationY = -1000.0, float RotationZ = -1000.0);
-
-	void OnPlayerEdit(std::shared_ptr<Player> Player, uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation);
-
-	void OnPlayerSelect(std::shared_ptr<Player> Player, uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position);
 
 	bool SetNoCameraCol(uint32_t ID);
 

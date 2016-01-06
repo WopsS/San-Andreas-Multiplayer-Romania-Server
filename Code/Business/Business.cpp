@@ -1,10 +1,5 @@
 #include <Business/Business.hpp>
 
-#include <Streamer/MapIcon.hpp>
-#include <Streamer/Pickup.hpp>
-#include <Streamer/TextLabel.hpp>
-#include <Utilities/Utils.hpp>
-
 Business::Business(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 {
 	// Let's do that because the result vector is from index 0.

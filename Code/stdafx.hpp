@@ -50,5 +50,15 @@
 #include <sampgdk/interop.h>
 #include <sampgdk/sdk.h>
 
+#include <Streamer/MapIcon.hpp>
+#include <Streamer/Object.hpp>
+#include <Streamer/Pickup.hpp>
+#include <Streamer/TextLabel.hpp>
+
+#include <Utilities/Encryption.hpp>
+#include <Utilities/SHA256.hpp>
+#include <Utilities/Time.hpp>
+#include <Utilities/Utils.hpp>
+
 #define MYSQL_VERSION "1.0 alpha"
 #define SERVER_VERSION "0.3.0 alpha"

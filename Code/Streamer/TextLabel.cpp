@@ -1,4 +1,5 @@
 #include <Streamer/TextLabel.hpp>
+#include <Player/Player.hpp>
 
 uint32_t TextLabel::Create(const std::string& Text, int Color, Point3D<float> Position, float DrawDistance, uint16_t AttachedPlayer, uint16_t AttachedVehicle, bool TestLOS, int VirtualWorld, int Interior, std::shared_ptr<Player> Player, float StreamDistance)
 {

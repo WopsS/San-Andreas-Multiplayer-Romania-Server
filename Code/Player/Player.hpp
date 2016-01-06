@@ -17,6 +17,8 @@ public:
 
 	void AttachCameraToObject(int ObjectID);
 
+	const bool AttachObject(uint32_t ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ);
+
 	const void CancelEdit() const;
 
 	const bool EditObject(int ObjectID) const;
@@ -71,6 +73,12 @@ public:
 
 	void OnInserted(std::shared_ptr<MySQLResult> Result);
 
+	void OnObjectEdit(uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation);
+
+	void OnObjectSelect(uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position);
+
+	void OnPickUp(int ID);
+
 	void OnSpawn();
 
 	template<typename... Args>
@@ -100,15 +108,13 @@ public:
 	{
 		auto Dialog = GetDialog(ID);
 
-		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(ID), static_cast<int>(Dialog->GetStyle()), Dialog->GetCaption().c_str(),
-			fmt::format(Dialog->GetText(), std::forward<Args>(args)...).c_str(), Dialog->GetButton1().c_str(), Dialog->GetButton2().c_str());
+		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(ID), static_cast<int>(Dialog->GetStyle()), Dialog->GetCaption().c_str(), fmt::format(Dialog->GetText(), std::forward<Args>(args)...).c_str(), Dialog->GetButton1().c_str(), Dialog->GetButton2().c_str());
 	}
 
 	template<typename... Args>
 	inline const bool ShowDialog(const Dialog& Dialog, Args&& ...args) const
 	{
-		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(Dialog.GetID()), static_cast<int>(Dialog.GetStyle()), Dialog.GetCaption().c_str(),
-			fmt::format(Dialog.GetText(), std::forward<Args>(args)...).c_str(), Dialog.GetButton1().c_str(), Dialog.GetButton2().c_str());
+		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(Dialog.GetID()), static_cast<int>(Dialog.GetStyle()), Dialog.GetCaption().c_str(), fmt::format(Dialog.GetText(), std::forward<Args>(args)...).c_str(), Dialog.GetButton1().c_str(), Dialog.GetButton2().c_str());
 	}
 
 	bool Spawn();
@@ -116,8 +122,6 @@ public:
 	bool ToggleSpectating(const bool Toggle);
 
 private:
-
-	friend class Commands;
 
 	friend class Dialogs;
 

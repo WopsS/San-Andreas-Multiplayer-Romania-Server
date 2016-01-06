@@ -5,9 +5,6 @@
 #include <Key/Keys.hpp>
 #include <Player/Player.hpp>
 #include <Server/Server.hpp>
-#include <Streamer/Object.hpp>
-#include <Streamer/Pickup.hpp>
-#include <Utilities/Time.hpp>
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 {
@@ -132,8 +129,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 
 		if (Player != nullptr)
 		{
-			Object::OnPlayerEdit(Player, params[2], static_cast<ObjectEditionResponse>(params[3]), Point3D<float>(amx_ctof(params[4]), amx_ctof(params[5]), amx_ctof(params[6])), 
-				Point3D<float>(amx_ctof(params[7]), amx_ctof(params[8]), amx_ctof(params[9])));
+			Player->OnObjectEdit(params[2], static_cast<ObjectEditionResponse>(params[3]), Point3D<float>(amx_ctof(params[4]), amx_ctof(params[5]), amx_ctof(params[6])), Point3D<float>(amx_ctof(params[7]), amx_ctof(params[8]), amx_ctof(params[9])));
 		}
 	}
 	else if (Name.compare("OnPlayerPickUpDynamicPickup") == 0)
@@ -142,7 +138,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 
 		if (Player != nullptr)
 		{
-			Pickup::OnPlayerPickUp(Player, params[2]);
+			Player->OnPickUp(params[2]);
 		}
 	}
 	else if (Name.compare("OnPlayerSelectDynamicObject") == 0)
@@ -151,7 +147,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 
 		if (Player != nullptr)
 		{
-			Object::OnPlayerSelect(Player, params[2], params[3], Point3D<float>(amx_ctof(params[4]), amx_ctof(params[5]), amx_ctof(params[6])));
+			Player->OnObjectSelect(params[2], params[3], Point3D<float>(amx_ctof(params[4]), amx_ctof(params[5]), amx_ctof(params[6])));
 		}
 	}
 

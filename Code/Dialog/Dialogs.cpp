@@ -1,8 +1,5 @@
 #include <Dialog/Dialogs.hpp>
 
-#include <Utilities/Encryption.hpp>
-#include <Utilities/Utils.hpp>
-
 Dialogs::Dialogs()
 {
 	Add(DialogID::kRegister, DialogStyle::kPassword, "Registration",

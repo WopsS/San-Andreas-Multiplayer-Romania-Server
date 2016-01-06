@@ -1,10 +1,5 @@
 #include <House/House.hpp>
 
-#include <Streamer/Pickup.hpp>
-#include <Streamer/MapIcon.hpp>
-#include <Streamer/TextLabel.hpp>
-#include <Utilities/Utils.hpp>
-
 House::House(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 {
 	// Let's do that because the result vector is from index 0.

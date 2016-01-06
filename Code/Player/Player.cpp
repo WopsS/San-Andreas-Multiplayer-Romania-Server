@@ -1,6 +1,5 @@
 #include <Player/Player.hpp>
 #include <Dialog/Dialogs.hpp>
-#include <Utilities/Utils.hpp>
 
 Player::Player(uint16_t ID)
 {
@@ -19,6 +18,12 @@ void Player::AttachCameraToObject(int ObjectID)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("AttachCameraToDynamicObject");
 	sampgdk::InvokeNative(Native, "ii", GetGameID(), ObjectID);
+}
+
+const bool Player::AttachObject(uint32_t ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
+{
+	static AMX_NATIVE Native = sampgdk::FindNative("AttachDynamicObjectToPlayer");
+	return !!sampgdk::InvokeNative(Native, "iiffffff", ID, GetGameID(), X, Y, Z, RotationX, RotationY, RotationZ);
 }
 
 const void Player::CancelEdit() const
@@ -130,6 +135,34 @@ void Player::OnInserted(std::shared_ptr<MySQLResult> Result)
 {
 	SetData<uint64_t>(PlayerData::kMySQLID, static_cast<uint64_t>(Result->GetInsertedID()));
 	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `players` WHERE `ID` = ':id' LIMIT 1", { MySQL::GetInstance()->MakeParameter("id", GetMySQLID()) }, &Player::OnConnect, this);
+}
+
+void Player::OnObjectEdit(uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
+{
+	if (Object::IsValid(ObjectID) == true)
+	{
+		if (Response == ObjectEditionResponse::kFinal)
+		{
+			CancelEdit();
+		}
+		else
+		{
+			Object::SetPosition(ObjectID, Position.X, Position.Y, Position.Z);
+			Object::SetRotation(ObjectID, Rotation.X, Rotation.Y, Rotation.Z);
+		}
+	}
+}
+
+void Player::OnObjectSelect(uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position)
+{
+	if (Object::IsValid(ObjectID) == true)
+	{
+		EditObject(ObjectID);
+	}
+}
+
+void Player::OnPickUp(int ID)
+{
 }
 
 void Player::OnSpawn()

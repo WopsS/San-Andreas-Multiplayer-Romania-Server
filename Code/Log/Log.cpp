@@ -1,5 +1,4 @@
 #include <Log/Log.hpp>
-#include <Utilities/Time.hpp>
 
 Logger::Logger()
 	: m_shouldStop(false)

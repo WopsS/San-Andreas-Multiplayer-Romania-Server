@@ -1,15 +1,10 @@
 #include <Streamer/Object.hpp>
+#include <Player/Player.hpp>
 
 const bool Object::AttachToObject(uint32_t ID, uint32_t AttachToID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ, bool SyncRotation)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("AttachDynamicObjectToObject");
 	return !!sampgdk::InvokeNative(Native, "iiffffffb", ID, AttachToID, X, Y, Z, RotationX, RotationY, RotationZ, SyncRotation);
-}
-
-const bool Object::AttachToPlayer(uint32_t ID, std::shared_ptr<Player> Player, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
-{
-	static AMX_NATIVE Native = sampgdk::FindNative("AttachDynamicObjectToPlayer");
-	return !!sampgdk::InvokeNative(Native, "iiffffff", ID, Player->GetGameID(), X, Y, Z, RotationX, RotationY, RotationZ);
 }
 
 const bool Object::AttachToVehicle(uint32_t ID, uint32_t VehicleID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
@@ -83,30 +78,6 @@ void Object::Move(uint32_t ID, float X, float Y, float Z, float Speed, float Rot
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("MoveDynamicObject");
 	sampgdk::InvokeNative(Native, "ifffffff", ID, X, Y, Z, Speed, RotationX, RotationY, RotationZ);
-}
-
-void Object::OnPlayerEdit(std::shared_ptr<Player> Player, uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
-{
-	if (IsValid(ObjectID) == true)
-	{
-		if (Response == ObjectEditionResponse::kFinal)
-		{
-			Player->CancelEdit();
-		}
-		else
-		{
-			SetPosition(ObjectID, Position.X, Position.Y, Position.Z);
-			SetRotation(ObjectID, Rotation.X, Rotation.Y, Rotation.Z);
-		}
-	}
-}
-
-void Object::OnPlayerSelect(std::shared_ptr<Player> Player, uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position)
-{
-	if (IsValid(ObjectID) == true)
-	{
-		Player->EditObject(ObjectID);
-	}
 }
 
 bool Object::SetNoCameraCol(uint32_t ID)

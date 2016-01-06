@@ -1,5 +1,4 @@
 #include <Vehicle/Vehicle.hpp>
-#include <Utilities/Utils.hpp>
 
 Vehicle::Vehicle(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 {

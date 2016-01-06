@@ -17,7 +17,3 @@ const bool Pickup::IsValid(int ID)
 	static AMX_NATIVE Native = sampgdk::FindNative("IsValidDynamicPickup");
 	return !!sampgdk::InvokeNative(Native, "i", ID);
 }
-
-void Pickup::OnPlayerPickUp(std::shared_ptr<Player> Player, int ID)
-{
-}

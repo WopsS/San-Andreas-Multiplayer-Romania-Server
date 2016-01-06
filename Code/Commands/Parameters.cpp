@@ -1,7 +1,5 @@
 #include <Commands/Parameters.hpp>
-
 #include <Player/Player.hpp>
-#include <Utilities/Utils.hpp>
 
 CommandParameters::CommandParameters(const std::string& Format, std::string& Parameters)
 	: m_requiredParameters(Format.length())

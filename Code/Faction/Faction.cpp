@@ -1,5 +1,4 @@
 #include <Faction/Faction.hpp>
-#include <Utilities/Utils.hpp>
 
 Faction::Faction(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 {

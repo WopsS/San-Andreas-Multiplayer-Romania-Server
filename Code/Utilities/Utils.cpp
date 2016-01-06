@@ -35,3 +35,11 @@ const std::string Utils::ToLower(const std::string& Text)
 
 	return Result;
 }
+
+const std::string Utils::ToUpper(const std::string& Text)
+{
+	auto Result = Text;
+	std::transform(Result.begin(), Result.end(), Result.begin(), toupper);
+
+	return Result;
+}
