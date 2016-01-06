@@ -210,6 +210,16 @@ const std::string Player::GetName() const
 	return GetData<std::string>(PlayerData::kName);
 }
 
+const std::string Player::GetPassword() const
+{
+	return GetData<std::string>(PlayerData::kPassword);
+}
+
+const std::string Player::GetPin() const
+{
+	return GetData<std::string>(PlayerData::kPin);
+}
+
 const std::string Player::GetSalt() const
 {
 	return GetData<std::string>(PlayerData::kSalt);
@@ -327,9 +337,4 @@ bool Player::ToggleSpectating(const bool Toggle)
 {
 	SetData<bool>(PlayerData::kSpectating, Toggle);
 	return sampgdk::TogglePlayerSpectating(GetGameID(), Toggle);
-}
-
-std::shared_ptr<Dialog> Player::GetDialog(const DialogID& ID)  const
-{
-	return Dialogs::GetInstance()->Get(ID);
 }

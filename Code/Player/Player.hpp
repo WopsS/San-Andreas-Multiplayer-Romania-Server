@@ -31,17 +31,21 @@ public:
 
 	const unsigned long long GetMySQLID() const;
 
-	const std::shared_ptr<Vehicle> GetVehicle() const;
-
 	const int GetCash() const;
 
 	const long long GetMoney() const;
 
 	const std::string GetName() const;
 
+	const std::string GetPassword() const;
+
+	const std::string GetPin() const;
+
 	const std::string GetSalt() const;
 
 	const PlayerSex GetSex() const;
+
+	const std::shared_ptr<Vehicle> GetVehicle() const;
 
 	void GiveCash(int Amount);
 
@@ -106,7 +110,7 @@ public:
 	template<typename... Args>
 	inline const bool ShowDialog(const DialogID& ID, Args&& ...args) const
 	{
-		auto Dialog = GetDialog(ID);
+		auto Dialog = Dialogs::GetInstance()->Get(ID);
 
 		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int>(ID), static_cast<int>(Dialog->GetStyle()), Dialog->GetCaption().c_str(), fmt::format(Dialog->GetText(), std::forward<Args>(args)...).c_str(), Dialog->GetButton1().c_str(), Dialog->GetButton2().c_str());
 	}
@@ -124,6 +128,4 @@ public:
 private:
 
 	friend class Dialogs;
-
-	std::shared_ptr<Dialog> GetDialog(const DialogID& ID) const;
 };

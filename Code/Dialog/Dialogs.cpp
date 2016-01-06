@@ -112,15 +112,14 @@ void Dialogs::Authentication(std::shared_ptr<Player> Player, DialogResponse Resp
 
 		// TODO: Insert fail authentication log or success log.
 
-		if (Player->GetData<std::string>(PlayerData::kPassword).compare(Password) == 0)
+		if (Player->GetPassword().compare(Password) == 0)
 		{
 			Player->SetData<bool>(PlayerData::kAuthenticated, true);
 			Player->Spawn();
 		}
 		else
 		{
-			Player->ShowDialog(Create(DialogID::kAuthentication,
-				"Sorry {{95A3FF}}{}{{BECBFC}} but password which you entered {{9E0028}}doesn't match{{BECBFC}} with your account's password. Please try again.\n\nPlease type your password below:"), Player->GetName());
+			Player->ShowDialog(Create(DialogID::kAuthentication, "Sorry {{95A3FF}}{}{{BECBFC}} but password which you entered {{9E0028}}doesn't match{{BECBFC}} with your account's password. Please try again.\n\nPlease type your password below:"), Player->GetName());
 		}
 	}
 }
