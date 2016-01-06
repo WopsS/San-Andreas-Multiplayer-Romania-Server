@@ -19,10 +19,38 @@ public:
 		return m_affectedRows;
 	}
 
-	inline const size_t GetColumnCount() const
+	inline const size_t GetFieldCount() const
 	{
-		return m_columns.size();
+		return m_fields.size();
 	}
+
+	template<typename T>
+	const std::string GetFieldName(const T& Index) const
+	{
+		auto FieldIndex = static_cast<size_t>(Index);
+
+		if (FieldIndex < GetFieldCount())
+		{
+			return m_fields.at(FieldIndex).Name;
+		}
+
+		return std::string();
+	}
+
+	template<typename T>
+	inline const enum_field_types GetFieldType(const T& Index) const
+	{
+		auto FieldIndex = static_cast<size_t>(Index);
+
+		if (FieldIndex < GetFieldCount())
+		{
+			return m_fields.at(FieldIndex).Type;
+		}
+
+		return enum_field_types::MYSQL_TYPE_BIT;
+	}
+
+	const enum_field_types GetFieldType(const std::string& Name) const;
 
 	inline const my_ulonglong GetInsertedID() const
 	{
@@ -34,32 +62,19 @@ public:
 		return m_data.size();
 	}
 
+	std::unique_ptr<MySQLResult> GetRowResult(size_t Index) const;
+
 	inline const uint32_t GetWarningCount() const
 	{
 		return m_warnings;
 	}
 
 	template<typename T>
-	inline const enum_field_types GetColumnType(const T& Index) const
-	{
-		auto FieldIndex = static_cast<size_t>(Index);
-
-		if (FieldIndex < GetColumnCount())
-		{
-			return m_columns.at(FieldIndex).Type;
-		}
-
-		return enum_field_types::MYSQL_TYPE_BIT;
-	}
-
-	const enum_field_types GetColumnType(const std::string& Name) const;
-
-	template<typename T>
 	inline const std::string GetRowData(const T& FieldIndex) const
 	{
 		auto Index = static_cast<size_t>(FieldIndex);
 
-		if (Index < GetColumnCount())
+		if (Index < GetFieldCount())
 		{
 			return m_data[0][Index];
 		}
@@ -72,7 +87,7 @@ public:
 	{
 		auto Index = static_cast<size_t>(FieldIndex);
 
-		if (RowIndex < GetRowCount() && Index < GetColumnCount())
+		if (RowIndex < GetRowCount() && Index < GetFieldCount())
 		{
 			return m_data[RowIndex][Index];
 		}
@@ -92,7 +107,7 @@ private:
 
 	uint32_t m_warnings;
 
-	std::vector<ColumnInformation> m_columns;
+	std::vector<ColumnInformation> m_fields;
 
 	std::vector<std::vector<std::string>> m_data;
 };

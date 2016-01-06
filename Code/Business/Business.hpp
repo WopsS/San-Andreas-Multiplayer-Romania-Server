@@ -6,7 +6,7 @@ class Business : public Map<uint16_t, Business>, private Data<BusinessData>
 {
 public:
 
-	Business(uint16_t ID, std::shared_ptr<MySQLResult> Result);
+	Business(std::unique_ptr<MySQLResult> Result);
 	~Business() = default;
 
 	const Point3D<float> GetExit() const;

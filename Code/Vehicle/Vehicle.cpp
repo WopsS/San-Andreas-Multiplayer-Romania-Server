@@ -1,16 +1,13 @@
 #include <Vehicle/Vehicle.hpp>
 
-Vehicle::Vehicle(uint16_t ID, std::shared_ptr<MySQLResult> Result)
+Vehicle::Vehicle(std::unique_ptr<MySQLResult> Result)
 {
-	// Let's do that because the result vector is from index 0.
-	ID--;
-
-	auto Length = Result->GetColumnCount();
+	auto Length = Result->GetFieldCount();
 
 	for (size_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<VehicleData>(i);
-		auto Value = Result->GetRowData(ID, Index);
+		auto Value = Result->GetRowData(Index);
 
 		switch (Index)
 		{
@@ -22,10 +19,10 @@ Vehicle::Vehicle(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 			}
 			case VehicleData::kPosition:
 			{
-				auto X = std::stof(Result->GetRowData(ID, i++));
-				auto Y = std::stof(Result->GetRowData(ID, i++));
-				auto Z = std::stof(Result->GetRowData(ID, i++));
-				auto Rotation = std::stof(Result->GetRowData(ID, i));
+				auto X = std::stof(Result->GetRowData(i++));
+				auto Y = std::stof(Result->GetRowData(i++));
+				auto Z = std::stof(Result->GetRowData(i++));
+				auto Rotation = std::stof(Result->GetRowData(i));
 
 				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
 				SetData<float>(VehicleData::kRotation, Rotation);
@@ -34,12 +31,12 @@ Vehicle::Vehicle(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 			}
 			case VehicleData::kSiren:
 			{
-				SetData<bool>(Index, !!std::stoi(Result->GetRowData(ID, i++)));
+				SetData<bool>(Index, !!std::stoi(Result->GetRowData(i++)));
 				break;
 			}
 			default:
 			{
-				switch (Result->GetColumnType(Index))
+				switch (Result->GetFieldType(Index))
 				{
 					case enum_field_types::MYSQL_TYPE_DOUBLE:
 					{

@@ -6,7 +6,7 @@ class House : public Map<uint16_t, House>, private Data<HouseData>
 {
 public:
 
-	House(uint16_t aID, std::shared_ptr<MySQLResult> Result);
+	House(std::unique_ptr<MySQLResult> Result);
 	~House() = default;
 
 	const Point3D<float> GetExit() const;

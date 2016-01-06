@@ -1,16 +1,13 @@
 #include <Business/Business.hpp>
 
-Business::Business(uint16_t ID, std::shared_ptr<MySQLResult> Result)
+Business::Business(std::unique_ptr<MySQLResult> Result)
 {
-	// Let's do that because the result vector is from index 0.
-	ID--;
-
-	auto Length = Result->GetColumnCount();
+	auto Length = Result->GetFieldCount();
 
 	for (uint8_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<BusinessData>(i);
-		auto Value = Result->GetRowData(ID, Index);
+		auto Value = Result->GetRowData(Index);
 
 		switch (Index)
 		{
@@ -28,9 +25,9 @@ Business::Business(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 			case BusinessData::kEntrance: 
 			case BusinessData::kExit:
 			{
-				auto X = std::stof(Result->GetRowData(ID, i++));
-				auto Y = std::stof(Result->GetRowData(ID, i++));
-				auto Z = std::stof(Result->GetRowData(ID, i));
+				auto X = std::stof(Result->GetRowData(i++));
+				auto Y = std::stof(Result->GetRowData(i++));
+				auto Z = std::stof(Result->GetRowData(i));
 
 				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
 				break;
@@ -42,7 +39,7 @@ Business::Business(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 			}
 			default:
 			{
-				switch (Result->GetColumnType(Index))
+				switch (Result->GetFieldType(Index))
 				{
 					case enum_field_types::MYSQL_TYPE_DOUBLE:
 					{

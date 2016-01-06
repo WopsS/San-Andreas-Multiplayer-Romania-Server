@@ -26,7 +26,7 @@ public:
 			return false;
 		}
 
-		m_list.emplace(Index, std::make_shared<C>(Index, std::forward<Args>(args)...));
+		m_list.emplace(Index, std::make_shared<C>(std::forward<Args>(args)...));
 
 		return true;
 	}

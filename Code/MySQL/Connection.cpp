@@ -148,7 +148,7 @@ void Connection::ProcessQueries()
 							size_t RowIndex = 0;
 
 							// Set the capacity of the vector.
-							Result->m_columns.reserve(mysql_num_fields(StoredResult));
+							Result->m_fields.reserve(mysql_num_fields(StoredResult));
 							
 							// Let's store the fields name.
 							while ((Field = mysql_fetch_field(StoredResult)))
@@ -157,7 +157,7 @@ void Connection::ProcessQueries()
 								CurrentField.Name = Field->name;
 								CurrentField.Type = Field->type;
 
-								Result->m_columns.push_back(CurrentField);
+								Result->m_fields.push_back(CurrentField);
 							}
 
 							// Resize the vector for rows.
@@ -166,12 +166,12 @@ void Connection::ProcessQueries()
 							for (size_t i = 0; i < Result->GetRowCount(); i++)
 							{
 								// Resize the vector for columns.
-								Result->m_data[i].resize(Result->GetColumnCount());
+								Result->m_data[i].resize(Result->GetFieldCount());
 
 								// Fill the array with data.
 								Row = mysql_fetch_row(StoredResult);
 
-								for (size_t j = 0; j < Result->GetColumnCount(); j++)
+								for (size_t j = 0; j < Result->GetFieldCount(); j++)
 								{
 									// Check if the field is null.
 									Result->m_data[i][j] = Row[j] != NULL ? Row[j] : "";

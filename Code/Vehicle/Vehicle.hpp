@@ -6,7 +6,7 @@ class Vehicle : public Map<uint16_t, Vehicle>, private Data<VehicleData>
 {
 public:
 
-	Vehicle(uint16_t aID, std::shared_ptr<MySQLResult> Result);
+	Vehicle(std::unique_ptr<MySQLResult> Result);
 	Vehicle(int Model, const Point3D<float>& Position, float Rotation, int Color1, int Color2, int RespawnTine = -1, bool Siren = false);
 	~Vehicle() = default;
 

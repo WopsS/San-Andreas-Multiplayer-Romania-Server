@@ -25,7 +25,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int PlayerID)
 {
-	Player::Add(static_cast<uint16_t>(PlayerID));
+	Player::Add(static_cast<uint16_t>(PlayerID), static_cast<uint16_t>(PlayerID));
 
 	auto Player = Player::Get(PlayerID);
 

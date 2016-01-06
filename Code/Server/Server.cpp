@@ -17,7 +17,7 @@ void Server::InitializeBusinesses(std::shared_ptr<MySQLResult> Result)
 {
 	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
-		Business::Add(i + 1, Result);
+		Business::Add(i + 1, Result->GetRowResult(i));
 	}
 
 	sampgdk::logprintf(fmt::format("Server::Initialize: {} businesses loaded.", Result->GetRowCount()).c_str());
@@ -27,7 +27,7 @@ void Server::InitializeFactions(std::shared_ptr<MySQLResult> Result)
 {
 	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
-		Faction::Add(i + 1, Result);
+		Faction::Add(i + 1, Result->GetRowResult(i));
 	}
 
 	sampgdk::logprintf(fmt::format("Server::Initialize: {} factions loaded.", Result->GetRowCount()).c_str());
@@ -37,7 +37,7 @@ void Server::InitializeHouses(std::shared_ptr<MySQLResult> Result)
 {
 	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
-		House::Add(i + 1, Result);
+		House::Add(i + 1, Result->GetRowResult(i));
 	}
 
 	sampgdk::logprintf(fmt::format("Server::Initialize: {} houses loaded.", Result->GetRowCount()).c_str());
@@ -47,7 +47,7 @@ void Server::InitializeVehicles(std::shared_ptr<MySQLResult> Result)
 {
 	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
-		Vehicle::Add(i + 1, Result);
+		Vehicle::Add(i + 1, Result->GetRowResult(i));
 	}
 
 	sampgdk::logprintf(fmt::format("Server::Initialize: {} vehicles loaded.", Result->GetRowCount()).c_str());
