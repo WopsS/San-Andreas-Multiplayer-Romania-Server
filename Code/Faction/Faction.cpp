@@ -13,10 +13,10 @@ Faction::Faction(std::unique_ptr<MySQLResult> Result)
 		{
 			case FactionData::kID:
 			{
-				SetData<unsigned long long>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+				SetData<unsigned short>(Index,std::stoi(Value));
 				break;
 			}
-			case FactionData::kEnterance:
+			case FactionData::kEntrance:
 			case FactionData::kExit:
 			{
 				auto X = std::stof(Result->GetRowData(i++));
@@ -72,6 +72,21 @@ Faction::Faction(std::unique_ptr<MySQLResult> Result)
 			}
 		}
 	}
+}
+
+const Point3D<float> Faction::GetEntrance() const
+{
+	return GetData<Point3D<float>>(FactionData::kEntrance);
+}
+
+const Point3D<float> Faction::GetExit() const
+{
+	return GetData<Point3D<float>>(FactionData::kExit);
+}
+
+const unsigned short Faction::GetID() const
+{
+	return GetData<unsigned short>(FactionData::kID);
 }
 
 const std::string Faction::GetName() const

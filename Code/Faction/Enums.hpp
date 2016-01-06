@@ -4,6 +4,6 @@ enum class FactionData : unsigned char
 {
 	kID = 0,
 	kName,
-	kEnterance,
-	kExit = kEnterance + 3
+	kEntrance,
+	kExit = kEntrance + 3
 };
