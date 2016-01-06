@@ -2,13 +2,18 @@
 #include <House/House.hpp>
 
 // Include commands below in alphabetical order.
+#include <Commands/Player/BuyHouse.hpp>
 #include <Commands/Player/Engine.hpp>
+#include <Commands/Player/Lock.hpp>
 #include <Commands/Player/Test.hpp>
 
 Commands::Commands()
 {
-	Register(std::make_unique<TestCommand>());
+	Register(std::make_unique<BuyHouseCommand>());
 	Register(std::make_unique<EngineCommand>());
+	Register(std::make_unique<LockCommand>());
+	Register(std::make_unique<TestCommand>());
+	
 }
 
 bool Commands::Execute(std::shared_ptr<Player> Player, const std::string& Command)

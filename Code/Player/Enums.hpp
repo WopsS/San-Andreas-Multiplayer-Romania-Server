@@ -34,6 +34,7 @@ enum class PlayerData : unsigned char
 	kPassword,
 	kSalt,
 	kEmail,
+	kInterior,
 	kPin,
 	kSex,
 	kAdminLevel,

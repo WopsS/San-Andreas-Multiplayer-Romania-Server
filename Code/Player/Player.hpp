@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Dialog/Dialog.hpp>
+#include <House/House.hpp>
 #include <Player/Enums.hpp>
 #include <Vehicle/Vehicle.hpp>
 
@@ -25,13 +26,19 @@ public:
 
 	const AdminLevel GetAdminLevel() const;
 
+	const unsigned int GetCash() const;
+
+	std::shared_ptr<House> GetClosestHouse(float Range = 3.0f) const;
+
+	std::shared_ptr<House> GetPlayerHouse() const;
+
 	const std::string GetEmail() const;
 
 	const unsigned short GetGameID() const;
 
-	const unsigned long long GetMySQLID() const;
+	const unsigned char GetInterior() const;
 
-	const int GetCash() const;
+	const unsigned long long GetMySQLID() const;
 
 	const long long GetMoney() const;
 
@@ -57,9 +64,9 @@ public:
 
 	const bool IsInAnyFaction() const;
 
-	const bool IsInRangeOfPoint(const Point3D<float>& Position, float Range = 3.0f);
+	const bool IsInRangeOfPoint(const Point3D<float>& Position, float Range = 3.0f) const;
 
-	const bool IsInRangeOfPoint(float X, float Y, float Z, float Range = 3.0f);
+	const bool IsInRangeOfPoint(float X, float Y, float Z, float Range = 3.0f) const;
 
 	const bool IsInVehicle() const;
 

@@ -19,6 +19,8 @@ public:
 
 	const unsigned char GetLevel() const;
 
+	const bool GetLocked() const;
+
 	const unsigned long long GetOwnerID() const;
 
 	const unsigned int GetPrice() const;
@@ -28,6 +30,12 @@ public:
 	const unsigned int GetVirtualWorld() const;
 
 	const bool IsLocked() const;
+
+	const bool IsOwned() const;
+
+	void SetDoors(bool Status);
+
+	void SetOwnerID(unsigned long long ID);
 
 private:
 

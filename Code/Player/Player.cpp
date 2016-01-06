@@ -131,6 +131,38 @@ const AdminLevel Player::GetAdminLevel() const
 	return GetData<AdminLevel>(PlayerData::kAdminLevel);
 }
 
+const unsigned int Player::GetCash() const
+{
+	return GetData<unsigned int>(PlayerData::kCash);
+}
+
+std::shared_ptr<House> Player::GetClosestHouse(float Range) const
+{
+	for (auto i : House::GetList())
+	{
+		if (IsInRangeOfPoint(i.second->GetEntrance(), Range) == true)
+		{
+			return i.second;
+		}
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<House> Player::GetPlayerHouse() const
+{
+	for (auto i : House::GetList())
+	{
+		auto ID = GetMySQLID();
+		if (i.second->GetOwnerID() == ID)
+		{
+			return i.second;
+		}
+	}
+
+	return nullptr;
+}
+
 const std::string Player::GetEmail() const
 {
 	return GetData<std::string>(PlayerData::kEmail);
@@ -141,6 +173,11 @@ const unsigned short Player::GetGameID() const
 	return GetData<unsigned short>(PlayerData::kGameID);
 }
 
+const unsigned char Player::GetInterior() const
+{
+	return GetData<unsigned char>(PlayerData::kInterior);
+}
+
 const unsigned long long Player::GetMySQLID() const
 {
 	return GetData<unsigned long long>(PlayerData::kMySQLID);
@@ -149,11 +186,6 @@ const unsigned long long Player::GetMySQLID() const
 const std::shared_ptr<Vehicle> Player::GetVehicle() const
 {
 	return Vehicle::Get(static_cast<unsigned short>(sampgdk::GetPlayerVehicleID(GetGameID())));
-}
-
-const int Player::GetCash() const
-{
-	return GetData<int>(PlayerData::kCash);
 }
 
 const long long Player::GetMoney() const
@@ -213,12 +245,12 @@ const bool Player::IsInAnyFaction() const
 	return false;
 }
 
-const bool Player::IsInRangeOfPoint(const Point3D<float>& Position, float Range)
+const bool Player::IsInRangeOfPoint(const Point3D<float>& Position, float Range) const
 {
 	return IsInRangeOfPoint(Position.X, Position.Y, Position.Z, Range);
 }
 
-const bool Player::IsInRangeOfPoint(float X, float Y, float Z, float Range)
+const bool Player::IsInRangeOfPoint(float X, float Y, float Z, float Range) const
 {
 	return sampgdk::IsPlayerInRangeOfPoint(GetGameID(), X, Y, Z, Range);
 }

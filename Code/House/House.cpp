@@ -57,6 +57,11 @@ const unsigned char House::GetLevel() const
 	return GetData<unsigned char>(HouseData::kLevel);
 }
 
+const bool House::GetLocked() const
+{
+	return GetData<bool>(HouseData::kLocked);
+}
+
 const unsigned long long House::GetOwnerID() const
 {
 	return GetData<unsigned long long>(HouseData::kOwnerID);
@@ -80,6 +85,23 @@ const unsigned int House::GetVirtualWorld() const
 const bool House::IsLocked() const
 {
 	return GetData<bool>(HouseData::kLocked);
+}
+
+const bool House::IsOwned() const
+{
+	return GetOwnerID() > 0;
+}
+
+void House::SetDoors(bool Status)
+{
+	SetData<bool>(HouseData::kLocked, Status);
+}
+
+
+
+void House::SetOwnerID(unsigned long long ID)
+{
+	SetData<unsigned long long>(HouseData::kOwnerID, ID);
 }
 
 void House::Manage()
