@@ -1,6 +1,6 @@
 #include <MySQL/ConnectionPool.hpp>
 
-ConnectionPool::ConnectionPool(uint32_t Size)
+ConnectionPool::ConnectionPool(size_t Size)
 {
 	Logger::GetInstance()->Log(LogLevel::kDebug, "ConnectionPool::ConnectionPool(this={}, size={})", static_cast<const void*>(this), Size);
 
@@ -8,7 +8,7 @@ ConnectionPool::ConnectionPool(uint32_t Size)
 	m_normalNode = std::make_shared<ConnectionNode>();
 	auto Node = m_normalNode;
 
-	for (uint32_t i = 1; i <= Size; i++)
+	for (size_t i = 1; i <= Size; i++)
 	{
 		Node->Connection = std::make_shared<Connection>("sa-mp.ro", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
 		Node->Next = (i + 1) > Size ? m_normalNode : std::make_shared<ConnectionNode>();
@@ -20,7 +20,7 @@ ConnectionPool::ConnectionPool(uint32_t Size)
 	m_logNode = std::make_shared<ConnectionNode>();
 	Node = m_logNode;
 
-	for (uint32_t i = 1; i <= Size; i++)
+	for (size_t i = 1; i <= Size; i++)
 	{
 		Node->Connection = std::make_shared<Connection>("sa-mp.ro", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
 		Node->Next = (i + 1) > Size ? m_logNode : std::make_shared<ConnectionNode>();

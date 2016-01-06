@@ -25,7 +25,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int PlayerID)
 {
-	Player::Add(static_cast<uint16_t>(PlayerID), static_cast<uint16_t>(PlayerID));
+	Player::Add(static_cast<unsigned short>(PlayerID), static_cast<unsigned short>(PlayerID));
 
 	auto Player = Player::Get(PlayerID);
 
@@ -49,7 +49,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int PlayerID, int Reason)
 	}
 
 	Player->OnDisconnect(static_cast<DisconnectReason>(Reason));
-	Player::Remove(static_cast<uint16_t>(PlayerID));
+	Player::Remove(static_cast<unsigned short>(PlayerID));
 
 	return true;
 }
@@ -89,7 +89,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int PlayerID, int DialogID, int 
 
 	if (Player != nullptr)
 	{
-		return Dialogs::GetInstance()->Execute(Player, static_cast<::DialogID>(DialogID), static_cast<DialogResponse>(Response), static_cast<uint32_t>(ListItem), std::string(InputText));
+		return Dialogs::GetInstance()->Execute(Player, static_cast<::DialogID>(DialogID), static_cast<DialogResponse>(Response), static_cast<unsigned int>(ListItem), std::string(InputText));
 	}
 
 	return false;
@@ -125,7 +125,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 
 	if (Name.compare("OnPlayerEditDynamicObject") == 0)
 	{
-		auto Player = Player::Get(static_cast<uint16_t>(params[1]));
+		auto Player = Player::Get(static_cast<unsigned short>(params[1]));
 
 		if (Player != nullptr)
 		{
@@ -134,7 +134,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 	}
 	else if (Name.compare("OnPlayerPickUpDynamicPickup") == 0)
 	{
-		auto Player = Player::Get(static_cast<uint16_t>(params[1]));
+		auto Player = Player::Get(static_cast<unsigned short>(params[1]));
 
 		if (Player != nullptr)
 		{
@@ -143,7 +143,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 	}
 	else if (Name.compare("OnPlayerSelectDynamicObject") == 0)
 	{
-		auto Player = Player::Get(static_cast<uint16_t>(params[1]));
+		auto Player = Player::Get(static_cast<unsigned short>(params[1]));
 
 		if (Player != nullptr)
 		{

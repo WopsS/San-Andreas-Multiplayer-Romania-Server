@@ -47,11 +47,11 @@ bool Commands::Execute(std::shared_ptr<Player> Player, const std::string& Comman
 
 			if (i->CheckAccess(Player) == true)
 			{
-				auto CurrentParameters = std::make_shared<CommandParameters>(i->m_format, Parameters);
+				auto CurrentParameters = std::make_unique<CommandParameters>(i->m_format, Parameters);
 
 				if (CurrentParameters->Valid() == true)
 				{
-					i->Execute(Player, CurrentParameters);
+					i->Execute(Player, std::move(CurrentParameters));
 				}
 				else
 				{

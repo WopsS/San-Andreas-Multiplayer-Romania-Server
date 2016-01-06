@@ -5,11 +5,11 @@ EngineCommand::EngineCommand()
 	m_names = { "engine" };
 }
 
-void EngineCommand::Execute(std::shared_ptr<Player> Player, std::shared_ptr<CommandParameters> Parameters)
+void EngineCommand::Execute(std::shared_ptr<Player> Player, std::unique_ptr<CommandParameters> Parameters)
 {
 	if (Player->IsInVehicle() == false)
 	{
-		Player->SendMessage(Colors::kWhite, "* You are not in a vehicle.");
+		Player->SendMessage(Color::kWhite, "* You are not in a vehicle.");
 		return;
 	}
 
@@ -18,5 +18,5 @@ void EngineCommand::Execute(std::shared_ptr<Player> Player, std::shared_ptr<Comm
 
 	// TODO: Show message on range.
 	Vehicle->SetParameter(VehicleParameters::kEngine, !CurrentState);
-	Player->SendMessage(Colors::kWhite, "* You {} the engine of the vehicle.", CurrentState == false ? "started" : "stopped");
+	Player->SendMessage(Color::kWhite, "* You {} the engine of the vehicle.", CurrentState == false ? "started" : "stopped");
 }

@@ -142,7 +142,7 @@ void Dialogs::CompleteRegistration(std::shared_ptr<Player> Player, DialogRespons
 			MySQL::GetInstance()->MakeParameter("salt", Player->GetSalt()),
 			MySQL::GetInstance()->MakeParameter("email", Player->GetEmail()),
 			MySQL::GetInstance()->MakeParameter("pin", Player->GetData<std::string>(PlayerData::kPin)),
-			MySQL::GetInstance()->MakeParameter("sex", static_cast<uint16_t>(Player->GetSex()))
+			MySQL::GetInstance()->MakeParameter("sex", static_cast<unsigned short>(Player->GetSex()))
 		}, &Player::OnInserted, Player);
 
 		Player->ShowDialog(DialogID::kTutorial, Player->GetName());

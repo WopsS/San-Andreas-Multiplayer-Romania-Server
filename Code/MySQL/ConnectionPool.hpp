@@ -4,7 +4,7 @@ class ConnectionPool
 {
 public:
 
-	ConnectionPool(uint32_t Size);
+	ConnectionPool(size_t Size);
 	~ConnectionPool();
 
 	void ProcessCallbacks();

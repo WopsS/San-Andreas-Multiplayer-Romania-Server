@@ -1,8 +1,12 @@
 #pragma once
 
+#ifndef STREAMER_PICKUP_SD
+#define STREAMER_PICKUP_SD 200.0f
+#endif
+
 namespace Pickup
 {
-	int Create(int ModelID, int Type, const Point3D<float>& Position, int VirtualWorld = -1, int Interior = -1, int PlayerID = -1, float StreamDistance = 200.0);
+	int Create(int ModelID, int Type, const Point3D<float>& Position, int VirtualWorld = -1, int Interior = -1, int PlayerID = -1, float StreamDistance = STREAMER_PICKUP_SD);
 
 	const bool Destroy(int ID);
 

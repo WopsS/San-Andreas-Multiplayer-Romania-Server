@@ -1,6 +1,6 @@
 #pragma once
 
-enum class DialogData : uint8_t
+enum class DialogData : unsigned char
 {
 	kID = 0,
 	kStyle,
@@ -10,7 +10,7 @@ enum class DialogData : uint8_t
 	kButton2
 };
 
-enum class DialogStyle : uint8_t
+enum class DialogStyle : unsigned char
 {
 	kMessage = 0, // DIALOG_STYLE_MSGBOX
 	kInput, // DIALOG_STYLE_INPUT
@@ -20,13 +20,13 @@ enum class DialogStyle : uint8_t
 	kTabListHeaders // DIALOG_STYLE_TABLIST_HEADERS
 };
 
-enum class DialogResponse : uint16_t
+enum class DialogResponse : unsigned char
 {
 	kRight = 0, // Used to close the dialog or cancel the current action.
 	kLeft // Used to select an item from the list, go to the next step of the dialog, etc..
 };
 
-enum class DialogID : uint16_t
+enum class DialogID : unsigned char
 {
 	kRegister = 1,
 	kRegisterConfirmation,

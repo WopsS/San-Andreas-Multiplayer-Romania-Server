@@ -1,6 +1,6 @@
 #pragma once
 
-enum class HouseData : uint8_t
+enum class HouseData : unsigned char
 {
 	kID = 0,
 	kOwnerID,

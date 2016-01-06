@@ -4,7 +4,7 @@ class Connection
 {
 public:
 
-	Connection(const std::string& Host, const std::string& Database, const std::string& Username, const std::string& Password, const uint32_t Port = MYSQL_PORT);
+	Connection(const std::string& Host, const std::string& Database, const std::string& Username, const std::string& Password, const unsigned short Port = MYSQL_PORT);
 	~Connection();
 
 	void ProcessCallbacks();

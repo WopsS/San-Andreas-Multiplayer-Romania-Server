@@ -2,7 +2,7 @@
 
 #include <Faction/Enums.hpp>
 
-class Faction : public Map<uint16_t, Faction>, private Data<FactionData>
+class Faction : public Map<unsigned short, Faction>, private Data<FactionData>
 {
 public:
 

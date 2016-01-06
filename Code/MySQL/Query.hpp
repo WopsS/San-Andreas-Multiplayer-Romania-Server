@@ -1,8 +1,8 @@
 #pragma once
 
-enum QueryType : uint16_t
+enum QueryType : unsigned char
 {
-	kNormal = 1,
+	kNormal = 0,
 	kLog
 };
 
@@ -10,7 +10,7 @@ class Query
 {
 public:
 
-	Query(const QueryType& Type, const std::string& Query, std::initializer_list<MySQLParameter> Parameters);
+	Query(const QueryType Type, const std::string& Query, std::initializer_list<MySQLParameter> Parameters);
 	~Query() = default;
 
 	const char* c_str() const;

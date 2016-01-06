@@ -46,10 +46,10 @@ void Logger::Process()
 
 				while (m_queue.empty() == false)
 				{
-					auto Information = std::move(m_queue.front());
+					auto Information = m_queue.front();
 					m_queue.pop();
 
-					m_file << fmt::format("Log(\"{}\", {}, \"{}\");", Time::GetTime(), Information->Level, Information->Message);
+					m_file << fmt::format("Log(\"{}\", {}, \"{}\");", Time::GetTime(), Information.Level, Information.Message);
 				}
 
 				m_file << fmt::format("ClosePanel(\"Logging ended at {}\");</script></body></html>", Time::GetTime());

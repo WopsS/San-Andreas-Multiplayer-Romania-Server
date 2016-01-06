@@ -1,8 +1,8 @@
 #pragma once
 
-enum LogLevel : uint16_t
+enum LogLevel : unsigned char
 {
-	kDebug = 1,
+	kDebug = 0,
 	kWarning,
 	kError
 };
@@ -14,13 +14,13 @@ public:
 	template<typename... Args>
 	inline void Log(const LogLevel& Level, const std::string& Format, Args&& ...args)
 	{
-		auto Information = std::make_unique<LogInformation>();
+		LogInformation Information;
 
-		Information->Level = Level;
-		Information->Message = fmt::format(Format, std::forward<Args>(args)...);
+		Information.Level = Level;
+		Information.Message = fmt::format(Format, std::forward<Args>(args)...);
 
 		std::lock_guard<std::mutex> lock_guard(m_queueMutex);
-		m_queue.push(std::move(Information));
+		m_queue.push(Information);
 	}
 
 private:
@@ -43,6 +43,6 @@ private:
 	std::unique_ptr<std::thread> m_thread;
 	std::atomic<bool> m_shouldStop;
 
-	std::queue<std::unique_ptr<LogInformation>> m_queue;
+	std::queue<LogInformation> m_queue;
 	std::mutex m_queueMutex;
 };

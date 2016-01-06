@@ -8,34 +8,34 @@
 #undef SendMessage
 #endif
 
-class Player : public Map<uint16_t, Player>, private Data<PlayerData>
+class Player : public Map<unsigned short, Player>, private Data<PlayerData>
 {
 public:
 
-	Player(uint16_t ID);
+	Player(unsigned short ID);
 	~Player() = default;
 
 	void AttachCameraToObject(int ObjectID);
 
-	const bool AttachObject(uint32_t ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ);
+	const bool AttachObject(unsigned int ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ);
 
 	const void CancelEdit() const;
 
-	const bool EditObject(int ObjectID) const;
+	const bool EditObject(unsigned int ObjectID) const;
 
 	const AdminLevel GetAdminLevel() const;
 
 	const std::string GetEmail() const;
 
-	const uint16_t GetGameID() const;
+	const unsigned short GetGameID() const;
 
-	const uint64_t GetMySQLID() const;
+	const unsigned long long GetMySQLID() const;
 
 	const std::shared_ptr<Vehicle> GetVehicle() const;
 
-	const int32_t GetCash() const;
+	const int GetCash() const;
 
-	const int64_t GetMoney() const;
+	const long long GetMoney() const;
 
 	const std::string GetName() const;
 
@@ -43,9 +43,9 @@ public:
 
 	const PlayerSex GetSex() const;
 
-	void GiveCash(int32_t Amount);
+	void GiveCash(int Amount);
 
-	void GiveMoney(int64_t Amount);
+	void GiveMoney(long long Amount);
 
 	const bool IsAdmin() const;
 
@@ -59,7 +59,7 @@ public:
 
 	const bool IsInVehicle() const;
 
-	const bool IsInVehicle(uint16_t VehicleID) const;
+	const bool IsInVehicle(unsigned short VehicleID) const;
 
 	const bool IsLeader() const;
 
@@ -73,16 +73,16 @@ public:
 
 	void OnInserted(std::shared_ptr<MySQLResult> Result);
 
-	void OnObjectEdit(uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation);
+	void OnObjectEdit(unsigned int ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation);
 
-	void OnObjectSelect(uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position);
+	void OnObjectSelect(unsigned int ObjectID, unsigned int ModelID, const Point3D<float>& Position);
 
-	void OnPickUp(int ID);
+	void OnPickUp(unsigned int ID);
 
 	void OnSpawn();
 
 	template<typename... Args>
-	inline bool SendMessage(Colors Color, const std::string& Message, Args&& ...args)
+	inline bool SendMessage(Color Color, const std::string& Message, Args&& ...args)
 	{
 		return SendMessage(static_cast<int>(Color), Message, std::forward<Args>(args)...);
 	}
@@ -95,13 +95,13 @@ public:
 
 	void SetAdminLevel(AdminLevel Level);
 
-	void SetCash(int32_t Amount);
+	void SetCash(int Amount);
 
-	void SetMoney(int64_t Amount);
+	void SetMoney(long long Amount);
 
-	const bool SetPosition(const Point3D<float>& Position, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
+	const bool SetPosition(const Point3D<float>& Position, const float Angle = 0.0f, const unsigned int Interior = 0, const unsigned int VirtualWorld = 0) const;
 
-	const bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const uint32_t Interior = 0, const uint32_t VirtualWorld = 0) const;
+	const bool SetPosition(const float X, const float Y, const float Z, const float Angle = 0.0f, const unsigned int Interior = 0, const unsigned int VirtualWorld = 0) const;
 
 	template<typename... Args>
 	inline const bool ShowDialog(const DialogID& ID, Args&& ...args) const

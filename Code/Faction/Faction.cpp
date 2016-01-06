@@ -4,7 +4,7 @@ Faction::Faction(std::unique_ptr<MySQLResult> Result)
 {
 	auto Length = Result->GetFieldCount();
 
-	for (uint8_t i = 0; i < Length; i++)
+	for (size_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<FactionData>(i);
 		auto Value = Result->GetRowData(Index);
@@ -13,7 +13,7 @@ Faction::Faction(std::unique_ptr<MySQLResult> Result)
 		{
 			case FactionData::kID:
 			{
-				SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+				SetData<unsigned long long>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 				break;
 			}
 			case FactionData::kEnterance:
@@ -43,22 +43,22 @@ Faction::Faction(std::unique_ptr<MySQLResult> Result)
 					case enum_field_types::MYSQL_TYPE_INT24:
 					case enum_field_types::MYSQL_TYPE_LONG:
 					{
-						SetData<int32_t>(Index, std::stoi(Value));
+						SetData<int>(Index, std::stoi(Value));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_LONGLONG:
 					{
-						SetData<int64_t>(Index, std::stoll(Value));
+						SetData<long long>(Index, std::stoll(Value));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_SHORT:
 					{
-						SetData<int16_t>(Index, static_cast<int16_t>(std::stoi(Value)));
+						SetData<short>(Index, static_cast<short>(std::stoi(Value)));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_TINY:
 					{
-						SetData<int8_t>(Index, static_cast<int8_t>(std::stoi(Value)));
+						SetData<signed char>(Index, static_cast<signed char>(std::stoi(Value)));
 						break;
 					}
 					default:

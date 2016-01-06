@@ -26,7 +26,7 @@ const std::string Encryption::Encrypt(const std::string& Data, const std::string
 		}
 	}
 
-	for (uint16_t i = 0; i < 12; i++)
+	for (unsigned short i = 0; i < 12; i++)
 	{
 		Result = sha256(Result);
 	}

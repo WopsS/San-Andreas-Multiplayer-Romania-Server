@@ -14,5 +14,5 @@ public:
 		return true;
 	}
 
-	void Execute(std::shared_ptr<Player> Player, std::shared_ptr<CommandParameters> Parameters);
+	void Execute(std::shared_ptr<Player> Player, std::unique_ptr<CommandParameters> Parameters);
 };

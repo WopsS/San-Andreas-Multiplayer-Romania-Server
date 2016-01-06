@@ -14,7 +14,7 @@ const bool TestCommand::CustomAccess(std::shared_ptr<Player> Player) const
 	return true;
 }
 
-void TestCommand::Execute(std::shared_ptr<Player> Player, std::shared_ptr<CommandParameters> Parameters)
+void TestCommand::Execute(std::shared_ptr<Player> Player, std::unique_ptr<CommandParameters> Parameters)
 {
 	auto TargetPlayer = Parameters->GetAt<std::shared_ptr<::Player>>(4);
 

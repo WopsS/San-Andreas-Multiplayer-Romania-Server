@@ -1,7 +1,7 @@
 #include <Player/Player.hpp>
 #include <Dialog/Dialogs.hpp>
 
-Player::Player(uint16_t ID)
+Player::Player(unsigned short ID)
 {
 	char Name[MAX_PLAYER_NAME + 1];
 	sampgdk::GetPlayerName(ID, Name, sizeof(Name));
@@ -9,7 +9,7 @@ Player::Player(uint16_t ID)
 	std::stringstream StringStream;
 	StringStream << Name;
 
-	AddData<uint16_t>(PlayerData::kGameID, ID);
+	AddData<unsigned short>(PlayerData::kGameID, ID);
 	AddData<std::string>(PlayerData::kName, StringStream.str());
 	AddData<bool>(PlayerData::kAuthenticated, false);
 }
@@ -20,7 +20,7 @@ void Player::AttachCameraToObject(int ObjectID)
 	sampgdk::InvokeNative(Native, "ii", GetGameID(), ObjectID);
 }
 
-const bool Player::AttachObject(uint32_t ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
+const bool Player::AttachObject(unsigned int ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("AttachDynamicObjectToPlayer");
 	return !!sampgdk::InvokeNative(Native, "iiffffff", ID, GetGameID(), X, Y, Z, RotationX, RotationY, RotationZ);
@@ -28,13 +28,13 @@ const bool Player::AttachObject(uint32_t ID, float X, float Y, float Z, float Ro
 
 const void Player::CancelEdit() const
 {
-	sampgdk::CancelEdit(GetData<uint16_t>(PlayerData::kGameID));
+	sampgdk::CancelEdit(GetData<unsigned short>(PlayerData::kGameID));
 }
 
-const bool Player::EditObject(int ObjectID) const
+const bool Player::EditObject(unsigned int ObjectID) const
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("EditDynamicObject");
-	return !!sampgdk::InvokeNative(Native, "ii", GetData<uint16_t>(PlayerData::kGameID), ObjectID);
+	return !!sampgdk::InvokeNative(Native, "ii", GetGameID(), ObjectID);
 }
 
 void Player::OnConnect(std::shared_ptr<MySQLResult> Result)
@@ -43,9 +43,9 @@ void Player::OnConnect(std::shared_ptr<MySQLResult> Result)
 	{
 		// Load user information from database.
 
-		auto Length = static_cast<uint8_t>(PlayerData::kEndMySQL);
+		auto Length = Result->GetFieldCount();
 
-		for (uint8_t i = 0; i < Length; i++)
+		for (size_t i = 0; i < Length; i++)
 		{
 			auto Index = static_cast<PlayerData>(i);
 			auto Value = Result->GetRowData(Index);
@@ -54,7 +54,7 @@ void Player::OnConnect(std::shared_ptr<MySQLResult> Result)
 			{
 				case PlayerData::kMySQLID:
 				{
-					SetData<uint64_t>(PlayerData::kMySQLID, std::stoull(Value));
+					SetData<unsigned long long>(PlayerData::kMySQLID, std::stoull(Value));
 					break;
 				}
 				case PlayerData::kSex:
@@ -84,22 +84,22 @@ void Player::OnConnect(std::shared_ptr<MySQLResult> Result)
 						case enum_field_types::MYSQL_TYPE_INT24:
 						case enum_field_types::MYSQL_TYPE_LONG:
 						{
-							SetData<int32_t>(Index, std::stoi(Value));
+							SetData<int>(Index, std::stoi(Value));
 							break;
 						}
 						case enum_field_types::MYSQL_TYPE_LONGLONG:
 						{
-							SetData<int64_t>(Index, std::stoll(Value));
+							SetData<long long>(Index, std::stoll(Value));
 							break;
 						}
 						case enum_field_types::MYSQL_TYPE_SHORT:
 						{
-							SetData<int16_t>(Index, static_cast<int16_t>(std::stoi(Value)));
+							SetData<short>(Index, static_cast<short>(std::stoi(Value)));
 							break;
 						}
 						case enum_field_types::MYSQL_TYPE_TINY:
 						{
-							SetData<int8_t>(Index, static_cast<int8_t>(std::stoi(Value)));
+							SetData<signed char>(Index, static_cast<signed char>(std::stoi(Value)));
 							break;
 						}
 						default:
@@ -133,11 +133,11 @@ void Player::OnDisconnect(const DisconnectReason& Reason)
 
 void Player::OnInserted(std::shared_ptr<MySQLResult> Result)
 {
-	SetData<uint64_t>(PlayerData::kMySQLID, static_cast<uint64_t>(Result->GetInsertedID()));
+	SetData<unsigned long long>(PlayerData::kMySQLID, static_cast<unsigned long long>(Result->GetInsertedID()));
 	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `players` WHERE `ID` = ':id' LIMIT 1", { MySQL::GetInstance()->MakeParameter("id", GetMySQLID()) }, &Player::OnConnect, this);
 }
 
-void Player::OnObjectEdit(uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
+void Player::OnObjectEdit(unsigned int ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
 {
 	if (Object::IsValid(ObjectID) == true)
 	{
@@ -153,7 +153,7 @@ void Player::OnObjectEdit(uint32_t ObjectID, ObjectEditionResponse Response, con
 	}
 }
 
-void Player::OnObjectSelect(uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position)
+void Player::OnObjectSelect(unsigned int ObjectID, unsigned int ModelID, const Point3D<float>& Position)
 {
 	if (Object::IsValid(ObjectID) == true)
 	{
@@ -161,7 +161,7 @@ void Player::OnObjectSelect(uint32_t ObjectID, uint32_t ModelID, const Point3D<f
 	}
 }
 
-void Player::OnPickUp(int ID)
+void Player::OnPickUp(unsigned int ID)
 {
 }
 
@@ -180,29 +180,29 @@ const std::string Player::GetEmail() const
 	return GetData<std::string>(PlayerData::kEmail);
 }
 
-const uint16_t Player::GetGameID() const
+const unsigned short Player::GetGameID() const
 {
-	return GetData<uint16_t>(PlayerData::kGameID);
+	return GetData<unsigned short>(PlayerData::kGameID);
 }
 
-const uint64_t Player::GetMySQLID() const
+const unsigned long long Player::GetMySQLID() const
 {
-	return GetData<uint64_t>(PlayerData::kMySQLID);
+	return GetData<unsigned long long>(PlayerData::kMySQLID);
 }
 
 const std::shared_ptr<Vehicle> Player::GetVehicle() const
 {
-	return Vehicle::Get(static_cast<uint16_t>(sampgdk::GetPlayerVehicleID(GetGameID())));
+	return Vehicle::Get(static_cast<unsigned short>(sampgdk::GetPlayerVehicleID(GetGameID())));
 }
 
-const int32_t Player::GetCash() const
+const int Player::GetCash() const
 {
-	return GetData<int32_t>(PlayerData::kCash);
+	return GetData<int>(PlayerData::kCash);
 }
 
-const int64_t Player::GetMoney() const
+const long long Player::GetMoney() const
 {
-	return GetData<int64_t>(PlayerData::kMoney);
+	return GetData<long long>(PlayerData::kMoney);
 }
 
 const std::string Player::GetName() const
@@ -220,15 +220,15 @@ const PlayerSex Player::GetSex() const
 	return GetData<PlayerSex>(PlayerData::kSex);
 }
 
-void Player::GiveCash(int32_t Amount)
+void Player::GiveCash(int Amount)
 {
 	SetData<int>(PlayerData::kCash, GetData<int>(PlayerData::kCash) + Amount);
 	sampgdk::GivePlayerMoney(GetGameID(), GetData<int>(PlayerData::kCash));
 }
 
-void Player::GiveMoney(int64_t Amount)
+void Player::GiveMoney(long long Amount)
 {
-	SetData<int64_t>(PlayerData::kMoney, GetData<int64_t>(PlayerData::kMoney) + Amount);
+	SetData<long long>(PlayerData::kMoney, GetData<long long>(PlayerData::kMoney) + Amount);
 }
 
 const bool Player::IsAdmin() const
@@ -262,7 +262,7 @@ const bool Player::IsInVehicle() const
 	return sampgdk::IsPlayerInAnyVehicle(GetGameID()) && Vehicle::Contains(sampgdk::GetPlayerVehicleID(GetGameID())) == true;
 }
 
-const bool Player::IsInVehicle(uint16_t VehicleID) const
+const bool Player::IsInVehicle(unsigned short VehicleID) const
 {
 	return sampgdk::IsPlayerInVehicle(GetGameID(), VehicleID) && Vehicle::Contains(VehicleID) == true;
 }
@@ -289,25 +289,25 @@ void Player::SetAdminLevel(AdminLevel Level)
 	SetData<AdminLevel>(PlayerData::kAdminLevel, Level);
 }
 
-void Player::SetCash(int32_t Amount)
+void Player::SetCash(int Amount)
 {
-	SetData<int32_t>(PlayerData::kCash, Amount);
+	SetData<int>(PlayerData::kCash, Amount);
 
 	sampgdk::ResetPlayerMoney(GetGameID());
 	sampgdk::GivePlayerMoney(GetGameID(), Amount);
 }
 
-void Player::SetMoney(int64_t Amount)
+void Player::SetMoney(long long Amount)
 {
-	SetData<int64_t>(PlayerData::kMoney, Amount);
+	SetData<long long>(PlayerData::kMoney, Amount);
 }
 
-const bool Player::SetPosition(const Point3D<float>& Position, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
+const bool Player::SetPosition(const Point3D<float>& Position, const float Angle, const unsigned int Interior, const unsigned int VirtualWorld) const
 {
 	return SetPosition(Position.X, Position.Y, Position.Z, Angle, Interior, VirtualWorld);
 }
 
-const bool Player::SetPosition(const float X, const float Y, const float Z, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
+const bool Player::SetPosition(const float X, const float Y, const float Z, const float Angle, const unsigned int Interior, const unsigned int VirtualWorld) const
 {
 	auto ID = GetGameID();
 	return sampgdk::SetPlayerPos(ID, X, Y, Z) && sampgdk::SetPlayerFacingAngle(ID, Angle) && sampgdk::SetPlayerInterior(ID, Interior) && sampgdk::SetPlayerVirtualWorld(ID, VirtualWorld);

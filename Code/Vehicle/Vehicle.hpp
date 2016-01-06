@@ -2,7 +2,7 @@
 
 #include <Vehicle/Enums.hpp>
 
-class Vehicle : public Map<uint16_t, Vehicle>, private Data<VehicleData>
+class Vehicle : public Map<unsigned short, Vehicle>, private Data<VehicleData>
 {
 public:
 
@@ -10,11 +10,11 @@ public:
 	Vehicle(int Model, const Point3D<float>& Position, float Rotation, int Color1, int Color2, int RespawnTine = -1, bool Siren = false);
 	~Vehicle() = default;
 
-	const uint16_t Vehicle::GetGameID() const;
+	const unsigned short Vehicle::GetGameID() const;
 
-	const uint16_t GetMySQLID() const;
+	const unsigned short GetMySQLID() const;
 
-	const uint64_t GetOwnerID() const;
+	const unsigned long long GetOwnerID() const;
 
 	const bool GetParameter(VehicleParameters Parameter) const;
 

@@ -2,7 +2,7 @@
 
 #include <Business/Enums.hpp>
 
-class Business : public Map<uint16_t, Business>, private Data<BusinessData>
+class Business : public Map<unsigned short, Business>, private Data<BusinessData>
 {
 public:
 
@@ -13,9 +13,9 @@ public:
 
 	const Point3D<float> GetEntrance() const;
 
-	const uint16_t GetID() const;
+	const unsigned short GetID() const;
 
-	const uint64_t GetOwnerID() const;
+	const unsigned long long GetOwnerID() const;
 
 	const bool IsLocked() const;
 

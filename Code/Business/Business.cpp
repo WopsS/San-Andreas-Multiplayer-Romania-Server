@@ -4,7 +4,7 @@ Business::Business(std::unique_ptr<MySQLResult> Result)
 {
 	auto Length = Result->GetFieldCount();
 
-	for (uint8_t i = 0; i < Length; i++)
+	for (size_t i = 0; i < Length; i++)
 	{
 		auto Index = static_cast<BusinessData>(i);
 		auto Value = Result->GetRowData(Index);
@@ -14,7 +14,7 @@ Business::Business(std::unique_ptr<MySQLResult> Result)
 			case BusinessData::kID:
 			case BusinessData::kOwnerID:
 			{
-				SetData<uint64_t>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+				SetData<unsigned long long>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
 				break;
 			}
 			case BusinessData::kType:
@@ -54,22 +54,22 @@ Business::Business(std::unique_ptr<MySQLResult> Result)
 					case enum_field_types::MYSQL_TYPE_INT24:
 					case enum_field_types::MYSQL_TYPE_LONG:
 					{
-						SetData<int32_t>(Index, std::stoi(Value));
+						SetData<int>(Index, std::stoi(Value));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_LONGLONG:
 					{
-						SetData<int64_t>(Index, std::stoll(Value));
+						SetData<long long>(Index, std::stoll(Value));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_SHORT:
 					{
-						SetData<int16_t>(Index, static_cast<int16_t>(std::stoi(Value)));
+						SetData<short>(Index, static_cast<short>(std::stoi(Value)));
 						break;
 					}
 					case enum_field_types::MYSQL_TYPE_TINY:
 					{
-						SetData<int8_t>(Index, static_cast<int8_t>(std::stoi(Value)));
+						SetData<signed char>(Index, static_cast<signed char>(std::stoi(Value)));
 						break;
 					}
 					default:
@@ -97,14 +97,14 @@ const Point3D<float> Business::GetEntrance() const
 	return GetData<Point3D<float>>(BusinessData::kEntrance);
 }
 
-const uint16_t Business::GetID() const
+const unsigned short Business::GetID() const
 {
-	return GetData<uint16_t>(BusinessData::kID);
+	return GetData<unsigned short>(BusinessData::kID);
 }
 
-const uint64_t Business::GetOwnerID() const
+const unsigned long long Business::GetOwnerID() const
 {
-	return GetData<uint64_t>(BusinessData::kOwnerID);
+	return GetData<unsigned long long>(BusinessData::kOwnerID);
 }
 
 const bool Business::IsLocked() const
@@ -114,7 +114,7 @@ const bool Business::IsLocked() const
 
 void Business::Manage()
 {
-	uint16_t MapIconID;
+	unsigned short MapIconID;
 
 	switch (GetData<BusinessType>(BusinessData::kType))
 	{
@@ -139,24 +139,22 @@ void Business::Manage()
 
 	// TODO: Create a function to format the number with comma, eg.: 1000 => 1,000.
 
-	if (GetData<uint64_t>(BusinessData::kOwnerID) == 0)
+	if (GetOwnerID() == 0)
 	{
-		Text = fmt::format("Business {}\nThis business is for sale\nName: {FFFFFF}{}\n{0F90FA}Price: {FFFFFF}${}\n{0F90FA}Level: {FFFFFF}{}\n{0F90FA}to buy this business type /COMMAND_HERE",
-			GetData<uint64_t>(BusinessData::kID), GetData<uint64_t>(BusinessData::kName), GetData<uint64_t>(BusinessData::kPrice), GetData<uint64_t>(BusinessData::kLevel));
+		Text = fmt::format("Business {}\nThis business is for sale\nName: {FFFFFF}{}\n{0F90FA}Price: {FFFFFF}${}\n{0F90FA}Level: {FFFFFF}{}\n{0F90FA}to buy this business type /COMMAND_HERE", GetData<unsigned long long>(BusinessData::kID), GetData<std::string>(BusinessData::kName), GetData<unsigned long long>(BusinessData::kPrice), GetData<unsigned long long>(BusinessData::kLevel));
 	}
 	else
 	{
 		// TODO: Check if the business is locked and set a specific message.
-		Text = fmt::format("Business {}\n{0F90FA}Name: {FFFFFF}{}\n{0F90FA}Owner: {FFFFFF}{}\n{0F90FA}Fee: {FFFFFF}${}", GetData<uint64_t>(BusinessData::kID), GetData<uint64_t>(BusinessData::kName), 
-			GetData<uint64_t>(BusinessData::kOwnerID), GetData<uint64_t>(BusinessData::kPayout));
+		Text = fmt::format("Business {}\n{0F90FA}Name: {FFFFFF}{}\n{0F90FA}Owner: {FFFFFF}{}\n{0F90FA}Fee: {FFFFFF}${}", GetData<int>(BusinessData::kID), GetData<std::string>(BusinessData::kName), GetOwnerID(), GetData<unsigned long long>(BusinessData::kPayout));
 	}
 
 	auto Entrance = GetData<Point3D<float>>(BusinessData::kEntrance);
 	auto Exit = GetData<Point3D<float>>(BusinessData::kExit);
 
-	SetData<uint32_t>(BusinessData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
-	SetData<uint32_t>(BusinessData::kPickupID, Pickup::Create(1239, 1, Entrance));
-	SetData<uint32_t>(BusinessData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
+	SetData<unsigned int>(BusinessData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
+	SetData<unsigned int>(BusinessData::kPickupID, Pickup::Create(1239, 1, Entrance));
+	SetData<unsigned int>(BusinessData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
 
 	// Create exit pickup.
 	Pickup::Create(1239, 1, Exit);

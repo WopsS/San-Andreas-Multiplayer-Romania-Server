@@ -2,7 +2,7 @@
 
 #include <Dialog/Enums.hpp>
 
-class Dialog : public Data<DialogData>
+class Dialog : private Data<DialogData>
 {
 public:
 

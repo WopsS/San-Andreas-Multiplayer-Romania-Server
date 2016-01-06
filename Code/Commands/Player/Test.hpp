@@ -11,5 +11,5 @@ public:
 
 	const bool CustomAccess(std::shared_ptr<Player> Player) const;
 
-	void Execute(std::shared_ptr<Player> Player, std::shared_ptr<CommandParameters> Parameters);
+	void Execute(std::shared_ptr<Player> Player, std::unique_ptr<CommandParameters> Parameters);
 };
