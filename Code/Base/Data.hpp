@@ -59,6 +59,98 @@ public:
 	}
 
 	/// <summary>
+	/// Set value for an object from the list, detect type. It will add the object if it doesn't exist.
+	/// </summary>
+	/// <param name="Field">Field information.</param>
+	/// <param name="Index">Index for the data.</param>
+	/// <param name="Value">Value for the data.</param>
+	inline const void SetData(FieldInformation Field, TK Index, std::string Value)
+	{
+		if (Field.IsNumeric == false)
+		{
+			SetData<std::string>(Index, Value);
+			return;
+		}
+		else if (Value.length() == 0)
+		{
+			Value = "0";
+		}
+
+		if (Field.IsBool == true)
+		{
+			SetData<bool>(Index, !!std::stoi(Value));
+			return;
+		}
+
+		switch (Field.Type)
+		{
+			case enum_field_types::MYSQL_TYPE_DOUBLE:
+			{
+				SetData<double>(Index, std::stod(Value));
+				break;
+			}
+			case enum_field_types::MYSQL_TYPE_FLOAT:
+			{
+				SetData<float>(Index, std::stof(Value));
+				break;
+			}
+			case enum_field_types::MYSQL_TYPE_INT24:
+			case enum_field_types::MYSQL_TYPE_LONG:
+			{
+				if (Field.IsUnsigned == true)
+				{
+					SetData<unsigned int>(Index, std::stoul(Value));
+				}
+				else
+				{
+					SetData<int>(Index, std::stoi(Value));
+				}
+
+				break;
+			}
+			case enum_field_types::MYSQL_TYPE_LONGLONG:
+			{
+				if (Field.IsUnsigned == true)
+				{
+					SetData<unsigned long long>(Index, std::stoull(Value));
+				}
+				else
+				{
+					SetData<long long>(Index, std::stoll(Value));
+				}
+
+				break;
+			}
+			case enum_field_types::MYSQL_TYPE_SHORT:
+			{
+				if (Field.IsUnsigned == true)
+				{
+					SetData<unsigned short>(Index, std::stoi(Value));
+				}
+				else
+				{
+					SetData<short>(Index, std::stoi(Value));
+				}
+
+				break;
+			}
+			case enum_field_types::MYSQL_TYPE_TINY:
+			{
+				if (Field.IsUnsigned == true)
+				{
+					SetData<unsigned char>(Index, std::stoi(Value));
+				}
+				else
+				{
+					SetData<signed char>(Index, std::stoi(Value));
+				}
+
+				break;
+			}
+		}
+	}
+
+	/// <summary>
 	/// Set value for an object from the list. It will add the object if it doesn't exist.
 	/// </summary>
 	/// <param name="Index">Index for the data.</param>

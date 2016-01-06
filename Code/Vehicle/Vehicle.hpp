@@ -32,5 +32,7 @@ public:
 
 	const float GetRotation() const;
 
+	const bool HasSiren() const;
+
 	const bool SetParameter(VehicleParameters Parameter, bool Status) const;
 };

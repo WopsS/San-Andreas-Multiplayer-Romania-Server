@@ -16,7 +16,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	sampgdk::ManualVehicleEngineAndLights();
 	sampgdk::SetNameTagDrawDistance(40.0);
 	sampgdk::SetWorldTime(std::stoi(Time::GetHour()));
-	
+
 	// Initialize server things.
 	Server::GetInstance()->Initialize();
 

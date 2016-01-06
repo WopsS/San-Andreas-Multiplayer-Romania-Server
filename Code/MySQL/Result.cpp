@@ -13,7 +13,7 @@ std::unique_ptr<MySQLResult> MySQLResult::GetRowResult(size_t Index) const
 	return std::move(Result);
 }
 
-const enum_field_types MySQLResult::GetFieldType(const std::string& Name) const
+const FieldInformation MySQLResult::GetField(const std::string& Name) const
 {
 	if (Name.empty() == false)
 	{
@@ -23,12 +23,12 @@ const enum_field_types MySQLResult::GetFieldType(const std::string& Name) const
 
 			if (Field.Name.compare(Name) == 0)
 			{
-				return Field.Type;
+				return Field;
 			}
 		}
 	}
 
-	return enum_field_types::MYSQL_TYPE_BIT;
+	return FieldInformation();
 }
 
 const std::string MySQLResult::GetRowData(size_t RowIndex, const std::string& FieldName) const

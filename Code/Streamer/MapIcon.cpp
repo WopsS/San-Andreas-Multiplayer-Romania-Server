@@ -7,7 +7,7 @@ const unsigned int MapIcon::Create(Point3D<float> Position, unsigned short Type,
 
 const unsigned int MapIcon::Create(float X, float Y, float Z, unsigned short Type, int Color, int VirtualWorld, int Interior, int PlayerID, float StreamDistance, MapIconStlye Style)
 {
-	static AMX_NATIVE Native = sampgdk::FindNative("CreateDynamiMapIcon");
+	static AMX_NATIVE Native = sampgdk::FindNative("CreateDynamicMapIcon");
 	return static_cast<unsigned int>(sampgdk::InvokeNative(Native, "fffiiiiifi", X, Y, Z, Type, Color, VirtualWorld, Interior, PlayerID, StreamDistance, static_cast<int>(Style)));
 }
 

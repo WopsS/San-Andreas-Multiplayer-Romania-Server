@@ -25,6 +25,7 @@
 #include <format.h>
 #include <mysql.h>
 #include <Colors.hpp>
+#include <Base/Types.hpp>
 #include <Base/Any.hpp>
 #include <Base/Data.hpp>
 #include <Base/Map.hpp>

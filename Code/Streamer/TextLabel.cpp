@@ -9,7 +9,7 @@ unsigned int TextLabel::Create(const std::string& Text, int Color, Point3D<float
 unsigned int TextLabel::Create(const std::string& Text, int Color, float X, float Y, float Z, float DrawDistance, unsigned short AttachedPlayer, unsigned short AttachedVehicle, bool TestLOS, int VirtualWorld, int Interior, unsigned short PlayerID, float StreamDistance)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("CreateDynamic3DTextLabel");
-	return !!sampgdk::InvokeNative(Native, "siffffiibiiif", Text.c_str(), Color, X, Y, Z, DrawDistance, AttachedPlayer, AttachedVehicle, TestLOS, VirtualWorld, Interior, PlayerID != -1 ? Player::Get(PlayerID)->GetGameID() : -1, StreamDistance);
+	return !!sampgdk::InvokeNative(Native, "siffffiibiiif", Text.c_str(), Color, X, Y, Z, DrawDistance, AttachedPlayer, AttachedVehicle, TestLOS, VirtualWorld, Interior, PlayerID == INVALID_PLAYER_ID ? -1 : Player::Get(PlayerID)->GetGameID(), StreamDistance);
 }
 
 const bool TextLabel::Destroy(unsigned int ID)

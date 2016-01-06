@@ -142,7 +142,7 @@ void Connection::ProcessQueries()
 
 						if (StoredResult != nullptr) // It is a SELECT query.
 						{
-							MYSQL_FIELD* Field;
+							MYSQL_FIELD* CurrentField;
 							MYSQL_ROW Row;
 
 							size_t RowIndex = 0;
@@ -151,13 +151,21 @@ void Connection::ProcessQueries()
 							Result->m_fields.reserve(mysql_num_fields(StoredResult));
 							
 							// Let's store the fields name.
-							while ((Field = mysql_fetch_field(StoredResult)))
+							while ((CurrentField = mysql_fetch_field(StoredResult)))
 							{
-								ColumnInformation CurrentField;
-								CurrentField.Name = Field->name;
-								CurrentField.Type = Field->type;
+								FieldInformation Field;
+								Field.Name = CurrentField->name;
+								Field.Type = CurrentField->type;
+								Field.IsNumeric = IS_NUM(CurrentField->type);
+								Field.IsUnsigned = (CurrentField->flags & UNSIGNED_FLAG) > 0;
 
-								Result->m_fields.push_back(CurrentField);
+								// If the field is numeric and length is 1, it is a bool.
+								if (Field.IsNumeric == true)
+								{
+									Field.IsBool = CurrentField->length == 1;
+								}
+
+								Result->m_fields.push_back(Field);
 							}
 
 							// Resize the vector for rows.

@@ -11,21 +11,6 @@ Vehicle::Vehicle(std::unique_ptr<MySQLResult> Result)
 
 		switch (Index)
 		{
-			case VehicleData::kID:
-			{
-				SetData<unsigned short>(Index,  std::stoi(Value));
-				break;
-			}
-			case VehicleData::kOwnerID:
-			{
-				SetData<unsigned long long>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
-				break;
-			}
-			case VehicleData::kModel:
-			{
-				SetData<unsigned int>(Index, std::stoul(Value));
-				break;
-			}
 			case VehicleData::kPosition:
 			{
 				auto X = std::stof(Result->GetRowData(i++));
@@ -36,68 +21,18 @@ Vehicle::Vehicle(std::unique_ptr<MySQLResult> Result)
 
 				break;
 			}
-			case VehicleData::kColor1:
-			case VehicleData::kColor2:
-			{
-				SetData<unsigned char>(Index, std::stoi(Value));
-				break;
-			}
-			case VehicleData::kSiren:
-			{
-				SetData<bool>(Index, !!std::stoi(Result->GetRowData(i++)));
-				break;
-			}
 			default:
 			{
-				switch (Result->GetFieldType(Index))
-				{
-					case enum_field_types::MYSQL_TYPE_DOUBLE:
-					{
-						SetData<double>(Index, std::stod(Value));
-						break;
-					}
-					case enum_field_types::MYSQL_TYPE_FLOAT:
-					{
-						SetData<float>(Index, std::stof(Value));
-						break;
-					}
-					case enum_field_types::MYSQL_TYPE_INT24:
-					case enum_field_types::MYSQL_TYPE_LONG:
-					{
-						SetData<int>(Index, std::stoi(Value));
-						break;
-					}
-					case enum_field_types::MYSQL_TYPE_LONGLONG:
-					{
-						SetData<long long>(Index, std::stoll(Value));
-						break;
-					}
-					case enum_field_types::MYSQL_TYPE_SHORT:
-					{
-						SetData<short>(Index, static_cast<short>(std::stoi(Value)));
-						break;
-					}
-					case enum_field_types::MYSQL_TYPE_TINY:
-					{
-						SetData<signed char>(Index, static_cast<signed char>(std::stoi(Value)));
-						break;
-					}
-					default:
-					{
-						SetData<std::string>(Index, Value);
-						break;
-					}
-				}
-
+				SetData(Result->GetField(Index), Index, Value);
 				break;
 			}
 		}
 	}
 
 	auto Position = GetData<Point3D<float>>(VehicleData::kPosition);
-
-	SetData<unsigned short>(VehicleData::kGameID, sampgdk::CreateVehicle(GetData<short>(VehicleData::kModel), Position.X, Position.Y, Position.Z, GetData<float>(VehicleData::kRotation),
-		GetData<int>(VehicleData::kColor1), GetData<int>(VehicleData::kColor2), GetData<int>(VehicleData::kRespawnTime), GetData<bool>(VehicleData::kSiren)));
+	auto GameID = sampgdk::CreateVehicle(GetModel(), Position.X, Position.Y, Position.Z, GetRotation(), GetColor1(), GetColor2(), GetRespawnTine(), HasSiren());
+	
+	SetData<unsigned short>(VehicleData::kGameID, GameID);
 }
 
 Vehicle::Vehicle(int Model, const Point3D<float>& Position, float Rotation, int Color1, int Color2, int RespawnTine, bool Siren)
@@ -168,7 +103,12 @@ const unsigned int Vehicle::GetRespawnTine() const
 
 const float Vehicle::GetRotation() const
 {
-	return GetData<float>(VehicleData::kPosition);
+	return GetData<float>(VehicleData::kRotation);
+}
+
+const bool Vehicle::HasSiren() const
+{
+	return GetData<bool>(VehicleData::kSiren);
 }
 
 const bool Vehicle::SetParameter(VehicleParameters Parameter, bool Status) const

@@ -6,9 +6,9 @@
 
 namespace TextLabel
 {
-	unsigned int Create(const std::string& Text, int Color, Point3D<float> Position, float DrawDistance = 5.0f, unsigned short AttachedPlayer = INVALID_PLAYER_ID, unsigned short AttachedVehicle = INVALID_VEHICLE_ID, bool TestLOS = false, int VirtualWorld = -1, int Interior = -1, unsigned short PlayerID = -1, float StreamDistance = STREAMER_3D_TEXT_LABEL_SD);
+	unsigned int Create(const std::string& Text, int Color, Point3D<float> Position, float DrawDistance = 5.0f, unsigned short AttachedPlayer = INVALID_PLAYER_ID, unsigned short AttachedVehicle = INVALID_VEHICLE_ID, bool TestLOS = false, int VirtualWorld = -1, int Interior = -1, unsigned short PlayerID = INVALID_PLAYER_ID, float StreamDistance = STREAMER_3D_TEXT_LABEL_SD);
 
-	unsigned int Create(const std::string& Text, int Color, float X, float Y, float Z, float DrawDistance = 5.0f, unsigned short AttachedPlayer = INVALID_PLAYER_ID, unsigned short AttachedVehicle = INVALID_VEHICLE_ID, bool TestLOS = false, int VirtualWorld = -1, int Interior = -1, unsigned short PlayerID = -1, float StreamDistance = STREAMER_3D_TEXT_LABEL_SD);
+	unsigned int Create(const std::string& Text, int Color, float X, float Y, float Z, float DrawDistance = 5.0f, unsigned short AttachedPlayer = INVALID_PLAYER_ID, unsigned short AttachedVehicle = INVALID_VEHICLE_ID, bool TestLOS = false, int VirtualWorld = -1, int Interior = -1, unsigned short PlayerID = INVALID_PLAYER_ID, float StreamDistance = STREAMER_3D_TEXT_LABEL_SD);
 
 	const bool Destroy(unsigned int ID);
 

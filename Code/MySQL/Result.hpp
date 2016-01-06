@@ -1,12 +1,5 @@
 #pragma once
 
-struct ColumnInformation
-{
-	std::string Name;
-
-	enum_field_types Type;
-};
-
 class MySQLResult
 {
 public:
@@ -38,19 +31,19 @@ public:
 	}
 
 	template<typename T>
-	inline const enum_field_types GetFieldType(const T& Index) const
+	inline const FieldInformation GetField(const T& Index) const
 	{
 		auto FieldIndex = static_cast<size_t>(Index);
 
 		if (FieldIndex < GetFieldCount())
 		{
-			return m_fields.at(FieldIndex).Type;
+			return m_fields.at(FieldIndex);
 		}
 
-		return enum_field_types::MYSQL_TYPE_BIT;
+		return FieldInformation();
 	}
 
-	const enum_field_types GetFieldType(const std::string& Name) const;
+	const FieldInformation GetField(const std::string& Name) const;
 
 	inline const my_ulonglong GetInsertedID() const
 	{
@@ -107,7 +100,7 @@ private:
 
 	unsigned int m_warnings;
 
-	std::vector<ColumnInformation> m_fields;
+	std::vector<FieldInformation> m_fields;
 
 	std::vector<std::vector<std::string>> m_data;
 };

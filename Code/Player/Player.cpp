@@ -52,11 +52,6 @@ void Player::OnConnect(std::shared_ptr<MySQLResult> Result)
 
 			switch (Index)
 			{
-				case PlayerData::kMySQLID:
-				{
-					SetData<unsigned long long>(PlayerData::kMySQLID, std::stoull(Value));
-					break;
-				}
 				case PlayerData::kSex:
 				{
 					SetData<PlayerSex>(PlayerData::kSex, static_cast<PlayerSex>(std::stoi(Value)));
@@ -69,46 +64,7 @@ void Player::OnConnect(std::shared_ptr<MySQLResult> Result)
 				}
 				default:
 				{
-					switch (Result->GetFieldType(Index))
-					{
-						case enum_field_types::MYSQL_TYPE_DOUBLE:
-						{
-							SetData<double>(Index, std::stod(Value));
-							break;
-						}
-						case enum_field_types::MYSQL_TYPE_FLOAT:
-						{
-							SetData<float>(Index, std::stof(Value));
-							break;
-						}
-						case enum_field_types::MYSQL_TYPE_INT24:
-						case enum_field_types::MYSQL_TYPE_LONG:
-						{
-							SetData<int>(Index, std::stoi(Value));
-							break;
-						}
-						case enum_field_types::MYSQL_TYPE_LONGLONG:
-						{
-							SetData<long long>(Index, std::stoll(Value));
-							break;
-						}
-						case enum_field_types::MYSQL_TYPE_SHORT:
-						{
-							SetData<short>(Index, static_cast<short>(std::stoi(Value)));
-							break;
-						}
-						case enum_field_types::MYSQL_TYPE_TINY:
-						{
-							SetData<signed char>(Index, static_cast<signed char>(std::stoi(Value)));
-							break;
-						}
-						default:
-						{
-							SetData<std::string>(Index, Value);
-							break;
-						}
-					}
-
+					SetData(Result->GetField(Index), Index, Value);
 					break;
 				}
 			}
