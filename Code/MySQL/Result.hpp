@@ -1,8 +1,6 @@
 #pragma once
 
-class Connection;
-
-struct FieldInformation
+struct ColumnInformation
 {
 	std::string Name;
 
@@ -21,9 +19,9 @@ public:
 		return m_affectedRows;
 	}
 
-	inline const size_t GetFieldCount() const
+	inline const size_t GetColumnCount() const
 	{
-		return m_fieldsCount;
+		return m_columns.size();
 	}
 
 	inline const my_ulonglong GetInsertedID() const
@@ -33,35 +31,35 @@ public:
 
 	inline const my_ulonglong GetRowCount() const
 	{
-		return m_rowsCount;
+		return m_data.size();
 	}
 
 	inline const uint32_t GetWarningCount() const
 	{
-		return m_warningCount;
+		return m_warnings;
 	}
 
 	template<typename T>
-	inline const enum_field_types GetFieldType(const T& Index) const
+	inline const enum_field_types GetColumnType(const T& Index) const
 	{
 		auto FieldIndex = static_cast<size_t>(Index);
 
-		if (FieldIndex < m_fieldsCount)
+		if (FieldIndex < GetColumnCount())
 		{
-			return m_fields.at(FieldIndex).Type;
+			return m_columns.at(FieldIndex).Type;
 		}
 
 		return enum_field_types::MYSQL_TYPE_BIT;
 	}
 
-	const enum_field_types GetFieldType(const std::string& Name) const;
+	const enum_field_types GetColumnType(const std::string& Name) const;
 
 	template<typename T>
 	inline const std::string GetRowData(const T& FieldIndex) const
 	{
 		auto Index = static_cast<size_t>(FieldIndex);
 
-		if (Index < m_fieldsCount)
+		if (Index < GetColumnCount())
 		{
 			return m_data[0][Index];
 		}
@@ -74,7 +72,7 @@ public:
 	{
 		auto Index = static_cast<size_t>(FieldIndex);
 
-		if (RowIndex < m_rowsCount && Index < m_fieldsCount)
+		if (RowIndex < GetRowCount() && Index < GetColumnCount())
 		{
 			return m_data[RowIndex][Index];
 		}
@@ -90,15 +88,11 @@ private:
 
 	my_ulonglong m_affectedRows;
 
-	size_t m_fieldsCount;
-
 	my_ulonglong m_insertID;
 
-	my_ulonglong m_rowsCount;
+	uint32_t m_warnings;
 
-	uint32_t m_warningCount;
-
-	std::vector<FieldInformation> m_fields;
+	std::vector<ColumnInformation> m_columns;
 
 	std::vector<std::vector<std::string>> m_data;
 };

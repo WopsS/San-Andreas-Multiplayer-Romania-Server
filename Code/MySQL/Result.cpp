@@ -1,12 +1,12 @@
 #include <MySQL/Result.hpp>
 
-const enum_field_types MySQLResult::GetFieldType(const std::string& Name) const
+const enum_field_types MySQLResult::GetColumnType(const std::string& Name) const
 {
 	if (Name.empty() == false)
 	{
-		for (size_t i = 0; i < m_fieldsCount; i++)
+		for (size_t i = 0; i < GetColumnCount(); i++)
 		{
-			auto Field = m_fields.at(i);
+			auto Field = m_columns.at(i);
 
 			if (Field.Name.compare(Name) == 0)
 			{
@@ -20,11 +20,11 @@ const enum_field_types MySQLResult::GetFieldType(const std::string& Name) const
 
 const std::string MySQLResult::GetRowData(size_t RowIndex, const std::string& FieldName) const
 {
-	if (RowIndex < m_rowsCount && FieldName.empty() == false)
+	if (RowIndex < GetRowCount() && FieldName.empty() == false)
 	{
-		for (size_t i = 0; i < m_fieldsCount; i++)
+		for (size_t i = 0; i < GetColumnCount(); i++)
 		{
-			if (m_fields.at(i).Name.compare(FieldName) == 0)
+			if (m_columns.at(i).Name.compare(FieldName) == 0)
 			{
 				return m_data[RowIndex][i];
 			}

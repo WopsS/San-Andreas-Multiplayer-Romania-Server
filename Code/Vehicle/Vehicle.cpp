@@ -5,7 +5,7 @@ Vehicle::Vehicle(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 	// Let's do that because the result vector is from index 0.
 	ID--;
 
-	auto Length = static_cast<size_t>(VehicleData::kEndMySQL);
+	auto Length = Result->GetColumnCount();
 
 	for (size_t i = 0; i < Length; i++)
 	{
@@ -39,7 +39,7 @@ Vehicle::Vehicle(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 			}
 			default:
 			{
-				switch (Result->GetFieldType(Index))
+				switch (Result->GetColumnType(Index))
 				{
 					case enum_field_types::MYSQL_TYPE_DOUBLE:
 					{

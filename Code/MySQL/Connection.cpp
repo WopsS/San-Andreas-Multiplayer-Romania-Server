@@ -147,34 +147,31 @@ void Connection::ProcessQueries()
 
 							size_t RowIndex = 0;
 
-							Result->m_fieldsCount = mysql_num_fields(StoredResult);
-							Result->m_rowsCount = mysql_num_rows(StoredResult);
-
 							// Set the capacity of the vector.
-							Result->m_fields.reserve(Result->m_fieldsCount);
+							Result->m_columns.reserve(mysql_num_fields(StoredResult));
 							
 							// Let's store the fields name.
 							while ((Field = mysql_fetch_field(StoredResult)))
 							{
-								FieldInformation CurrentField;
+								ColumnInformation CurrentField;
 								CurrentField.Name = Field->name;
 								CurrentField.Type = Field->type;
 
-								Result->m_fields.push_back(CurrentField);
+								Result->m_columns.push_back(CurrentField);
 							}
 
 							// Resize the vector for rows.
-							Result->m_data.resize(static_cast<size_t>(Result->m_rowsCount));
+							Result->m_data.resize(static_cast<size_t>(mysql_num_rows(StoredResult)));
 
-							for (size_t i = 0; i < Result->m_rowsCount; i++)
+							for (size_t i = 0; i < Result->GetRowCount(); i++)
 							{
 								// Resize the vector for columns.
-								Result->m_data[i].resize(Result->m_fieldsCount);
+								Result->m_data[i].resize(Result->GetColumnCount());
 
 								// Fill the array with data.
 								Row = mysql_fetch_row(StoredResult);
 
-								for (size_t j = 0; j < Result->m_fieldsCount; j++)
+								for (size_t j = 0; j < Result->GetColumnCount(); j++)
 								{
 									// Check if the field is null.
 									Result->m_data[i][j] = Row[j] != NULL ? Row[j] : "";
@@ -189,7 +186,7 @@ void Connection::ProcessQueries()
 							{
 								Result->m_affectedRows = mysql_affected_rows(m_connection);
 								Result->m_insertID = mysql_insert_id(m_connection);
-								Result->m_warningCount = mysql_warning_count(m_connection);
+								Result->m_warnings= mysql_warning_count(m_connection);
 							}
 						}
 

@@ -5,7 +5,7 @@ Business::Business(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 	// Let's do that because the result vector is from index 0.
 	ID--;
 
-	auto Length = static_cast<uint8_t>(BusinessData::kEndMySQL);
+	auto Length = Result->GetColumnCount();
 
 	for (uint8_t i = 0; i < Length; i++)
 	{
@@ -42,7 +42,7 @@ Business::Business(uint16_t ID, std::shared_ptr<MySQLResult> Result)
 			}
 			default:
 			{
-				switch (Result->GetFieldType(Index))
+				switch (Result->GetColumnType(Index))
 				{
 					case enum_field_types::MYSQL_TYPE_DOUBLE:
 					{

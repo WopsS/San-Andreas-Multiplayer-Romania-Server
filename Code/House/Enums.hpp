@@ -13,8 +13,6 @@ enum class HouseData : uint8_t
 	kLevel,
 	kRentPrice,
 
-	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
-
 	kMapIconID,
 	kPickupID,
 	kTextLabelID

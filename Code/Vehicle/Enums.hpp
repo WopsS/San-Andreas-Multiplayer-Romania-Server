@@ -12,8 +12,6 @@ enum class VehicleData : uint16_t
 	kRespawnTime,
 	kSiren,
 
-	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
-
 	kGameID
 };
 

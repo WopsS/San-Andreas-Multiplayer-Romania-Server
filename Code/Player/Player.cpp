@@ -69,7 +69,7 @@ void Player::OnConnect(std::shared_ptr<MySQLResult> Result)
 				}
 				default:
 				{
-					switch (Result->GetFieldType(Index))
+					switch (Result->GetColumnType(Index))
 					{
 						case enum_field_types::MYSQL_TYPE_DOUBLE:
 						{

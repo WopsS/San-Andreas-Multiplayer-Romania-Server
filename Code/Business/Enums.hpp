@@ -15,8 +15,6 @@ enum class BusinessData : uint8_t
 	kLevel,
 	kPayout,
 
-	kEndMySQL, // Used to know the last value in the iteration when MySQL information is loaded.
-
 	kMapIconID,
 	kPickupID,
 	kTextLabelID
