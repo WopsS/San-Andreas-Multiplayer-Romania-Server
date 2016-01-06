@@ -104,14 +104,14 @@ Business::Business(std::unique_ptr<MySQLResult> Result)
 	Manage();
 }
 
-const Point3D<float> Business::GetExit() const
-{
-	return GetData<Point3D<float>>(BusinessData::kExit);
-}
-
 const Point3D<float> Business::GetEntrance() const
 {
 	return GetData<Point3D<float>>(BusinessData::kEntrance);
+}
+
+const Point3D<float> Business::GetExit() const
+{
+	return GetData<Point3D<float>>(BusinessData::kExit);
 }
 
 const unsigned short Business::GetID() const

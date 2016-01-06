@@ -9,9 +9,9 @@ public:
 	Business(std::unique_ptr<MySQLResult> Result);
 	~Business() = default;
 
-	const Point3D<float> GetExit() const;
-
 	const Point3D<float> GetEntrance() const;
+
+	const Point3D<float> GetExit() const;
 
 	const unsigned short GetID() const;
 
