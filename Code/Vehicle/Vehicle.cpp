@@ -12,21 +12,34 @@ Vehicle::Vehicle(std::unique_ptr<MySQLResult> Result)
 		switch (Index)
 		{
 			case VehicleData::kID:
+			{
+				SetData<unsigned short>(Index,  std::stoi(Value));
+				break;
+			}
 			case VehicleData::kOwnerID:
 			{
 				SetData<unsigned long long>(Index, Value.length() == 0 ? 0 : std::stoull(Value));
+				break;
+			}
+			case VehicleData::kModel:
+			{
+				SetData<unsigned int>(Index, std::stoul(Value));
 				break;
 			}
 			case VehicleData::kPosition:
 			{
 				auto X = std::stof(Result->GetRowData(i++));
 				auto Y = std::stof(Result->GetRowData(i++));
-				auto Z = std::stof(Result->GetRowData(i++));
-				auto Rotation = std::stof(Result->GetRowData(i));
+				auto Z = std::stof(Result->GetRowData(i));
 
 				SetData<Point3D<float>>(Index, Point3D<float>(X, Y, Z));
-				SetData<float>(VehicleData::kRotation, Rotation);
 
+				break;
+			}
+			case VehicleData::kColor1:
+			case VehicleData::kColor2:
+			{
+				SetData<unsigned char>(Index, std::stoi(Value));
 				break;
 			}
 			case VehicleData::kSiren:
@@ -91,6 +104,16 @@ Vehicle::Vehicle(int Model, const Point3D<float>& Position, float Rotation, int 
 {
 }
 
+const unsigned char Vehicle::GetColor1() const
+{
+	return GetData<unsigned char>(VehicleData::kColor1);
+}
+
+const unsigned char Vehicle::GetColor2() const
+{
+	return GetData<unsigned char>(VehicleData::kColor2);
+}
+
 const unsigned short Vehicle::GetGameID() const
 {
 	return GetData<unsigned short>(VehicleData::kGameID);
@@ -104,6 +127,11 @@ const unsigned short Vehicle::GetMySQLID() const
 const unsigned long long Vehicle::GetOwnerID() const
 {
 	return GetData<unsigned long long>(VehicleData::kOwnerID);
+}
+
+const unsigned short Vehicle::GetModel() const
+{
+	return GetData<unsigned short>(VehicleData::kModel);
 }
 
 const bool Vehicle::GetParameter(VehicleParameters Parameter) const
@@ -126,6 +154,21 @@ const std::vector<bool> Vehicle::GetParameters() const
 	}
 
 	return Parameters;
+}
+
+const Point3D<float> Vehicle::GetPosition() const
+{
+	return GetData<Point3D<float>>(VehicleData::kPosition);
+}
+
+const unsigned int Vehicle::GetRespawnTine() const
+{
+	return GetData<unsigned int>(VehicleData::kRespawnTime);
+}
+
+const float Vehicle::GetRotation() const
+{
+	return GetData<float>(VehicleData::kPosition);
 }
 
 const bool Vehicle::SetParameter(VehicleParameters Parameter, bool Status) const
