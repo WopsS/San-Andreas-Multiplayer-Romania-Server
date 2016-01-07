@@ -35,7 +35,7 @@ public:
 
 	void SetDoors(bool Status);
 
-	void SetOwnerID(unsigned long long ID);
+	void SetOwner(unsigned long long ID);
 
 private:
 

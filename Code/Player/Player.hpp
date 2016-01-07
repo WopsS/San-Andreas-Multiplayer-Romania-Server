@@ -26,17 +26,19 @@ public:
 
 	const AdminLevel GetAdminLevel() const;
 
-	const unsigned int GetCash() const;
+	const int GetCash() const;
 
 	std::shared_ptr<House> GetClosestHouse(float Range = 3.0f) const;
-
-	std::shared_ptr<House> GetPlayerHouse() const;
 
 	const std::string GetEmail() const;
 
 	const unsigned short GetGameID() const;
 
-	const unsigned char GetInterior() const;
+	std::shared_ptr<House> GetHouse() const;
+
+	const Interior GetInterior() const;
+
+	const unsigned short GetInteriorID() const;
 
 	const unsigned long long GetMySQLID() const;
 
@@ -81,6 +83,10 @@ public:
 	void OnConnect(std::shared_ptr<MySQLResult> Result);
 
 	void OnDisconnect(const DisconnectReason& Reason);
+
+	void OnEnterBuilding(Interior Interior, unsigned short ID);
+
+	void OnExitBuilding(Interior Interior);
 
 	void OnInserted(std::shared_ptr<MySQLResult> Result);
 

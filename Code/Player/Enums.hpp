@@ -19,6 +19,13 @@ enum class DisconnectReason : unsigned char
 	kKick // The player was kicked or banned by the server. 
 };
 
+enum class Interior : unsigned char
+{
+	kWorld = 0,
+	kHouse,
+	kBusiness
+};
+
 enum class PlayerSex : unsigned char
 {
 	kMale = 1,
@@ -34,7 +41,6 @@ enum class PlayerData : unsigned char
 	kPassword,
 	kSalt,
 	kEmail,
-	kInterior,
 	kPin,
 	kSex,
 	kAdminLevel,
@@ -45,5 +51,7 @@ enum class PlayerData : unsigned char
 
 	kGameID,
 	kAuthenticated,
+	kInterior,
+	kInteriorID,
 	kSpectating
 };

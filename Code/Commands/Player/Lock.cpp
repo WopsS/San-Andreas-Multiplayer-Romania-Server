@@ -12,24 +12,19 @@ const bool LockCommand::CustomAccess(std::shared_ptr<Player> Player) const
 
 void LockCommand::Execute(std::shared_ptr<Player> Player, std::unique_ptr<CommandParameters> Parameters)
 {
-	auto House = Player->GetClosestHouse();
-	if (Player->GetPlayerHouse() == 0)
+	auto House = Player->GetHouse();
+
+	if (House == nullptr)
 	{
-		Player->SendMessage(Color::kWhite, "You don't have house.");
+		Player->SendMessage(Color::kFren, "* You don't own house.");
 		return;
 	}
-	if (!Player->GetClosestHouse() || House->GetInterior() != Player->GetInterior())
+	else if (Player->IsInRangeOfPoint(House->GetEntrance()) == false && Player->GetInterior() != Interior::kHouse)
 	{
-		Player->SendMessage(Color::kWhite, "You don't can execute this command.");
+		Player->SendMessage(Color::kFren, "* You are not near or in your house.");
 		return;
-	}
-	if (House->GetLocked() == true)
-	{
-		House->SetDoors(false);
-	}
-	else
-	{
-		House->SetDoors(true);
 	}
 
+	House->SetDoors(!House->GetLocked());
+	Player->SendMessage(Color::kWhite, "* You {} your house.", House->IsLocked() == true ? "locked" : "unlocked");
 }

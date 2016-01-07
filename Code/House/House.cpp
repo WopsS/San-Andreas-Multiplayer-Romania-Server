@@ -97,9 +97,7 @@ void House::SetDoors(bool Status)
 	SetData<bool>(HouseData::kLocked, Status);
 }
 
-
-
-void House::SetOwnerID(unsigned long long ID)
+void House::SetOwner(unsigned long long ID)
 {
 	SetData<unsigned long long>(HouseData::kOwnerID, ID);
 }

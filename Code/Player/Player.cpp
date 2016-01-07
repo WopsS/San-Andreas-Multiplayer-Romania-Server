@@ -87,6 +87,18 @@ void Player::OnDisconnect(const DisconnectReason& Reason)
 	// TODO: Save player data.
 }
 
+void Player::OnEnterBuilding(Interior Interior, unsigned short ID)
+{
+	SetData<::Interior>(PlayerData::kInterior, Interior);
+	SetData<unsigned short>(PlayerData::kInteriorID, ID);
+}
+
+void Player::OnExitBuilding(Interior Interior)
+{
+	SetData<::Interior>(PlayerData::kInterior, Interior);
+	SetData<unsigned short>(PlayerData::kInteriorID, 0);
+}
+
 void Player::OnInserted(std::shared_ptr<MySQLResult> Result)
 {
 	SetData<unsigned long long>(PlayerData::kMySQLID, static_cast<unsigned long long>(Result->GetInsertedID()));
@@ -131,9 +143,9 @@ const AdminLevel Player::GetAdminLevel() const
 	return GetData<AdminLevel>(PlayerData::kAdminLevel);
 }
 
-const unsigned int Player::GetCash() const
+const int Player::GetCash() const
 {
-	return GetData<unsigned int>(PlayerData::kCash);
+	return GetData<int>(PlayerData::kCash);
 }
 
 std::shared_ptr<House> Player::GetClosestHouse(float Range) const
@@ -141,20 +153,6 @@ std::shared_ptr<House> Player::GetClosestHouse(float Range) const
 	for (auto i : House::GetList())
 	{
 		if (IsInRangeOfPoint(i.second->GetEntrance(), Range) == true)
-		{
-			return i.second;
-		}
-	}
-
-	return nullptr;
-}
-
-std::shared_ptr<House> Player::GetPlayerHouse() const
-{
-	for (auto i : House::GetList())
-	{
-		auto ID = GetMySQLID();
-		if (i.second->GetOwnerID() == ID)
 		{
 			return i.second;
 		}
@@ -173,9 +171,29 @@ const unsigned short Player::GetGameID() const
 	return GetData<unsigned short>(PlayerData::kGameID);
 }
 
-const unsigned char Player::GetInterior() const
+std::shared_ptr<House> Player::GetHouse() const
 {
-	return GetData<unsigned char>(PlayerData::kInterior);
+	auto ID = GetMySQLID();
+
+	for (auto i : House::GetList())
+	{
+		if (i.second->GetOwnerID() == ID)
+		{
+			return i.second;
+		}
+	}
+
+	return nullptr;
+}
+
+const Interior Player::GetInterior() const
+{
+	return GetData<Interior>(PlayerData::kInterior);
+}
+
+const unsigned short Player::GetInteriorID() const
+{
+	return GetData<unsigned short>(PlayerData::kInteriorID);
 }
 
 const unsigned long long Player::GetMySQLID() const

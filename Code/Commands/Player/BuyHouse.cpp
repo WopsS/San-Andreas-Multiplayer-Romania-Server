@@ -17,22 +17,26 @@ void BuyHouseCommand::Execute(std::shared_ptr<Player> Player, std::unique_ptr<Co
 
 	if (House == nullptr)
 	{
-		Player->SendMessage(Color::kWhite, "");
+		Player->SendMessage(Color::kFren, "* You are not near a house.");
 		return;
 	}
-	if (Player->GetCash() < House->GetPrice())
+	else if (Player->GetHouse() != nullptr)
 	{
-		Player->SendMessage(Color::kWhite, "You don't have enought money for to buy this house.");
+		Player->SendMessage(Color::kFren, "* You own house already.");
 		return;
-	}
-	if (Player->GetPlayerHouse() > 0)
-	{
-		Player->SendMessage(Color::kWhite, "You own house already.");
 	}
 
-	House->SetOwnerID(Player->GetMySQLID());
-	Player->GiveCash(-static_cast<int>(House->GetPrice()));
+	auto Price = static_cast<int>(House->GetPrice());
 	
+	if (Player->GetCash() < Price)
+	{
+		Player->SendMessage(Color::kFren, "* You don't have enought money for to buy this house.");
+		return;
+	}
+
+	House->SetOwner(Player->GetMySQLID());
+	Player->GiveCash(-Price);
 	
+	Player->SendMessage(Color::kWhite, "* You bought this house for ${}.", Utils::FormatNumber(Price));
 }
 
