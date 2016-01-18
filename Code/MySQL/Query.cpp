@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <MySQL/Query.hpp>
 
 Query::Query(const QueryType Type, const std::string& Query, std::initializer_list<MySQLParameter> Parameters)

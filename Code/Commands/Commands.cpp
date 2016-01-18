@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Commands/Commands.hpp>
 #include <House/House.hpp>
 

@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <MySQL/MySQL.hpp>
 
 MySQL::MySQL()

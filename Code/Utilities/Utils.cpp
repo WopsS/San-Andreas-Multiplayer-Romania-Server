@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Utilities/Utils.hpp>
 
 const bool Utils::IsFloat(const std::string& Text)

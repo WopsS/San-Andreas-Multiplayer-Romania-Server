@@ -61,11 +61,6 @@ solution "San Andreas Multiplayer Romania"
 			"../Includes/sampgdk"
 		}
 		
-		forceincludes
-		{
-			"stdafx.hpp"
-		}
-		
 		files 
 		{ 
 			"../Code/**.hpp", 

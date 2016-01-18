@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Business/Business.hpp>
 
 Business::Business(std::unique_ptr<MySQLResult> Result)

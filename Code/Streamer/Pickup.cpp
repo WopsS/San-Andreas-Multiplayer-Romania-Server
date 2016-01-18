@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Streamer/Pickup.hpp>
 
 int32_t Pickup::Create(int32_t ModelID, int32_t Type, const Point3D<float>& Position, int32_t VirtualWorld, int32_t Interior, int32_t PlayerID, float StreamDistance)

@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <MySQL/Result.hpp>
 
 std::unique_ptr<MySQLResult> MySQLResult::GetRowResult(size_t Index) const

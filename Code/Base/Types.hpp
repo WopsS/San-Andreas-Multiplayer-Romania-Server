@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdafx.hpp>
+
 struct FieldInformation
 {
 	std::string Name;

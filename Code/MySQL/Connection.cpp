@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <MySQL/Connection.hpp>
 
 Connection::Connection(const std::string& Host, const std::string& Database, const std::string& Username, const std::string& Password, const uint16_t Port)

@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <House/House.hpp>
 
 House::House(std::unique_ptr<MySQLResult> Result)

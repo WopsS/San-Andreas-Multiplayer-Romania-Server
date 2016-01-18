@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Utilities/Encryption.hpp>
 #include <Utilities/SHA256.hpp>
 

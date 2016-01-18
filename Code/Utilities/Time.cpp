@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Utilities/Time.hpp>
 
 const std::tm* Time::GetTM()

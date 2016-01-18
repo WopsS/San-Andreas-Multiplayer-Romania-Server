@@ -15,7 +15,7 @@ private:
 
 	struct ConnectionNode
 	{
-		std::shared_ptr<Connection> Connection;
+		std::shared_ptr<Connection> pConnection;
 		std::shared_ptr<ConnectionNode> Next;
 	};
 

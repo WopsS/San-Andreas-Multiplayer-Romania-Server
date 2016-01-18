@@ -20,7 +20,6 @@
 #include <tuple>
 #include <unordered_map>
 #include <vector>
-#include <xmemory>
 
 #include <format.h>
 #include <mysql.h>

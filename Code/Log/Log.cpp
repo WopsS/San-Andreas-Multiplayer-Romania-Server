@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Log/Log.hpp>
 
 Logger::Logger()

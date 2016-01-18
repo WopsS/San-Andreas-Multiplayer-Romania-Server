@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Streamer/MapIcon.hpp>
 
 const uint32_t MapIcon::Create(Point3D<float> Position, uint16_t Type, int32_t Color, int32_t VirtualWorld, int32_t Interior, int32_t PlayerID, float StreamDistance, MapIconStlye Style)

@@ -1,5 +1,17 @@
 #pragma once
 
+struct custom_hash
+{
+	template<typename T>
+	std::size_t operator ()(const T& value) const
+	{
+		return static_cast<std::size_t>(value);
+	}
+};
+
+template <typename Key>
+using HashType = typename std::conditional<std::is_enum<Key>::value, custom_hash, std::hash<Key>>::type;
+
 /// <summary>
 /// Base class to store an undefined amount of objects with any type.
 /// </summary>
@@ -173,5 +185,5 @@ public:
 
 private:
 
-	std::unordered_map<TK, std::shared_ptr<AnyObject>> m_data;
+	std::unordered_map<TK, std::shared_ptr<AnyObject>, HashType<TK>> m_data;
 };

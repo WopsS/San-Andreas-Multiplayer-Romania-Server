@@ -1,4 +1,6 @@
+#include <stdafx.hpp>
 #include <Dialog/Dialogs.hpp>
+#include <Player/Player.hpp>
 
 Dialogs::Dialogs()
 {

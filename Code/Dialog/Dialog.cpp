@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Dialog/Dialog.hpp>
 
 Dialog::Dialog(dialogfunction_t Function)

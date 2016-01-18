@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Faction/Faction.hpp>
 
 Faction::Faction(std::unique_ptr<MySQLResult> Result)

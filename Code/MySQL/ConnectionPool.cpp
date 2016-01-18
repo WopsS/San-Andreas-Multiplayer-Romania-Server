@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <MySQL/ConnectionPool.hpp>
 
 ConnectionPool::ConnectionPool(size_t Size)
@@ -10,7 +11,7 @@ ConnectionPool::ConnectionPool(size_t Size)
 
 	for (size_t i = 1; i <= Size; i++)
 	{
-		Node->Connection = std::make_shared<Connection>("sa-mp.ro", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
+		Node->pConnection = std::make_shared<Connection>("185.11.146.76", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
 		Node->Next = (i + 1) > Size ? m_normalNode : std::make_shared<ConnectionNode>();
 
 		Node = Node->Next;
@@ -22,7 +23,7 @@ ConnectionPool::ConnectionPool(size_t Size)
 
 	for (size_t i = 1; i <= Size; i++)
 	{
-		Node->Connection = std::make_shared<Connection>("sa-mp.ro", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
+		Node->pConnection = std::make_shared<Connection>("185.11.146.76", "sampro_server", "sampro_server", "9VXKr3ZrmVhEf3aj");
 		Node->Next = (i + 1) > Size ? m_logNode : std::make_shared<ConnectionNode>();
 
 		Node = Node->Next;
@@ -45,7 +46,7 @@ void ConnectionPool::ProcessCallbacks()
 
 	do
 	{
-		Node->Connection->ProcessCallbacks();
+		Node->pConnection->ProcessCallbacks();
 		Node = Node->Next;
 	} while (Node.get() != m_normalNode.get());
 }
@@ -54,12 +55,12 @@ void ConnectionPool::Queue(std::shared_ptr<Query> Query, std::function<void()> C
 {
 	if (Query->GetType() == QueryType::kLog)
 	{
-		m_logNode->Connection->Queue(std::move(Query), std::move(Callback), std::move(Result));
+		m_logNode->pConnection->Queue(std::move(Query), std::move(Callback), std::move(Result));
 		m_logNode = m_logNode->Next;
 	}
 	else
 	{
-		m_normalNode->Connection->Queue(std::move(Query), std::move(Callback), std::move(Result));
+		m_normalNode->pConnection->Queue(std::move(Query), std::move(Callback), std::move(Result));
 		m_normalNode = m_normalNode->Next;
 	}
 }

@@ -2,7 +2,8 @@
 
 #include <Dialog/Dialog.hpp>
 #include <Dialog/Enums.hpp>
-#include <Player/Player.hpp>
+
+class Player;
 
 class Dialogs : public Singleton<Dialogs>
 {

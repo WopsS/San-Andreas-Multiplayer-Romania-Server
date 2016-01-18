@@ -35,6 +35,7 @@
 * SUCH DAMAGE.
 */
 
+#include <stdafx.hpp>
 #include <cstring>
 #include "SHA256.hpp"
 

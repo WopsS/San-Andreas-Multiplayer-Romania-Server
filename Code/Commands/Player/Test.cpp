@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Commands/Player/Test.hpp>
 
 TestCommand::TestCommand()

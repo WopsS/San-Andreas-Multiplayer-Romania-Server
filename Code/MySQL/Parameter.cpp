@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <MySQL/Parameter.hpp>
 
 MySQLParameter::MySQLParameter(const std::string& Name, const std::string& Value)

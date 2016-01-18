@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Key/Keys.hpp>
 
 #include <House/House.hpp>

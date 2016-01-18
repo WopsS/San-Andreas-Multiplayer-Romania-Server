@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Commands/Player/Lock.hpp>
 
 LockCommand::LockCommand()

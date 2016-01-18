@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Commands/Player/BuyHouse.hpp>
 #include <House/House.hpp>
 

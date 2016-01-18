@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Dialog/Dialog.hpp>
+#include <Dialog/Dialogs.hpp>
 #include <House/House.hpp>
 #include <Player/Enums.hpp>
 #include <Vehicle/Vehicle.hpp>

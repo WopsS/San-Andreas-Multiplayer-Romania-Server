@@ -1,5 +1,5 @@
+#include <stdafx.hpp>
 #include <Player/Player.hpp>
-#include <Dialog/Dialogs.hpp>
 
 Player::Player(uint16_t ID)
 {

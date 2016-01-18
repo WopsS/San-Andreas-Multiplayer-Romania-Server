@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Streamer/Object.hpp>
 
 const bool Object::AttachToObject(uint32_t ID, uint32_t AttachToID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ, bool SyncRotation)

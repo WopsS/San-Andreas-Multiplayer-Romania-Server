@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Commands/Parameters.hpp>
 #include <Player/Player.hpp>
 

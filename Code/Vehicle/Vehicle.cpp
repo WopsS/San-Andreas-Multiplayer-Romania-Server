@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Vehicle/Vehicle.hpp>
 
 Vehicle::Vehicle(std::unique_ptr<MySQLResult> Result)

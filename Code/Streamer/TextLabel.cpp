@@ -1,3 +1,4 @@
+#include <stdafx.hpp>
 #include <Streamer/TextLabel.hpp>
 #include <Player/Player.hpp>
 
