@@ -32,51 +32,51 @@ Vehicle::Vehicle(std::unique_ptr<MySQLResult> Result)
 	auto Position = GetData<Point3D<float>>(VehicleData::kPosition);
 	auto GameID = sampgdk::CreateVehicle(GetModel(), Position.X, Position.Y, Position.Z, GetRotation(), GetColor1(), GetColor2(), GetRespawnTine(), HasSiren());
 	
-	SetData<unsigned short>(VehicleData::kGameID, GameID);
+	SetData<uint16_t>(VehicleData::kGameID, GameID);
 }
 
-Vehicle::Vehicle(int Model, const Point3D<float>& Position, float Rotation, int Color1, int Color2, int RespawnTine, bool Siren)
+Vehicle::Vehicle(int32_t Model, const Point3D<float>& Position, float Rotation, int32_t Color1, int32_t Color2, int32_t RespawnTine, bool Siren)
 {
 }
 
-const unsigned char Vehicle::GetColor1() const
+const uint8_t Vehicle::GetColor1() const
 {
-	return GetData<unsigned char>(VehicleData::kColor1);
+	return GetData<uint8_t>(VehicleData::kColor1);
 }
 
-const unsigned char Vehicle::GetColor2() const
+const uint8_t Vehicle::GetColor2() const
 {
-	return GetData<unsigned char>(VehicleData::kColor2);
+	return GetData<uint8_t>(VehicleData::kColor2);
 }
 
-const unsigned short Vehicle::GetGameID() const
+const uint16_t Vehicle::GetGameID() const
 {
-	return GetData<unsigned short>(VehicleData::kGameID);
+	return GetData<uint16_t>(VehicleData::kGameID);
 }
 
-const unsigned short Vehicle::GetMySQLID() const
+const uint16_t Vehicle::GetMySQLID() const
 {
-	return GetData<unsigned short>(VehicleData::kID);
+	return GetData<uint16_t>(VehicleData::kID);
 }
 
-const unsigned long long Vehicle::GetOwnerID() const
+const uint64_t Vehicle::GetOwnerID() const
 {
-	return GetData<unsigned long long>(VehicleData::kOwnerID);
+	return GetData<uint64_t>(VehicleData::kOwnerID);
 }
 
-const unsigned short Vehicle::GetModel() const
+const uint16_t Vehicle::GetModel() const
 {
-	return GetData<unsigned short>(VehicleData::kModel);
+	return GetData<uint16_t>(VehicleData::kModel);
 }
 
 const bool Vehicle::GetParameter(VehicleParameters Parameter) const
 {
-	return GetParameters()[static_cast<unsigned short>(Parameter)] == 1;
+	return GetParameters()[static_cast<uint16_t>(Parameter)] == 1;
 }
 
 const std::vector<bool> Vehicle::GetParameters() const
 {
-	std::vector<int> ParametersInt;
+	std::vector<int32_t> ParametersInt;
 	ParametersInt.resize(7);
 
 	sampgdk::GetVehicleParamsEx(GetGameID(), &ParametersInt[0], &ParametersInt[1], &ParametersInt[2], &ParametersInt[3], &ParametersInt[4], &ParametersInt[5], &ParametersInt[6]);
@@ -96,9 +96,9 @@ const Point3D<float> Vehicle::GetPosition() const
 	return GetData<Point3D<float>>(VehicleData::kPosition);
 }
 
-const unsigned int Vehicle::GetRespawnTine() const
+const uint32_t Vehicle::GetRespawnTine() const
 {
-	return GetData<unsigned int>(VehicleData::kRespawnTime);
+	return GetData<uint32_t>(VehicleData::kRespawnTime);
 }
 
 const float Vehicle::GetRotation() const
@@ -114,7 +114,7 @@ const bool Vehicle::HasSiren() const
 const bool Vehicle::SetParameter(VehicleParameters Parameter, bool Status) const
 {
 	auto Parameters = GetParameters();
-	Parameters[static_cast<unsigned char>(Parameter)] = Status;
+	Parameters[static_cast<uint8_t>(Parameter)] = Status;
 
 	return sampgdk::SetVehicleParamsEx(GetGameID(), Parameters[0], Parameters[1], Parameters[2], Parameters[3], Parameters[4], Parameters[5], Parameters[6]);
 }

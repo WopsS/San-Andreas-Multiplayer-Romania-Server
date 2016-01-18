@@ -2,7 +2,7 @@
 
 #include <Business/Enums.hpp>
 
-class Business : public Map<unsigned short, Business>, private Data<BusinessData>
+class Business : public Map<uint16_t, Business>, private Data<BusinessData>
 {
 public:
 
@@ -13,23 +13,23 @@ public:
 
 	const Point3D<float> GetExit() const;
 
-	const unsigned short GetID() const;
+	const uint16_t GetID() const;
 
-	const unsigned char GetInterior() const;
+	const uint8_t GetInterior() const;
 
-	const unsigned char GetLevel() const;
+	const uint8_t GetLevel() const;
 
 	const std::string GetName() const;
 
-	const unsigned long long GetOwnerID() const;
+	const uint64_t GetOwnerID() const;
 
-	const unsigned int GetPayout() const;
+	const uint32_t GetPayout() const;
 
-	const unsigned int GetPrice() const;
+	const uint32_t GetPrice() const;
 
 	const BusinessType GetType() const;
 
-	const unsigned int GetVirtualWorld() const;
+	const uint32_t GetVirtualWorld() const;
 
 	const bool IsLocked() const;
 

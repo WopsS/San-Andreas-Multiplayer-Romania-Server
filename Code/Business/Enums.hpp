@@ -1,6 +1,6 @@
 #pragma once
 
-enum class BusinessData : unsigned char
+enum class BusinessData : uint8_t
 {
 	kID = 0,
 	kOwnerID,
@@ -20,7 +20,7 @@ enum class BusinessData : unsigned char
 	kTextLabelID
 };
 
-enum class BusinessType : unsigned char
+enum class BusinessType : uint8_t
 {
 	kBank = 1,
 	kGunShop

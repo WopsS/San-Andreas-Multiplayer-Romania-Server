@@ -2,7 +2,7 @@
 
 #include <House/Enums.hpp>
 
-class House : public Map<unsigned short, House>, private Data<HouseData>
+class House : public Map<uint16_t, House>, private Data<HouseData>
 {
 public:
 
@@ -13,21 +13,21 @@ public:
 
 	const Point3D<float> GetExit() const;
 
-	const unsigned short GetID() const;
+	const uint16_t GetID() const;
 
-	const unsigned char GetInterior() const;
+	const uint8_t GetInterior() const;
 
-	const unsigned char GetLevel() const;
+	const uint8_t GetLevel() const;
 
 	const bool GetLocked() const;
 
-	const unsigned long long GetOwnerID() const;
+	const uint64_t GetOwnerID() const;
 
-	const unsigned int GetPrice() const;
+	const uint32_t GetPrice() const;
 
-	const unsigned int GetRentPrice() const;
+	const uint32_t GetRentPrice() const;
 
-	const unsigned int GetVirtualWorld() const;
+	const uint32_t GetVirtualWorld() const;
 
 	const bool IsLocked() const;
 
@@ -35,7 +35,7 @@ public:
 
 	void SetDoors(bool Status);
 
-	void SetOwner(unsigned long long ID);
+	void SetOwner(uint64_t ID);
 
 private:
 

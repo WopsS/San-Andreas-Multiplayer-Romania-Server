@@ -1,6 +1,6 @@
 #pragma once
 
-enum class VehicleData : unsigned char
+enum class VehicleData : uint8_t
 {
 	kID = 0,
 	kOwnerID,
@@ -15,7 +15,7 @@ enum class VehicleData : unsigned char
 	kGameID
 };
 
-enum class VehicleParameters : unsigned char
+enum class VehicleParameters : uint8_t
 {
 	kEngine,
 	kLights,

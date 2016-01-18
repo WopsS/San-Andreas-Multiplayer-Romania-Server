@@ -15,7 +15,7 @@ void Server::Initialize()
 
 void Server::InitializeBusinesses(std::shared_ptr<MySQLResult> Result)
 {
-	for (unsigned short i = 0; i < Result->GetRowCount(); i++)
+	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
 		Business::Add(i + 1, Result->GetRowResult(i));
 	}
@@ -25,7 +25,7 @@ void Server::InitializeBusinesses(std::shared_ptr<MySQLResult> Result)
 
 void Server::InitializeFactions(std::shared_ptr<MySQLResult> Result)
 {
-	for (unsigned short i = 0; i < Result->GetRowCount(); i++)
+	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
 		Faction::Add(i + 1, Result->GetRowResult(i));
 	}
@@ -35,7 +35,7 @@ void Server::InitializeFactions(std::shared_ptr<MySQLResult> Result)
 
 void Server::InitializeHouses(std::shared_ptr<MySQLResult> Result)
 {
-	for (unsigned short i = 0; i < Result->GetRowCount(); i++)
+	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
 		House::Add(i + 1, Result->GetRowResult(i));
 	}
@@ -45,7 +45,7 @@ void Server::InitializeHouses(std::shared_ptr<MySQLResult> Result)
 
 void Server::InitializeVehicles(std::shared_ptr<MySQLResult> Result)
 {
-	for (unsigned short i = 0; i < Result->GetRowCount(); i++)
+	for (uint16_t i = 0; i < Result->GetRowCount(); i++)
 	{
 		Vehicle::Add(i + 1, Result->GetRowResult(i));
 	}

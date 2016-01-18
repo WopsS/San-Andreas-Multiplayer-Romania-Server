@@ -99,11 +99,11 @@ public:
 			{
 				if (Field.IsUnsigned == true)
 				{
-					SetData<unsigned int>(Index, std::stoul(Value));
+					SetData<uint32_t>(Index, std::stoul(Value));
 				}
 				else
 				{
-					SetData<int>(Index, std::stoi(Value));
+					SetData<int32_t>(Index, std::stoi(Value));
 				}
 
 				break;
@@ -112,11 +112,11 @@ public:
 			{
 				if (Field.IsUnsigned == true)
 				{
-					SetData<unsigned long long>(Index, std::stoull(Value));
+					SetData<uint64_t>(Index, std::stoull(Value));
 				}
 				else
 				{
-					SetData<long long>(Index, std::stoll(Value));
+					SetData<int64_t>(Index, std::stoll(Value));
 				}
 
 				break;
@@ -125,11 +125,11 @@ public:
 			{
 				if (Field.IsUnsigned == true)
 				{
-					SetData<unsigned short>(Index, std::stoi(Value));
+					SetData<uint16_t>(Index, std::stoi(Value));
 				}
 				else
 				{
-					SetData<short>(Index, std::stoi(Value));
+					SetData<int16_t>(Index, std::stoi(Value));
 				}
 
 				break;
@@ -138,11 +138,11 @@ public:
 			{
 				if (Field.IsUnsigned == true)
 				{
-					SetData<unsigned char>(Index, std::stoi(Value));
+					SetData<uint8_t>(Index, std::stoi(Value));
 				}
 				else
 				{
-					SetData<signed char>(Index, std::stoi(Value));
+					SetData<int8_t>(Index, std::stoi(Value));
 				}
 
 				break;

@@ -47,19 +47,19 @@ const Point3D<float> Business::GetExit() const
 	return GetData<Point3D<float>>(BusinessData::kExit);
 }
 
-const unsigned short Business::GetID() const
+const uint16_t Business::GetID() const
 {
-	return GetData<unsigned short>(BusinessData::kID);
+	return GetData<uint16_t>(BusinessData::kID);
 }
 
-const unsigned char Business::GetInterior() const
+const uint8_t Business::GetInterior() const
 {
-	return GetData<unsigned char>(BusinessData::kInterior);
+	return GetData<uint8_t>(BusinessData::kInterior);
 }
 
-const unsigned char Business::GetLevel() const
+const uint8_t Business::GetLevel() const
 {
-	return GetData<unsigned char>(BusinessData::kLevel);
+	return GetData<uint8_t>(BusinessData::kLevel);
 }
 
 const std::string Business::GetName() const
@@ -67,19 +67,19 @@ const std::string Business::GetName() const
 	return GetData<std::string>(BusinessData::kName);
 }
 
-const unsigned long long Business::GetOwnerID() const
+const uint64_t Business::GetOwnerID() const
 {
-	return GetData<unsigned long long>(BusinessData::kOwnerID);
+	return GetData<uint64_t>(BusinessData::kOwnerID);
 }
 
-const unsigned int Business::GetPayout() const
+const uint32_t Business::GetPayout() const
 {
-	return GetData<unsigned int>(BusinessData::kPayout);
+	return GetData<uint32_t>(BusinessData::kPayout);
 }
 
-const unsigned int Business::GetPrice() const
+const uint32_t Business::GetPrice() const
 {
-	return GetData<unsigned int>(BusinessData::kPrice);
+	return GetData<uint32_t>(BusinessData::kPrice);
 }
 
 const BusinessType Business::GetType() const
@@ -87,9 +87,9 @@ const BusinessType Business::GetType() const
 	return GetData<BusinessType>(BusinessData::kType);
 }
 
-const unsigned int Business::GetVirtualWorld() const
+const uint32_t Business::GetVirtualWorld() const
 {
-	return GetData<unsigned int>(BusinessData::kVirtualWorld);
+	return GetData<uint32_t>(BusinessData::kVirtualWorld);
 }
 
 const bool Business::IsLocked() const
@@ -99,7 +99,7 @@ const bool Business::IsLocked() const
 
 void Business::Manage()
 {
-	unsigned int MapIconID;
+	uint32_t MapIconID;
 
 	switch (GetType())
 	{
@@ -135,9 +135,9 @@ void Business::Manage()
 	auto Entrance = GetEntrance();
 	auto Exit = GetExit();
 
-	SetData<unsigned int>(BusinessData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
-	SetData<unsigned int>(BusinessData::kPickupID, Pickup::Create(1239, 1, Entrance));
-	SetData<unsigned int>(BusinessData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
+	SetData<uint32_t>(BusinessData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
+	SetData<uint32_t>(BusinessData::kPickupID, Pickup::Create(1239, 1, Entrance));
+	SetData<uint32_t>(BusinessData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
 
 	// Create exit pickup.
 	Pickup::Create(1239, 1, Exit);

@@ -9,15 +9,15 @@ Keys::Keys()
 	Register(KEY_FIRE, false, Bind(&Keys::Exit, this));
 }
 
-void Keys::Register(int Keys, bool Holding, keyfunction_t Function, int OldKeys)
+void Keys::Register(int32_t Keys, bool Holding, keyfunction_t Function, int32_t OldKeys)
 {
 	m_keys.emplace(Keys, std::make_tuple(Holding, Function, OldKeys));
 }
 
-void Keys::OnPress(std::shared_ptr<Player> Player, int NewKeys, int OldKeys)
+void Keys::OnPress(std::shared_ptr<Player> Player, int32_t NewKeys, int32_t OldKeys)
 {
 	bool NeedHolding = false;
-	int lOldKeys;
+	int32_t lOldKeys;
 
 	for (auto& i : m_keys)
 	{

@@ -57,7 +57,7 @@ public:
 
 	std::unique_ptr<MySQLResult> GetRowResult(size_t Index) const;
 
-	inline const unsigned int GetWarningCount() const
+	inline const uint32_t GetWarningCount() const
 	{
 		return m_warnings;
 	}
@@ -98,7 +98,7 @@ private:
 
 	my_ulonglong m_insertID;
 
-	unsigned int m_warnings;
+	uint32_t m_warnings;
 
 	std::vector<FieldInformation> m_fields;
 

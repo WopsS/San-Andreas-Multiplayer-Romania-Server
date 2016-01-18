@@ -2,7 +2,7 @@
 
 #include <Faction/Enums.hpp>
 
-class Faction : public Map<unsigned short, Faction>, private Data<FactionData>
+class Faction : public Map<uint16_t, Faction>, private Data<FactionData>
 {
 public:
 
@@ -13,7 +13,7 @@ public:
 
 	const Point3D<float> GetExit() const;
 
-	const unsigned short GetID() const;
+	const uint16_t GetID() const;
 
 	const std::string GetName() const;
 };

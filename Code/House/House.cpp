@@ -42,19 +42,19 @@ const Point3D<float> House::GetExit() const
 	return GetData<Point3D<float>>(HouseData::kExit);
 }
 
-const unsigned short House::GetID() const
+const uint16_t House::GetID() const
 {
-	return GetData<unsigned short>(HouseData::kID);
+	return GetData<uint16_t>(HouseData::kID);
 }
 
-const unsigned char House::GetInterior() const
+const uint8_t House::GetInterior() const
 {
-	return GetData<unsigned char>(HouseData::kInterior);
+	return GetData<uint8_t>(HouseData::kInterior);
 }
 
-const unsigned char House::GetLevel() const
+const uint8_t House::GetLevel() const
 {
-	return GetData<unsigned char>(HouseData::kLevel);
+	return GetData<uint8_t>(HouseData::kLevel);
 }
 
 const bool House::GetLocked() const
@@ -62,24 +62,24 @@ const bool House::GetLocked() const
 	return GetData<bool>(HouseData::kLocked);
 }
 
-const unsigned long long House::GetOwnerID() const
+const uint64_t House::GetOwnerID() const
 {
-	return GetData<unsigned long long>(HouseData::kOwnerID);
+	return GetData<uint64_t>(HouseData::kOwnerID);
 }
 
-const unsigned int House::GetPrice() const
+const uint32_t House::GetPrice() const
 {
-	return GetData<unsigned int>(HouseData::kPrice);
+	return GetData<uint32_t>(HouseData::kPrice);
 }
 
-const unsigned int House::GetRentPrice() const
+const uint32_t House::GetRentPrice() const
 {
-	return GetData<unsigned int>(HouseData::kRentPrice);
+	return GetData<uint32_t>(HouseData::kRentPrice);
 }
 
-const unsigned int House::GetVirtualWorld() const
+const uint32_t House::GetVirtualWorld() const
 {
-	return GetData<unsigned int>(HouseData::kVirtualWorld);
+	return GetData<uint32_t>(HouseData::kVirtualWorld);
 }
 
 const bool House::IsLocked() const
@@ -97,14 +97,14 @@ void House::SetDoors(bool Status)
 	SetData<bool>(HouseData::kLocked, Status);
 }
 
-void House::SetOwner(unsigned long long ID)
+void House::SetOwner(uint64_t ID)
 {
-	SetData<unsigned long long>(HouseData::kOwnerID, ID);
+	SetData<uint64_t>(HouseData::kOwnerID, ID);
 }
 
 void House::Manage()
 {
-	unsigned short MapIconID;
+	uint16_t MapIconID;
 	std::string Text;
 
 	if (GetOwnerID() == 0)
@@ -124,9 +124,9 @@ void House::Manage()
 	auto Entrance = GetEntrance();
 	auto Exit = GetExit();
 
-	SetData<unsigned int>(HouseData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
-	SetData<unsigned int>(HouseData::kPickupID, Pickup::Create(1239, 1, Entrance));
-	SetData<unsigned int>(HouseData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
+	SetData<uint32_t>(HouseData::kMapIconID, MapIcon::Create(Entrance, MapIconID));
+	SetData<uint32_t>(HouseData::kPickupID, Pickup::Create(1239, 1, Entrance));
+	SetData<uint32_t>(HouseData::kTextLabelID, TextLabel::Create(Text, 0x0F90FAFF, Entrance));
 
 	// Create exit pickup.
 	Pickup::Create(1239, 1, Exit);

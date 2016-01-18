@@ -26,7 +26,7 @@ const std::string Encryption::Encrypt(const std::string& Data, const std::string
 		}
 	}
 
-	for (unsigned short i = 0; i < 12; i++)
+	for (uint8_t i = 0; i < 12; i++)
 	{
 		Result = sha256(Result);
 	}
@@ -40,8 +40,9 @@ const std::string Encryption::GenerateSalt(size_t Length)
 
 	auto RandomCharacter = []() -> char
 	{
-		const char CharSet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-		const size_t MaxIndex = sizeof(CharSet) - 1;
+		const std::string CharSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		const size_t MaxIndex = CharSet.size() - 1;
+
 		return CharSet[rand() % MaxIndex];
 	};
 

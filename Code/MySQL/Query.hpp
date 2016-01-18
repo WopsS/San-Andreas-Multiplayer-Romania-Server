@@ -1,6 +1,6 @@
 #pragma once
 
-enum QueryType : unsigned char
+enum QueryType : uint8_t
 {
 	kNormal = 0,
 	kLog

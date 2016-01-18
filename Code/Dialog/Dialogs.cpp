@@ -141,7 +141,7 @@ void Dialogs::CompleteRegistration(std::shared_ptr<Player> Player, DialogRespons
 			MySQL::GetInstance()->MakeParameter("salt", Player->GetSalt()),
 			MySQL::GetInstance()->MakeParameter("email", Player->GetEmail()),
 			MySQL::GetInstance()->MakeParameter("pin", Player->GetData<std::string>(PlayerData::kPin)),
-			MySQL::GetInstance()->MakeParameter("sex", static_cast<unsigned short>(Player->GetSex()))
+			MySQL::GetInstance()->MakeParameter("sex", static_cast<uint16_t>(Player->GetSex()))
 		}, &Player::OnInserted, Player);
 
 		Player->ShowDialog(DialogID::kTutorial, Player->GetName());
@@ -221,7 +221,7 @@ void Dialogs::Register(std::shared_ptr<Player> Player, DialogResponse Response, 
 			// Generate salt for the user and encrypt the password.
 			std::random_device RandomDevice;
 			std::default_random_engine RandomEngine(RandomDevice());
-			std::uniform_int_distribution<int> uniform_dist(12, 32);
+			std::uniform_int_distribution<int32_t> uniform_dist(12, 32);
 
 			Player->SetData<std::string>(PlayerData::kSalt, Encryption::GenerateSalt(64 + uniform_dist(RandomEngine)));
 			Player->SetData<std::string>(PlayerData::kPassword, Encryption::Encrypt(Text, Player->GetSalt()));

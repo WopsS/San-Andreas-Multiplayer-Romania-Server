@@ -1,6 +1,6 @@
 #pragma once
 
-enum class FactionData : unsigned char
+enum class FactionData : uint8_t
 {
 	kID = 0,
 	kName,

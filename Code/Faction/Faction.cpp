@@ -40,9 +40,9 @@ const Point3D<float> Faction::GetExit() const
 	return GetData<Point3D<float>>(FactionData::kExit);
 }
 
-const unsigned short Faction::GetID() const
+const uint16_t Faction::GetID() const
 {
-	return GetData<unsigned short>(FactionData::kID);
+	return GetData<uint16_t>(FactionData::kID);
 }
 
 const std::string Faction::GetName() const

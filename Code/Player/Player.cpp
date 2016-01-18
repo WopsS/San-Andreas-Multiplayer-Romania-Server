@@ -1,7 +1,7 @@
 #include <Player/Player.hpp>
 #include <Dialog/Dialogs.hpp>
 
-Player::Player(unsigned short ID)
+Player::Player(uint16_t ID)
 {
 	char Name[MAX_PLAYER_NAME + 1];
 	sampgdk::GetPlayerName(ID, Name, sizeof(Name));
@@ -9,18 +9,18 @@ Player::Player(unsigned short ID)
 	std::stringstream StringStream;
 	StringStream << Name;
 
-	AddData<unsigned short>(PlayerData::kGameID, ID);
+	AddData<uint16_t>(PlayerData::kGameID, ID);
 	AddData<std::string>(PlayerData::kName, StringStream.str());
 	AddData<bool>(PlayerData::kAuthenticated, false);
 }
 
-void Player::AttachCameraToObject(int ObjectID)
+void Player::AttachCameraToObject(int32_t ObjectID)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("AttachCameraToDynamicObject");
 	sampgdk::InvokeNative(Native, "ii", GetGameID(), ObjectID);
 }
 
-const bool Player::AttachObject(unsigned int ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
+const bool Player::AttachObject(uint32_t ID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ)
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("AttachDynamicObjectToPlayer");
 	return !!sampgdk::InvokeNative(Native, "iiffffff", ID, GetGameID(), X, Y, Z, RotationX, RotationY, RotationZ);
@@ -28,10 +28,10 @@ const bool Player::AttachObject(unsigned int ID, float X, float Y, float Z, floa
 
 const void Player::CancelEdit() const
 {
-	sampgdk::CancelEdit(GetData<unsigned short>(PlayerData::kGameID));
+	sampgdk::CancelEdit(GetData<uint16_t>(PlayerData::kGameID));
 }
 
-const bool Player::EditObject(unsigned int ObjectID) const
+const bool Player::EditObject(uint32_t ObjectID) const
 {
 	static AMX_NATIVE Native = sampgdk::FindNative("EditDynamicObject");
 	return !!sampgdk::InvokeNative(Native, "ii", GetGameID(), ObjectID);
@@ -87,25 +87,25 @@ void Player::OnDisconnect(const DisconnectReason& Reason)
 	// TODO: Save player data.
 }
 
-void Player::OnEnterBuilding(Interior Interior, unsigned short ID)
+void Player::OnEnterBuilding(Interior Interior, uint16_t ID)
 {
 	SetData<::Interior>(PlayerData::kInterior, Interior);
-	SetData<unsigned short>(PlayerData::kInteriorID, ID);
+	SetData<uint16_t>(PlayerData::kInteriorID, ID);
 }
 
 void Player::OnExitBuilding(Interior Interior)
 {
 	SetData<::Interior>(PlayerData::kInterior, Interior);
-	SetData<unsigned short>(PlayerData::kInteriorID, 0);
+	SetData<uint16_t>(PlayerData::kInteriorID, 0);
 }
 
 void Player::OnInserted(std::shared_ptr<MySQLResult> Result)
 {
-	SetData<unsigned long long>(PlayerData::kMySQLID, static_cast<unsigned long long>(Result->GetInsertedID()));
+	SetData<uint64_t>(PlayerData::kMySQLID, static_cast<uint64_t>(Result->GetInsertedID()));
 	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `players` WHERE `ID` = ':id' LIMIT 1", { MySQL::GetInstance()->MakeParameter("id", GetMySQLID()) }, &Player::OnConnect, this);
 }
 
-void Player::OnObjectEdit(unsigned int ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
+void Player::OnObjectEdit(uint32_t ObjectID, ObjectEditionResponse Response, const Point3D<float>& Position, const Point3D<float>& Rotation)
 {
 	if (Object::IsValid(ObjectID) == true)
 	{
@@ -121,7 +121,7 @@ void Player::OnObjectEdit(unsigned int ObjectID, ObjectEditionResponse Response,
 	}
 }
 
-void Player::OnObjectSelect(unsigned int ObjectID, unsigned int ModelID, const Point3D<float>& Position)
+void Player::OnObjectSelect(uint32_t ObjectID, uint32_t ModelID, const Point3D<float>& Position)
 {
 	if (Object::IsValid(ObjectID) == true)
 	{
@@ -129,7 +129,7 @@ void Player::OnObjectSelect(unsigned int ObjectID, unsigned int ModelID, const P
 	}
 }
 
-void Player::OnPickUp(unsigned int ID)
+void Player::OnPickUp(uint32_t ID)
 {
 }
 
@@ -143,9 +143,9 @@ const AdminLevel Player::GetAdminLevel() const
 	return GetData<AdminLevel>(PlayerData::kAdminLevel);
 }
 
-const int Player::GetCash() const
+const int32_t Player::GetCash() const
 {
-	return GetData<int>(PlayerData::kCash);
+	return GetData<int32_t>(PlayerData::kCash);
 }
 
 std::shared_ptr<House> Player::GetClosestHouse(float Range) const
@@ -166,9 +166,9 @@ const std::string Player::GetEmail() const
 	return GetData<std::string>(PlayerData::kEmail);
 }
 
-const unsigned short Player::GetGameID() const
+const uint16_t Player::GetGameID() const
 {
-	return GetData<unsigned short>(PlayerData::kGameID);
+	return GetData<uint16_t>(PlayerData::kGameID);
 }
 
 std::shared_ptr<House> Player::GetHouse() const
@@ -191,24 +191,24 @@ const Interior Player::GetInterior() const
 	return GetData<Interior>(PlayerData::kInterior);
 }
 
-const unsigned short Player::GetInteriorID() const
+const uint16_t Player::GetInteriorID() const
 {
-	return GetData<unsigned short>(PlayerData::kInteriorID);
+	return GetData<uint16_t>(PlayerData::kInteriorID);
 }
 
-const unsigned long long Player::GetMySQLID() const
+const uint64_t Player::GetMySQLID() const
 {
-	return GetData<unsigned long long>(PlayerData::kMySQLID);
+	return GetData<uint64_t>(PlayerData::kMySQLID);
 }
 
 const std::shared_ptr<Vehicle> Player::GetVehicle() const
 {
-	return Vehicle::Get(static_cast<unsigned short>(sampgdk::GetPlayerVehicleID(GetGameID())));
+	return Vehicle::Get(static_cast<uint16_t>(sampgdk::GetPlayerVehicleID(GetGameID())));
 }
 
-const long long Player::GetMoney() const
+const int64_t Player::GetMoney() const
 {
-	return GetData<long long>(PlayerData::kMoney);
+	return GetData<int64_t>(PlayerData::kMoney);
 }
 
 const std::string Player::GetName() const
@@ -236,15 +236,15 @@ const PlayerSex Player::GetSex() const
 	return GetData<PlayerSex>(PlayerData::kSex);
 }
 
-void Player::GiveCash(int Amount)
+void Player::GiveCash(int32_t Amount)
 {
-	SetData<int>(PlayerData::kCash, GetData<int>(PlayerData::kCash) + Amount);
-	sampgdk::GivePlayerMoney(GetGameID(), GetData<int>(PlayerData::kCash));
+	SetData<int32_t>(PlayerData::kCash, GetData<int32_t>(PlayerData::kCash) + Amount);
+	sampgdk::GivePlayerMoney(GetGameID(), GetData<int32_t>(PlayerData::kCash));
 }
 
-void Player::GiveMoney(long long Amount)
+void Player::GiveMoney(int64_t Amount)
 {
-	SetData<long long>(PlayerData::kMoney, GetData<long long>(PlayerData::kMoney) + Amount);
+	SetData<int64_t>(PlayerData::kMoney, GetData<int64_t>(PlayerData::kMoney) + Amount);
 }
 
 const bool Player::IsAdmin() const
@@ -278,7 +278,7 @@ const bool Player::IsInVehicle() const
 	return sampgdk::IsPlayerInAnyVehicle(GetGameID()) && Vehicle::Contains(sampgdk::GetPlayerVehicleID(GetGameID())) == true;
 }
 
-const bool Player::IsInVehicle(unsigned short VehicleID) const
+const bool Player::IsInVehicle(uint16_t VehicleID) const
 {
 	return sampgdk::IsPlayerInVehicle(GetGameID(), VehicleID) && Vehicle::Contains(VehicleID) == true;
 }
@@ -305,25 +305,25 @@ void Player::SetAdminLevel(AdminLevel Level)
 	SetData<AdminLevel>(PlayerData::kAdminLevel, Level);
 }
 
-void Player::SetCash(int Amount)
+void Player::SetCash(int32_t Amount)
 {
-	SetData<int>(PlayerData::kCash, Amount);
+	SetData<int32_t>(PlayerData::kCash, Amount);
 
 	sampgdk::ResetPlayerMoney(GetGameID());
 	sampgdk::GivePlayerMoney(GetGameID(), Amount);
 }
 
-void Player::SetMoney(long long Amount)
+void Player::SetMoney(int64_t Amount)
 {
-	SetData<long long>(PlayerData::kMoney, Amount);
+	SetData<int64_t>(PlayerData::kMoney, Amount);
 }
 
-const bool Player::SetPosition(const Point3D<float>& Position, const float Angle, const unsigned int Interior, const unsigned int VirtualWorld) const
+const bool Player::SetPosition(const Point3D<float>& Position, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
 {
 	return SetPosition(Position.X, Position.Y, Position.Z, Angle, Interior, VirtualWorld);
 }
 
-const bool Player::SetPosition(const float X, const float Y, const float Z, const float Angle, const unsigned int Interior, const unsigned int VirtualWorld) const
+const bool Player::SetPosition(const float X, const float Y, const float Z, const float Angle, const uint32_t Interior, const uint32_t VirtualWorld) const
 {
 	auto ID = GetGameID();
 	return sampgdk::SetPlayerPos(ID, X, Y, Z) && sampgdk::SetPlayerFacingAngle(ID, Angle) && sampgdk::SetPlayerInterior(ID, Interior) && sampgdk::SetPlayerVirtualWorld(ID, VirtualWorld);

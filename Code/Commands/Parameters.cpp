@@ -37,7 +37,7 @@ CommandParameters::CommandParameters(const std::string& Format, std::string& Par
 				{
 					if (Utils::IsInteger(Result) == true)
 					{
-						SetData<int>(i, std::stoi(Result));
+						SetData<int32_t>(i, std::stoi(Result));
 					}
 
 					break;

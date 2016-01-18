@@ -69,7 +69,7 @@ protected:
 
 	std::vector<std::string> m_names;
 
-	int m_accessLevel = static_cast<int>(CommandFlags::kPlayer);
+	int32_t m_accessLevel = static_cast<int32_t>(CommandFlags::kPlayer);
 
 	std::string m_format;
 

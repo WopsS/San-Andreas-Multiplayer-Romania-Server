@@ -9,7 +9,7 @@ class Keys : public Singleton<Keys>
 {
 public:
 
-	void OnPress(std::shared_ptr<Player> Player, int NewKeys, int OldKeys);
+	void OnPress(std::shared_ptr<Player> Player, int32_t NewKeys, int32_t OldKeys);
 
 private:
 
@@ -20,7 +20,7 @@ private:
 	Keys();
 	~Keys() = default;
 
-	void Register(int Keys, bool Holding, keyfunction_t Function, int OldKeys = KEY_NONE);
+	void Register(int32_t Keys, bool Holding, keyfunction_t Function, int32_t OldKeys = KEY_NONE);
 
 	template<typename F, typename C>
 	inline keyfunction_t Bind(F Function, C Class)
@@ -32,5 +32,5 @@ private:
 
 	void Exit(std::shared_ptr<Player> Player);
 	
-	std::map<int, std::tuple<bool, keyfunction_t, int>> m_keys;
+	std::map<int32_t, std::tuple<bool, keyfunction_t, int32_t>> m_keys;
 };

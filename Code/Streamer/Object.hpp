@@ -9,7 +9,7 @@
 #endif
 
 
-enum class ObjectEditionResponse : unsigned char
+enum class ObjectEditionResponse : uint8_t
 {
 	kCancel = 0, // EDIT_RESPONSE_CANCEL - Player cancelled (ESC). 
 	kFinal, // EDIT_RESPONSE_FINAL - Player clicked on save.
@@ -18,41 +18,41 @@ enum class ObjectEditionResponse : unsigned char
 
 namespace Object
 {
-	const bool AttachToObject(unsigned int ID, unsigned int AttachToID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ, bool SyncRotation = true);
+	const bool AttachToObject(uint32_t ID, uint32_t AttachToID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ, bool SyncRotation = true);
 
-	const bool AttachToVehicle(unsigned int ID, unsigned int VehicleID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ);
+	const bool AttachToVehicle(uint32_t ID, uint32_t VehicleID, float X, float Y, float Z, float RotationX, float RotationY, float RotationZ);
 
-	const unsigned int Create(unsigned int ModelID, const Point3D<float>& Position, const Point3D<float>& Rotation, int VirtualWorld = -1, int Interior = -1, int PlayerID = -1, float StreamDistance = STREAMER_OBJECT_SD, float DrawDistance = STREAMER_OBJECT_DD);
+	const uint32_t Create(uint32_t ModelID, const Point3D<float>& Position, const Point3D<float>& Rotation, int32_t VirtualWorld = -1, int32_t Interior = -1, int32_t PlayerID = -1, float StreamDistance = STREAMER_OBJECT_SD, float DrawDistance = STREAMER_OBJECT_DD);
 
-	const bool Destroy(unsigned int ID);
+	const bool Destroy(uint32_t ID);
 
-	const bool GetNoCameraCol(unsigned int ID);
+	const bool GetNoCameraCol(uint32_t ID);
 
-	const Point3D<float> GetPosition(unsigned int ID);
+	const Point3D<float> GetPosition(uint32_t ID);
 
-	const Point3D<float> GetRotation(unsigned int ID);
+	const Point3D<float> GetRotation(uint32_t ID);
 
-	const bool IsValid(unsigned int ID);
+	const bool IsValid(uint32_t ID);
 
-	const bool IsMaterialUsed(unsigned int ID, unsigned int MaterialIndex);
+	const bool IsMaterialUsed(uint32_t ID, uint32_t MaterialIndex);
 
-	const bool IsMoving(unsigned int ID);
+	const bool IsMoving(uint32_t ID);
 
-	void Move(unsigned int ID, const Point3D<float>& Position, float Speed, const Point3D<float>& Rotation = { -1000.0, -1000.0, -1000.0 });
+	void Move(uint32_t ID, const Point3D<float>& Position, float Speed, const Point3D<float>& Rotation = { -1000.0, -1000.0, -1000.0 });
 
-	void Move(unsigned int ID, float X, float Y, float Z, float Speed, float RotationX = -1000.0, float RotationY = -1000.0, float RotationZ = -1000.0);
+	void Move(uint32_t ID, float X, float Y, float Z, float Speed, float RotationX = -1000.0, float RotationY = -1000.0, float RotationZ = -1000.0);
 
-	bool SetNoCameraCol(unsigned int ID);
+	bool SetNoCameraCol(uint32_t ID);
 
-	void SetPosition(unsigned int ID, const Point3D<float>& Position);
+	void SetPosition(uint32_t ID, const Point3D<float>& Position);
 
-	void SetPosition(unsigned int ID, float X, float Y, float Z);
+	void SetPosition(uint32_t ID, float X, float Y, float Z);
 
-	void SetRotation(unsigned int ID, const Point3D<float>& Position);
+	void SetRotation(uint32_t ID, const Point3D<float>& Position);
 
-	void SetRotation(unsigned int ID, float X, float Y, float Z);
+	void SetRotation(uint32_t ID, float X, float Y, float Z);
 
-	void StopMove(unsigned int ID);
+	void StopMove(uint32_t ID);
 
 	/* Unimplemented:
 		* native STREAMER_TAG_OBJECT CreateDynamicObjectEx(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);

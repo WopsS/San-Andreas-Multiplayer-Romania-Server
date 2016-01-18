@@ -1,6 +1,6 @@
 #pragma once
 
-enum LogLevel : unsigned char
+enum LogLevel : uint8_t
 {
 	kDebug = 1,
 	kWarning,

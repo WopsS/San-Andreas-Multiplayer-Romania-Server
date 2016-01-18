@@ -1,6 +1,6 @@
 #pragma once
 
-enum class CommandFlags : unsigned char
+enum class CommandFlags : uint8_t
 {
 	kPlayer = 1 << 0,
 	kMember = 1 << 1,
@@ -9,22 +9,22 @@ enum class CommandFlags : unsigned char
 	kAdmin = 1 << 4
 };
 
-inline unsigned int operator&(CommandFlags FirstFlag, unsigned int SecondFlag)
+inline uint32_t operator&(CommandFlags FirstFlag, uint32_t SecondFlag)
 {
-	return static_cast<unsigned char>(FirstFlag) & SecondFlag;
+	return static_cast<uint8_t>(FirstFlag) & SecondFlag;
 }
 
-inline unsigned int operator&(unsigned int FirstFlag, CommandFlags SecondFlag)
+inline uint32_t operator&(uint32_t FirstFlag, CommandFlags SecondFlag)
 {
-	return FirstFlag & static_cast<unsigned char>(SecondFlag);
+	return FirstFlag & static_cast<uint8_t>(SecondFlag);
 }
 
-inline unsigned int operator&(CommandFlags FirstFlag, CommandFlags SecondFlag)
+inline uint32_t operator&(CommandFlags FirstFlag, CommandFlags SecondFlag)
 {
-	return static_cast<unsigned char>(FirstFlag) & static_cast<unsigned char>(SecondFlag);
+	return static_cast<uint8_t>(FirstFlag) & static_cast<uint8_t>(SecondFlag);
 }
 
-inline unsigned int operator|(CommandFlags FirstFlag, CommandFlags SecondFlag)
+inline uint32_t operator|(CommandFlags FirstFlag, CommandFlags SecondFlag)
 {
-	return static_cast<unsigned char>(FirstFlag) | static_cast<unsigned char>(SecondFlag);
+	return static_cast<uint8_t>(FirstFlag) | static_cast<uint8_t>(SecondFlag);
 }

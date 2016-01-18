@@ -26,7 +26,7 @@ void BuyHouseCommand::Execute(std::shared_ptr<Player> Player, std::unique_ptr<Co
 		return;
 	}
 
-	auto Price = static_cast<int>(House->GetPrice());
+	auto Price = static_cast<int32_t>(House->GetPrice());
 	
 	if (Player->GetCash() < Price)
 	{
