@@ -15,7 +15,7 @@ using HashType = typename std::conditional<std::is_enum<Key>::value, custom_hash
 /// <summary>
 /// Base class to store an undefined amount of objects with any type.
 /// </summary>
-template<typename TK>
+template<typename Key>
 class Data
 {
 public:
@@ -30,7 +30,7 @@ public:
 	/// <param name="Value">Value for the data.</param>
 	/// <returns>Returns true if the data is added with success, false if already exists.</returns>
 	template<typename T>
-	inline const bool AddData(TK Index, T Value)
+	inline const bool AddData(Key Index, T Value)
 	{
 		// Check if the key already exists.
 		if (m_data.find(Index) != m_data.end())
@@ -49,7 +49,7 @@ public:
 	/// <param name="Index">Index for the data.</param>
 	/// <returns>Returns value of the data if exists, if it doesn't exist returns a new value of specific type.</returns>
 	template<typename T>
-	inline const T GetData(TK Index) const
+	inline const T GetData(Key Index) const
 	{
 		// Check if the key exists, if not return the type.
 		if (m_data.find(Index) == m_data.end())
@@ -76,7 +76,7 @@ public:
 	/// <param name="Field">Field information.</param>
 	/// <param name="Index">Index for the data.</param>
 	/// <param name="Value">Value for the data.</param>
-	inline const void SetData(FieldInformation Field, TK Index, std::string Value)
+	inline const void SetData(FieldInformation Field, Key Index, std::string Value)
 	{
 		if (Field.IsNumeric == false)
 		{
@@ -168,7 +168,7 @@ public:
 	/// <param name="Index">Index for the data.</param>
 	/// <param name="Value">Value for the data.</param>
 	template<typename T>
-	inline const void SetData(TK Index, T Value)
+	inline const void SetData(Key Index, T Value)
 	{
 		// Check if the key exists, if not add it.
 		if (m_data.find(Index) == m_data.end())
@@ -185,5 +185,5 @@ public:
 
 private:
 
-	std::unordered_map<TK, std::shared_ptr<AnyObject>, HashType<TK>> m_data;
+	std::unordered_map<Key, std::shared_ptr<AnyObject>, HashType<Key>> m_data;
 };

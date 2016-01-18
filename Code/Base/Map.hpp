@@ -3,7 +3,7 @@
 /// <summary>
 /// Base class to store an undefined amount of objects with the same type.
 /// </summary>
-template<typename T, class C>
+template<typename Key, class T>
 class Map
 {
 public:
@@ -18,7 +18,7 @@ public:
 	/// <param name="args">Undefined number of arguments for the object constructor.</param>
 	/// <returns>Returns true if the object is added with success, false if it already exists.</returns>
 	template<typename... Args>
-	inline static bool Add(T Index, Args&& ...args)
+	inline static bool Add(Key Index, Args&& ...args)
 	{
 		// Check if the key already exists.
 		if (m_list.find(Index) != m_list.end())
@@ -26,7 +26,7 @@ public:
 			return false;
 		}
 
-		m_list.emplace(Index, std::make_shared<C>(std::forward<Args>(args)...));
+		m_list.emplace(Index, std::make_shared<T>(std::forward<Args>(args)...));
 
 		return true;
 	}
@@ -36,7 +36,7 @@ public:
 	/// </summary>
 	/// <param name="Index">Index for the object.</param>
 	/// <returns>Returns true if the object exists, false otherwise.</returns>
-	inline static bool Contains(T Index)
+	inline static bool Contains(Key Index)
 	{
 		return m_list.find(Index) != m_list.end();
 	}
@@ -46,7 +46,7 @@ public:
 	/// </summary>
 	/// <param name="Index">Index of an object.</param>
 	/// <returns>Returns value of the object if it exist, if it doesn't exist returns nullptr.</returns>
-	inline static std::shared_ptr<C> Get(T Index)
+	inline static std::shared_ptr<T> Get(Key Index)
 	{
 		// Check if the key exists. 
 		if (m_list.find(Index) == m_list.end())
@@ -61,7 +61,7 @@ public:
 	/// Get the list of the objects.
 	/// </summary>
 	/// <returns>Returns list of the objects.</returns>
-	inline static std::unordered_map<T, std::shared_ptr<C>> GetList()
+	inline static std::unordered_map<Key, std::shared_ptr<T>> GetList()
 	{
 		return m_list;
 	}
@@ -71,7 +71,7 @@ public:
 	/// </summary>
 	/// <param name="Index">Index of an object.</param>
 	/// <returns>Returns true if it is removed with success, false otherwise.</returns>
-	inline static bool Remove(T Index)
+	inline static bool Remove(Key Index)
 	{
 		// Check if the key exists.
 		if (m_list.find(Index) == m_list.end())
@@ -86,8 +86,8 @@ public:
 
 private:
 
-	static std::unordered_map<T, std::shared_ptr<C>> m_list;
+	static std::unordered_map<Key, std::shared_ptr<T>> m_list;
 };
 
-template<typename T, class C>
-std::unordered_map<T, std::shared_ptr<C>> Map<T, C>::m_list;
+template<typename Key, class T>
+std::unordered_map<Key, std::shared_ptr<T>> Map<Key, T>::m_list;
