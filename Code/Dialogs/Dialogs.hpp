@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Dialog/Dialog.hpp>
-#include <Dialog/Enums.hpp>
+#include <Dialogs/Enums.hpp>
+#include <Dialogs/CustomDialog.hpp>
 
 class Player;
 
@@ -9,9 +9,9 @@ class Dialogs : public Singleton<Dialogs>
 {
 public:
 
-	Dialog Create(const DialogID& ID, const std::string& Text);
+	CustomDialog Create(const DialogID& ID, const std::string& Text);
 
-	Dialog Create(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1 = "Close", const std::string& Button2 = "", dialogfunction_t Function = nullptr);
+	CustomDialog Create(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string Buttons[2]);
 
 	bool Execute(std::shared_ptr<Player> Player, const DialogID& ID, const DialogResponse& Response, const size_t ItemIndex, const std::string& Tex);
 
@@ -24,7 +24,9 @@ private:
 	Dialogs();
 	~Dialogs() = default;
 
-	void Add(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1 = "Close", const std::string& Button2 = "", dialogfunction_t Function = nullptr);
+	void Register(std::shared_ptr<Dialog> Dialog);
+
+	/*void Add(const DialogID& ID, const DialogStyle& Style, const std::string& Caption, const std::string& Text, const std::string& Button1 = "Close", const std::string& Button2 = "", dialogfunction_t Function = nullptr);
 	
 	template<typename F, typename C>
 	inline dialogfunction_t Bind(F Function, C Class)
@@ -48,7 +50,7 @@ private:
 
 	void Sex(std::shared_ptr<Player> Player, DialogResponse Response, size_t ItemIndex, std::string Text);
 
-	void Tutorial(std::shared_ptr<Player> Player, DialogResponse Response, size_t ItemIndex, std::string Text);
+	void Tutorial(std::shared_ptr<Player> Player, DialogResponse Response, size_t ItemIndex, std::string Text);*/
 
-	std::map<DialogID, std::shared_ptr<Dialog>> m_dialogs;
+	std::unordered_map<DialogID, std::shared_ptr<Dialog>, HashType<DialogID>> m_dialogs;
 };

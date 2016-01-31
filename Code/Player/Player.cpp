@@ -305,6 +305,11 @@ void Player::SetAdminLevel(AdminLevel Level)
 	SetData<AdminLevel>(PlayerData::kAdminLevel, Level);
 }
 
+void Player::SetAuthenticationState(bool State)
+{
+	SetData<bool>(PlayerData::kAuthenticated, State);
+}
+
 void Player::SetCash(int32_t Amount)
 {
 	SetData<int32_t>(PlayerData::kCash, Amount);

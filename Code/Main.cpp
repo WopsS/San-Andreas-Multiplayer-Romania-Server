@@ -1,7 +1,6 @@
 #include <stdafx.hpp>
-
 #include <Commands/Commands.hpp>
-#include <Dialog/Dialogs.hpp>
+#include <Dialogs/Dialogs.hpp>
 #include <Key/Keys.hpp>
 #include <Player/Player.hpp>
 #include <Server/Server.hpp>

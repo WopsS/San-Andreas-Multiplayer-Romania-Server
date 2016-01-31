@@ -6,7 +6,7 @@ enum class VehicleData : uint8_t
 	kOwnerID,
 	kModel,
 	kPosition,
-	kRotation = kPosition + 3, // kPosition + 3, de ce? Pentru ca avem 3 axe in spatiul 3D. X, Y, Z. Si o sa pastram pozitia intr-o clasa de tip-ul Point3D
+	kRotation = kPosition + 3,
 	kColor1,
 	kColor2,
 	kRespawnTime,

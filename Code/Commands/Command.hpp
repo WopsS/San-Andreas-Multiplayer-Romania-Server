@@ -1,7 +1,7 @@
 #pragma once
 
+#include <PermissionFlags.hpp>
 #include <Commands/Parameters.hpp>
-#include <Commands/Flags.hpp>
 #include <Player/Player.hpp>
 
 class Command
@@ -23,23 +23,23 @@ public:
 		* 	the command is for faction's leader or for members without write anything more in the function.
 		*/
 
-		if (m_accessLevel & CommandFlags::kPlayer && CustomAccess(Player) == true)
+		if (m_accessLevel & PermissionFlags::kPlayer && CustomAccess(Player) == true)
 		{
 			return true;
 		}
-		else if ((m_accessLevel & CommandFlags::kMember) && Player->IsInAnyFaction() == true && CustomAccess(Player) == true)
+		else if ((m_accessLevel & PermissionFlags::kMember) && Player->IsInAnyFaction() == true && CustomAccess(Player) == true)
 		{
 			return true;
 		}
-		else if ((m_accessLevel & CommandFlags::kSubleader) && Player->IsSubleader() == true && CustomAccess(Player) == true)
+		else if ((m_accessLevel & PermissionFlags::kSubleader) && Player->IsSubleader() == true && CustomAccess(Player) == true)
 		{
 			return true;
 		}
-		else if ((m_accessLevel & CommandFlags::kLeader) && Player->IsLeader() == true && CustomAccess(Player) == true)
+		else if ((m_accessLevel & PermissionFlags::kLeader) && Player->IsLeader() == true && CustomAccess(Player) == true)
 		{
 			return true;
 		}
-		else if ((m_accessLevel & CommandFlags::kAdmin) && Player->IsAdmin() == true && CustomAccess(Player) == true)
+		else if ((m_accessLevel & PermissionFlags::kAdmin) && Player->IsAdmin() == true && CustomAccess(Player) == true)
 		{
 			return true;
 		}
@@ -69,7 +69,7 @@ protected:
 
 	std::vector<std::string> m_names;
 
-	int32_t m_accessLevel = static_cast<int32_t>(CommandFlags::kPlayer);
+	uint32_t m_accessLevel = static_cast<uint32_t>(PermissionFlags::kPlayer);
 
 	std::string m_format;
 

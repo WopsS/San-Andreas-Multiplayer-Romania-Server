@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Dialog/Dialogs.hpp>
+#include <Dialogs/Dialogs.hpp>
 #include <House/House.hpp>
 #include <Player/Enums.hpp>
 #include <Vehicle/Vehicle.hpp>
@@ -112,6 +112,8 @@ public:
 
 	void SetAdminLevel(AdminLevel Level);
 
+	void SetAuthenticationState(bool State);
+
 	void SetCash(int32_t Amount);
 
 	void SetMoney(int64_t Amount);
@@ -124,21 +126,19 @@ public:
 	inline const bool ShowDialog(const DialogID& ID, Args&& ...args) const
 	{
 		auto Dialog = Dialogs::GetInstance()->Get(ID);
+		auto Buttons = Dialog->GetButtons();
 
-		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int32_t>(ID), static_cast<int32_t>(Dialog->GetStyle()), Dialog->GetCaption().c_str(), fmt::format(Dialog->GetText(), std::forward<Args>(args)...).c_str(), Dialog->GetButton1().c_str(), Dialog->GetButton2().c_str());
+		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<uint32_t>(ID), static_cast<uint8_t>(Dialog->GetStyle()), Dialog->GetCaption().c_str(), fmt::format(Dialog->GetText(), std::forward<Args>(args)...).c_str(), Buttons[0].c_str(), Buttons[1].c_str());
 	}
 
 	template<typename... Args>
 	inline const bool ShowDialog(const Dialog& Dialog, Args&& ...args) const
 	{
-		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<int32_t>(Dialog.GetID()), static_cast<int32_t>(Dialog.GetStyle()), Dialog.GetCaption().c_str(), fmt::format(Dialog.GetText(), std::forward<Args>(args)...).c_str(), Dialog.GetButton1().c_str(), Dialog.GetButton2().c_str());
+		auto Buttons = Dialog.GetButtons();
+		return sampgdk::ShowPlayerDialog(GetGameID(), static_cast<uint32_t>(Dialog.GetID()), static_cast<uint8_t>(Dialog.GetStyle()), Dialog.GetCaption().c_str(), fmt::format(Dialog.GetText(), std::forward<Args>(args)...).c_str(), Buttons[0].c_str(), Buttons[1].c_str());
 	}
 
 	bool Spawn();
 
 	bool ToggleSpectating(const bool Toggle);
-
-private:
-
-	friend class Dialogs;
 };

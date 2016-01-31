@@ -8,10 +8,10 @@
 
 void Server::Initialize()
 {
-	//MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `businesses`", {}, &Server::InitializeBusinesses, this);
+	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `businesses`", {}, &Server::InitializeBusinesses, this);
 	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `factions`", {}, &Server::InitializeFactions, this);
-	//MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `houses`", {}, &Server::InitializeHouses, this);
-	//MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `faction_vehicles`", {}, &Server::InitializeVehicles, this);
+	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `houses`", {}, &Server::InitializeHouses, this);
+	MySQL::GetInstance()->Query(QueryType::kNormal, "SELECT * FROM `faction_vehicles`", {}, &Server::InitializeVehicles, this);
 }
 
 void Server::InitializeBusinesses(std::shared_ptr<MySQLResult> Result)

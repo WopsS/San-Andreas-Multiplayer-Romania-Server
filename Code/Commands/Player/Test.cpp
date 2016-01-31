@@ -4,7 +4,7 @@
 TestCommand::TestCommand()
 {
 	m_names = { "test" };
-	m_accessLevel = static_cast<int32_t>(CommandFlags::kPlayer);
+	m_accessLevel = static_cast<int32_t>(PermissionFlags::kPlayer);
 	m_format ="sifsp";
 	m_usageMessages = { "/test <string> <integer> <float> <string> <Player ID / name>" };
 	m_unauthorizedMessage = "You are not authorized to use this command.";
